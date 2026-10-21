@@ -2,6 +2,9 @@
 
 import re
 from datetime import datetime
+from zoneinfo import ZoneInfo
+
+TEHRAN = ZoneInfo("Asia/Tehran")
 
 _FA_DIGITS = "۰۱۲۳۴۵۶۷۸۹"
 _AR_DIGITS = "٠١٢٣٤٥٦٧٨٩"
@@ -49,11 +52,20 @@ def format_million(n: int) -> str:
     return to_fa_digits(text).replace(".", "٫") + " میلیون"
 
 
-def price_age_label(changed_at: datetime | None, now: datetime) -> tuple[str, bool]:
-    """Relative age of a registered price, plus whether it is old enough to say «احتمالاً تغییر کرده» (> 90 days)."""
-    if changed_at is None:
+def _aware(dt: datetime) -> datetime:
+    return dt.replace(tzinfo=TEHRAN) if dt.tzinfo is None else dt
+
+
+def price_age_label(changed_at: datetime | str | None, now: datetime) -> tuple[str, bool]:
+    """Relative age of a registered price, plus whether it is old enough to say «احتمالاً تغییر کرده» (> 90 days).
+
+    Accepts the dataset's ISO strings («2026-09-14T08:57:27.401253+00:00»); naive datetimes are taken as Tehran time.
+    """
+    if not changed_at:
         return "تاریخ ثبت نشده", True
-    days = (now - changed_at).days
+    if isinstance(changed_at, str):
+        changed_at = datetime.fromisoformat(changed_at)
+    days = (_aware(now) - _aware(changed_at)).days
     if days <= 0:
         label = "امروز"
     elif days == 1:
