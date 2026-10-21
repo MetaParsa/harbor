@@ -56,6 +56,16 @@ def _aware(dt: datetime) -> datetime:
     return dt.replace(tzinfo=TEHRAN) if dt.tzinfo is None else dt
 
 
+def format_price_short(n: int) -> str:
+    """Short spoken-style price: 1490000 → «۱٫۴۹ میلیون», 250000 → «۲۵۰ هزار», 4500 → «۴٬۵۰۰ تومان»."""
+    if n >= 1_000_000:
+        return format_million(n)
+    if n >= 1_000:
+        k = f"{n / 1000:.1f}".rstrip("0").rstrip(".")
+        return to_fa_digits(k).replace(".", "٫") + " هزار"
+    return format_toman(n) + " تومان"
+
+
 def price_age_label(changed_at: datetime | str | None, now: datetime) -> tuple[str, bool]:
     """Relative age of a registered price, plus whether it is old enough to say «احتمالاً تغییر کرده» (> 90 days).
 
