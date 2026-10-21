@@ -1,0 +1,25 @@
+[project]
+name = "starcoach-agents"
+version = "0.1.0"
+description = "StarCoach Agentic AI hackathon: Torob in-store shopping agent (+ shared core)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn==0.34.0",
+    "httpx==0.28.1",
+    "pydantic>=2.9,<3",
+    "tzdata>=2024.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "duckdb>=1.1",
+    "pytz",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["torob/tests"]
+
+[tool.uv]
+package = false

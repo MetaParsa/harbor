@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+
+# Torob dataset and built DBs: products.csv is 196 MB (over GitHub's limit); rebuild with torob/etl/build_db.py
+data/
+*.db
+*.db-wal
+*.db-shm
