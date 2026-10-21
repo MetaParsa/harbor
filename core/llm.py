@@ -48,13 +48,19 @@ class LLMResult:
 class Provider:
     name: str
     base_url: str
-    api_key: str
+    api_key: str = field(repr=False)
     timeout_s: float = 30
+
+
+def estimate_tokens(messages: list[dict]) -> int:
+    """Rough prompt size (Persian ≈ 3 chars/token in JSON). Used to reserve budget before a call."""
+    return len(json.dumps(messages, ensure_ascii=False)) // 3 + 1
 
 
 @dataclass
 class SpendGuard:
-    """Token caps per session and per day; every call is counted, refusals happen before the call."""
+    """Token caps per session and per day. A call reserves prompt + max_tokens up front (atomically, so concurrent
+    calls can't overshoot), then settles to the real usage; billed-but-failed replies still count."""
     daily_tokens: int = 200_000
     session_tokens: int = 20_000
     _day: date = field(default_factory=date.today)
@@ -62,22 +68,27 @@ class SpendGuard:
     _by_session: dict[str, int] = field(default_factory=dict)
     _lock: threading.Lock = field(default_factory=threading.Lock)
 
-    def check(self, session_id: str, max_tokens: int) -> None:
+    def reserve(self, session_id: str, tokens: int) -> None:
         with self._lock:
             self._roll()
-            if self._used_today + max_tokens > self.daily_tokens:
+            if self._used_today + tokens > self.daily_tokens:
                 raise BudgetExceeded("daily token cap reached")
-            if self._by_session.get(session_id, 0) + max_tokens > self.session_tokens:
+            if self._by_session.get(session_id, 0) + tokens > self.session_tokens:
                 raise BudgetExceeded("session token cap reached")
+            self._add(session_id, tokens)
 
-    def record(self, session_id: str, tokens: int) -> None:
+    def settle(self, session_id: str, reserved: int, actual: int) -> None:
         with self._lock:
-            self._roll()
-            self._used_today += tokens
-            self._by_session[session_id] = self._by_session.get(session_id, 0) + tokens
+            self._add(session_id, actual - reserved)
 
     def used_today(self) -> int:
         return self._used_today
+
+    def _add(self, session_id: str, tokens: int) -> None:
+        self._used_today += tokens
+        self._by_session[session_id] = self._by_session.get(session_id, 0) + tokens
+        if len(self._by_session) > 10_000:   # bound memory; the daily cap still holds for everyone
+            self._by_session = dict(list(self._by_session.items())[-5_000:])
 
     def _roll(self) -> None:
         if date.today() != self._day:
@@ -122,33 +133,38 @@ class LLMClient:
                 raise LLMDisabled("LLM_ENABLED is off and no FakeLLM is configured")
             return self.fake.complete(role, messages)
         model = self.models[role]
-        self.guard.check(session_id, max_tokens)
         body: dict = {"model": model, "messages": messages, "max_tokens": max_tokens, "temperature": 0.2}
         if json_mode:
             body["response_format"] = {"type": "json_object"}
         if tools:
             body["tools"], body["tool_choice"] = tools, "auto"
+        per_attempt = estimate_tokens(messages) + max_tokens
         errors = []
         for p in self.providers:
-            t0 = time.perf_counter()
+            self.guard.reserve(session_id, per_attempt)   # each attempt may be billed, so each one reserves
+            t0, used = time.perf_counter(), 0
             try:
                 r = self._http.post(f"{p.base_url.rstrip('/')}/chat/completions", json=body, timeout=p.timeout_s,
                                     headers={"Authorization": f"Bearer {p.api_key}"})
                 if r.status_code == 429 or r.status_code >= 500:
-                    raise LLMError(f"{p.name}: HTTP {r.status_code}")
+                    raise LLMError(f"HTTP {r.status_code}")
                 r.raise_for_status()
                 data = r.json()
-                msg = data["choices"][0]["message"]
-                res = LLMResult(msg.get("content") or "", msg.get("tool_calls") or [], data.get("usage") or {},
+                usage = data.get("usage") or {}
+                used = sum(int(usage.get(k) or 0) for k in ("prompt_tokens", "completion_tokens")) or per_attempt
+                msg = (data.get("choices") or [{}])[0].get("message") or {}
+                if not (msg.get("content") or msg.get("tool_calls")):
+                    raise LLMError("empty reply")
+                res = LLMResult(msg.get("content") or "", msg.get("tool_calls") or [], usage,
                                 p.name, model, int((time.perf_counter() - t0) * 1000))
                 if json_mode:
-                    res.json()   # bad JSON counts as a provider failure
-                tokens = sum((res.usage or {}).get(k, 0) for k in ("prompt_tokens", "completion_tokens")) or max_tokens
-                self.guard.record(session_id, tokens)
-                self._note(role, res, tokens)
+                    res.json()   # bad JSON counts as a provider failure (its tokens still count)
+                self._note(role, res, used)
                 return res
-            except (httpx.HTTPError, LLMError, KeyError, ValueError) as e:
+            except Exception as e:   # any malformed reply → next provider; never leak the key (it's only in headers)
                 errors.append(f"{p.name}: {type(e).__name__}: {e}"[:200])
+            finally:
+                self.guard.settle(session_id, per_attempt, used)   # used=0 when nothing came back (not billed)
         raise LLMError("all providers failed: " + " | ".join(errors))
 
     def _note(self, role: str, res: LLMResult, tokens: int) -> None:

@@ -9,7 +9,7 @@ import time
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 
-from core.llm import LLMClient
+from core.llm import LLMClient, LLMError
 
 Sink = Callable[[str, str, dict], None]   # (session_id, event, data) -> persist
 
@@ -55,10 +55,14 @@ def tool_loop(llm: LLMClient, messages: list[dict], tools: list[Tool], em: Emitt
     by_name = {t.name: t for t in tools}
     msgs = list(messages)
     for step in range(max_steps):
-        res = llm.complete("chat", msgs, session_id=em.session_id, max_tokens=max_tokens,
-                           tools=[t.schema() for t in tools])
+        try:
+            res = llm.complete("chat", msgs, session_id=em.session_id, max_tokens=max_tokens,
+                               tools=[t.schema() for t in tools])
+        except LLMError:   # providers down or budget spent: say so plainly, don't crash the turn
+            yield em.emit("message", {"text": "الان نمی‌تونم به این سؤال جواب بدم؛ از کارت‌ها کمک بگیر یا کمی بعد بپرس."})
+            return
         if not res.tool_calls:
-            yield em.emit("message", {"text": res.text.strip()})
+            yield em.emit("message", {"text": res.text.strip() or "جوابی پیدا نکردم؛ سؤال رو یه جور دیگه بپرس."})
             return
         msgs.append({"role": "assistant", "content": res.text or None, "tool_calls": res.tool_calls})
         for call in res.tool_calls:
