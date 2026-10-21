@@ -46,7 +46,10 @@ def format_toman(n: int | None) -> str:
 
 
 def format_million(n: int) -> str:
-    """3000000 -> «۳ میلیون», 1490000 -> «۱٫۴۹ میلیون»."""
+    """3000000 -> «۳ میلیون», 1490000 -> «۱٫۴۹ میلیون», 2080560000 -> «۲٫۰۸ میلیارد»."""
+    if n >= 1_000_000_000:
+        b = f"{n / 1_000_000_000:.2f}".rstrip("0").rstrip(".")
+        return to_fa_digits(b).replace(".", "٫") + " میلیارد"
     m = n / 1_000_000
     text = f"{m:.2f}".rstrip("0").rstrip(".")
     return to_fa_digits(text).replace(".", "٫") + " میلیون"
