@@ -172,6 +172,9 @@ class LLMClient:
         del self.log[:-200]
 
 
+HAIKU = "anthropic/claude-haiku-5.5"   # every role runs on Claude Haiku (BoxAPI model id); MODEL_* env can still override
+
+
 def from_env(fake: FakeLLM | None = None) -> LLMClient:
     """Providers and models from env. Keys come from env only; never logged."""
     providers = []
@@ -180,9 +183,9 @@ def from_env(fake: FakeLLM | None = None) -> LLMClient:
         if base and key:
             providers.append(Provider(os.environ.get(f"{prefix}_NAME", prefix.lower()), base, key))
     models = {
-        "router": os.environ.get("MODEL_ROUTER", "openai/gpt-4o-mini"),
-        "chat": os.environ.get("MODEL_CHAT", "openai/gpt-4.1-mini"),
-        "call": os.environ.get("MODEL_CALL", "openai/gpt-4o-mini"),
+        "router": os.environ.get("MODEL_ROUTER", HAIKU),
+        "chat": os.environ.get("MODEL_CHAT", HAIKU),
+        "call": os.environ.get("MODEL_CALL", HAIKU),
     }
     guard = SpendGuard(int(os.environ.get("LLM_DAILY_TOKENS", "200000")),
                        int(os.environ.get("LLM_SESSION_TOKENS", "20000")))
