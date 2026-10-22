@@ -26,9 +26,10 @@ class Emitter:
     events: list[tuple[str, dict]] = field(default_factory=list)
     started: float = field(default_factory=time.perf_counter)
     llm: object = None          # the turn's LLM client, for handlers that may need it (no globals across requests)
+    paused: float = 0.0         # seconds spent on deliberate pacing (call lines); excluded from `ms`
 
     def emit(self, event: str, data: dict) -> str:
-        data = {**data, "ms": int((time.perf_counter() - self.started) * 1000)}
+        data = {**data, "ms": int((time.perf_counter() - self.started - self.paused) * 1000)}
         self.events.append((event, data))
         if self.sink:
             self.sink(self.session_id, event, data)
