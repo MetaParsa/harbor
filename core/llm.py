@@ -281,6 +281,7 @@ def from_env(fake: FakeLLM | None = None) -> LLMClient:
         "chat": os.environ.get("MODEL_CHAT", HAIKU),
         "call": os.environ.get("MODEL_CALL", HAIKU),
         "vision": os.environ.get("MODEL_VISION", HAIKU),
+        "judge": os.environ.get("MODEL_JUDGE", HAIKU),
     }
     guard = SpendGuard(int(os.environ.get("LLM_DAILY_TOKENS", "200000")),
                        int(os.environ.get("LLM_SESSION_TOKENS", "20000")))
