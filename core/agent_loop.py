@@ -25,6 +25,7 @@ class Emitter:
     sink: Sink | None = None
     events: list[tuple[str, dict]] = field(default_factory=list)
     started: float = field(default_factory=time.perf_counter)
+    llm: object = None          # the turn's LLM client, for handlers that may need it (no globals across requests)
 
     def emit(self, event: str, data: dict) -> str:
         data = {**data, "ms": int((time.perf_counter() - self.started) * 1000)}
