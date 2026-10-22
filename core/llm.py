@@ -143,30 +143,18 @@ class LLMClient:
                 raise LLMDisabled("LLM_ENABLED is off and no FakeLLM is configured")
             return self.fake.complete(role, messages)
         model = self.models[role]
-        body: dict = {"model": model, "messages": messages, "max_tokens": max_tokens, "temperature": 0.2}
-        if json_mode:
-            body["response_format"] = {"type": "json_object"}
-        if tools:
-            body["tools"], body["tool_choice"] = tools, "auto"
         per_attempt = estimate_tokens(messages) + max_tokens
         errors = []
         for p in self.providers:
             self.guard.reserve(session_id, per_attempt)   # each attempt may be billed, so each one reserves
             t0, used = time.perf_counter(), 0
             try:
-                r = self._http.post(f"{p.base_url.rstrip('/')}/chat/completions", json=body, timeout=p.timeout_s,
-                                    headers={"Authorization": f"Bearer {p.api_key}"})
-                if r.status_code == 429 or r.status_code >= 500:
-                    raise LLMError(f"HTTP {r.status_code}")
-                r.raise_for_status()
-                data = r.json()
-                usage = data.get("usage") or {}
-                used = sum(int(usage.get(k) or 0) for k in ("prompt_tokens", "completion_tokens")) or per_attempt
-                msg = (data.get("choices") or [{}])[0].get("message") or {}
-                if not (msg.get("content") or msg.get("tool_calls")):
+                call = self._anthropic if isinstance(p, AnthropicProvider) else self._openai
+                text, tool_calls, usage, used = call(p, model, messages, max_tokens, json_mode, tools)
+                used = used or per_attempt
+                if not (text or tool_calls):
                     raise LLMError("empty reply")
-                res = LLMResult(msg.get("content") or "", msg.get("tool_calls") or [], usage,
-                                p.name, model, int((time.perf_counter() - t0) * 1000))
+                res = LLMResult(text, tool_calls, usage, p.name, model, int((time.perf_counter() - t0) * 1000))
                 if json_mode:
                     res.json()   # bad JSON counts as a provider failure (its tokens still count)
                 self._note(role, res, used)
@@ -177,21 +165,117 @@ class LLMClient:
                 self.guard.settle(session_id, per_attempt, used)   # used=0 when nothing came back (not billed)
         raise LLMError("all providers failed: " + " | ".join(errors))
 
+    def _openai(self, p: "Provider", model, messages, max_tokens, json_mode, tools):
+        """An OpenAI-compatible gateway: (text, tool_calls, usage, billed tokens)."""
+        body: dict = {"model": model, "messages": messages, "max_tokens": max_tokens, "temperature": 0.2}
+        if json_mode:
+            body["response_format"] = {"type": "json_object"}
+        if tools:
+            body["tools"], body["tool_choice"] = tools, "auto"
+        r = self._http.post(f"{p.base_url.rstrip('/')}/chat/completions", json=body, timeout=p.timeout_s,
+                            headers={"Authorization": f"Bearer {p.api_key}"})
+        if r.status_code == 429 or r.status_code >= 500:
+            raise LLMError(f"HTTP {r.status_code}")
+        r.raise_for_status()
+        data = r.json()
+        usage = data.get("usage") or {}
+        used = sum(int(usage.get(k) or 0) for k in ("prompt_tokens", "completion_tokens"))
+        msg = (data.get("choices") or [{}])[0].get("message") or {}
+        return msg.get("content") or "", msg.get("tool_calls") or [], usage, used
+
+    def _anthropic(self, p: "AnthropicProvider", model, messages, max_tokens, json_mode, tools):
+        """Claude through the official SDK. The app speaks OpenAI-shaped messages; they are translated both ways.
+        Thinking off and low effort: every call here is a short, latency-sensitive step (route, name a photo, answer)."""
+        system, msgs = to_anthropic_messages(messages)
+        if json_mode:
+            system = (system + "\n\n" if system else "") + "Reply with one JSON object only, no prose and no code fence."
+        kw: dict = {"model": model, "max_tokens": max_tokens, "messages": msgs,
+                    "thinking": {"type": "disabled"}, "output_config": {"effort": "low"}}
+        if system:
+            kw["system"] = system
+        if tools:
+            kw["tools"] = [{"name": t["function"]["name"], "description": t["function"].get("description", ""),
+                            "input_schema": t["function"].get("parameters") or {"type": "object", "properties": {}}}
+                           for t in tools]
+            kw["tool_choice"] = {"type": "auto"}
+        resp = p.client().messages.create(**kw)
+        used = (resp.usage.input_tokens or 0) + (resp.usage.output_tokens or 0)
+        if resp.stop_reason == "refusal":
+            raise LLMError("refusal")
+        text = "".join(b.text for b in resp.content if b.type == "text")
+        calls = [{"id": b.id, "type": "function", "function": {"name": b.name, "arguments": json.dumps(b.input, ensure_ascii=False)}}
+                 for b in resp.content if b.type == "tool_use"]
+        return text, calls, {"prompt_tokens": resp.usage.input_tokens, "completion_tokens": resp.usage.output_tokens}, used
+
     def _note(self, role: str, res: LLMResult, tokens: int) -> None:
         self.log.append({"role": role, "provider": res.provider, "model": res.model, "tokens": tokens, "ms": res.ms})
         del self.log[:-200]
 
 
-HAIKU = "anthropic/claude-haiku-5.5"   # every role runs on Claude Haiku (BoxAPI model id); MODEL_* env can still override
+@dataclass
+class AnthropicProvider:
+    """Claude via the official `anthropic` SDK (api.anthropic.com)."""
+    name: str
+    api_key: str = field(repr=False)
+    timeout_s: float = 30
+    _client: object = field(default=None, repr=False)
+
+    def client(self):
+        if self._client is None:
+            import anthropic
+            self._client = anthropic.Anthropic(api_key=self.api_key, timeout=self.timeout_s, max_retries=1)
+        return self._client
+
+
+def to_anthropic_messages(messages: list[dict]) -> tuple[str, list[dict]]:
+    """OpenAI-shaped chat (system/user/assistant+tool_calls/tool, image_url data URLs) → (system, Claude messages)."""
+    system, out = [], []
+    for m in messages:
+        role, content = m.get("role"), m.get("content")
+        if role == "system":
+            system.append(content if isinstance(content, str) else "")
+        elif role == "tool":
+            out.append({"role": "user", "content": [{"type": "tool_result", "tool_use_id": m.get("tool_call_id", ""),
+                                                     "content": content or ""}]})
+        elif role == "assistant" and m.get("tool_calls"):
+            blocks = [{"type": "text", "text": content}] if content else []
+            for c in m["tool_calls"]:
+                fn = c.get("function", {})
+                blocks.append({"type": "tool_use", "id": c.get("id", ""), "name": fn.get("name", ""),
+                               "input": json.loads(fn.get("arguments") or "{}")})
+            out.append({"role": "assistant", "content": blocks})
+        elif isinstance(content, list):
+            blocks = []
+            for part in content:
+                if part.get("type") == "image_url":
+                    url = part["image_url"]["url"]
+                    head, _, data = url.partition(",")
+                    blocks.append({"type": "image", "source": {"type": "base64", "data": data,
+                                   "media_type": head.removeprefix("data:").removesuffix(";base64")}})
+                elif part.get("type") == "text":
+                    blocks.append({"type": "text", "text": part.get("text", "")})
+            out.append({"role": role, "content": blocks})
+        elif content:   # Claude rejects empty text blocks
+            out.append({"role": role, "content": content})
+    while out and out[0]["role"] != "user":   # the conversation must open with the user (trimmed history may not)
+        out.pop(0)
+    return "\n\n".join(s for s in system if s), out
+
+
+HAIKU = "claude-haiku-5-5"   # every role runs on Claude Haiku 5.5; MODEL_* env can still override
 
 
 def from_env(fake: FakeLLM | None = None) -> LLMClient:
-    """Providers and models from env. Keys come from env only; never logged."""
-    providers = []
-    for prefix in ("LLM_PRIMARY", "LLM_FALLBACK"):
-        base, key = os.environ.get(f"{prefix}_BASE_URL"), os.environ.get(f"{prefix}_API_KEY")
-        if base and key:
-            providers.append(Provider(os.environ.get(f"{prefix}_NAME", prefix.lower()), base, key))
+    """Providers and models from env. Keys come from env only; never logged.
+    With ANTHROPIC_API_KEY set, Claude is the only provider: no gateway fallback, so no other credit is ever spent."""
+    providers: list = []
+    if key := os.environ.get("ANTHROPIC_API_KEY"):
+        providers.append(AnthropicProvider("anthropic", key))
+    else:
+        for prefix in ("LLM_PRIMARY", "LLM_FALLBACK"):
+            base, key = os.environ.get(f"{prefix}_BASE_URL"), os.environ.get(f"{prefix}_API_KEY")
+            if base and key:
+                providers.append(Provider(os.environ.get(f"{prefix}_NAME", prefix.lower()), base, key))
     models = {
         "router": os.environ.get("MODEL_ROUTER", HAIKU),
         "chat": os.environ.get("MODEL_CHAT", HAIKU),

@@ -9,6 +9,7 @@ dependencies = [
     "httpx==0.28.1",
     "pydantic>=2.9,<3",
     "tzdata>=2024.1",
+    "anthropic==2.1.0",
 ]
 
 [dependency-groups]
