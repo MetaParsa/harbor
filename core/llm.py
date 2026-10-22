@@ -52,9 +52,19 @@ class Provider:
     timeout_s: float = 30
 
 
+IMAGE_TOKENS = 1600   # a ≤1024 px photo costs about this much; its base64 text says nothing about the real cost
+
+
 def estimate_tokens(messages: list[dict]) -> int:
     """Rough prompt size (Persian ≈ 3 chars/token in JSON). Used to reserve budget before a call."""
-    return len(json.dumps(messages, ensure_ascii=False)) // 3 + 1
+    images, parts = 0, []
+    for m in messages:
+        content = m.get("content")
+        if isinstance(content, list):   # multimodal: count images at a flat rate, measure the text
+            images += sum(1 for c in content if c.get("type") == "image_url")
+            content = [c for c in content if c.get("type") != "image_url"]
+        parts.append({**m, "content": content})
+    return len(json.dumps(parts, ensure_ascii=False)) // 3 + 1 + images * IMAGE_TOKENS
 
 
 @dataclass
@@ -186,6 +196,7 @@ def from_env(fake: FakeLLM | None = None) -> LLMClient:
         "router": os.environ.get("MODEL_ROUTER", HAIKU),
         "chat": os.environ.get("MODEL_CHAT", HAIKU),
         "call": os.environ.get("MODEL_CALL", HAIKU),
+        "vision": os.environ.get("MODEL_VISION", HAIKU),
     }
     guard = SpendGuard(int(os.environ.get("LLM_DAILY_TOKENS", "200000")),
                        int(os.environ.get("LLM_SESSION_TOKENS", "20000")))
