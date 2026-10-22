@@ -5,6 +5,7 @@ questions about results already shown (spec §0.2 R10).
 """
 
 import json
+import re
 import time
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
@@ -12,6 +13,15 @@ from dataclasses import dataclass, field
 from core.llm import LLMClient, LLMError
 
 Sink = Callable[[str, str, dict], None]   # (session_id, event, data) -> persist
+
+
+_MD_MARKS = re.compile(r"\*\*|__|^#{1,6}\s*", re.M)
+_MD_BULLET = re.compile(r"^\s*[-*]\s+", re.M)
+
+
+def plain_text(text: str) -> str:
+    """Chat bubbles show plain text: drop Markdown bold/heading marks a model may add, keep bullets as «•»."""
+    return _MD_BULLET.sub("• ", _MD_MARKS.sub("", text)).strip()
 
 
 def sse(event: str, data: dict) -> str:
@@ -64,7 +74,7 @@ def tool_loop(llm: LLMClient, messages: list[dict], tools: list[Tool], em: Emitt
             yield em.emit("message", {"text": "الان نمی‌تونم به این سؤال جواب بدم؛ از کارت‌ها کمک بگیر یا کمی بعد بپرس."})
             return
         if not res.tool_calls:
-            yield em.emit("message", {"text": res.text.strip() or "جوابی پیدا نکردم؛ سؤال رو یه جور دیگه بپرس."})
+            yield em.emit("message", {"text": plain_text(res.text) or "جوابی پیدا نکردم؛ سؤال رو یه جور دیگه بپرس."})
             return
         msgs.append({"role": "assistant", "content": res.text or None, "tool_calls": res.tool_calls})
         for call in res.tool_calls:
