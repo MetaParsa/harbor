@@ -282,7 +282,8 @@ def from_env(fake: FakeLLM | None = None) -> LLMClient:
         "call": os.environ.get("MODEL_CALL", HAIKU),
         "vision": os.environ.get("MODEL_VISION", HAIKU),
         "judge": os.environ.get("MODEL_JUDGE", HAIKU),
+        "ui": os.environ.get("MODEL_UI", HAIKU),
     }
     guard = SpendGuard(int(os.environ.get("LLM_DAILY_TOKENS", "200000")),
-                       int(os.environ.get("LLM_SESSION_TOKENS", "20000")))
+                       int(os.environ.get("LLM_SESSION_TOKENS", "40000")))
     return LLMClient(providers, models, guard, enabled=os.environ.get("LLM_ENABLED") == "1", fake=fake)
