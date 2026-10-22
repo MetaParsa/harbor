@@ -1,0 +1,9 @@
+{
+ "request": "POST /v1/projects",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664245,
+ "body": {
+  "projectID": "6ad9e2b8615e2e0c8f34561a"
+ }
+}

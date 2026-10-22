@@ -1,0 +1,40 @@
+{
+ "request": "GET /v2/releases/6ad9e3a084eee4f3946584e3/build-logs",
+ "params": {
+  "since": "2026-10-22T10:21:32.605Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664493,
+ "body": {
+  "release": {
+   "_id": "6ad9e3a084eee4f3946584e3",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e3af8ab11135da1ed8bb",
+    "line": " ---> 00a874b67c4a\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:35.038Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3af8ab11135da1ed8f7",
+    "line": "Successfully built 00a874b67c4a\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:35.153Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3afc5e512f48f746824",
+    "line": "Successfully tagged apps/6ad9e2b8615e2e0c8f34561a:871wcl9rejas\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:35.220Z",
+    "__v": 0
+   }
+  ]
+ }
+}

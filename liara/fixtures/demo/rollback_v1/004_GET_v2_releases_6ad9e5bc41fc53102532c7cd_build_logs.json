@@ -1,0 +1,134 @@
+{
+ "request": "GET /v2/releases/6ad9e5bc41fc53102532c7cd/build-logs",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792665019,
+ "body": {
+  "release": {
+   "_id": "6ad9e5bc41fc53102532c7cd",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e5bda073b879201e7344",
+    "line": "> Fetching the source code: 0%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.605Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bd8ab11135da1f2b37",
+    "line": "> Fetching the source code: 100%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.622Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bda073b879201e7346",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.632Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bda073b879201e7348",
+    "line": "> Pulling the base images...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.663Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bd8ab11135da1f2b3d",
+    "line": "> All base images are already pulled.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.761Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bda073b879201e734a",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.795Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bdc5e512f48f74da1a",
+    "line": "> Preparing the build environment...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.855Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bd8ab11135da1f2b41",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:21.966Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bec5e512f48f74da1e",
+    "line": "Step 1/1 : FROM registry2.iran.liara.ir/platforms/node-platform:release-2026-10-17T11-44-node22",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.166Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5be8ab11135da1f2b45",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.221Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bea073b879201e7356",
+    "line": "# Executing 17 build trigger",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.262Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bec5e512f48f74da22",
+    "line": "s",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.324Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5be8ab11135da1f2b64",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.371Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5bec5e512f48f74da25",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.546Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e5be8ab11135da1f2b71",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e5bc41fc53102532c7cd",
+    "createdAt": "2026-10-22T10:30:22.599Z",
+    "__v": 0
+   }
+  ]
+ }
+}

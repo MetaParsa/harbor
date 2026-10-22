@@ -1,0 +1,22 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46/metrics/cpu",
+ "params": {
+  "since": 1792649823
+ },
+ "status": 200,
+ "ms": 297,
+ "body": {
+  "end": 1792651627,
+  "result": [
+   {
+    "values": [
+     [
+      1792651443,
+      "0.0003368906596469721"
+     ]
+    ],
+    "applet": "6ad9b01d615e2e0c8f27a024.1.edecabb4-aea9-4e70-ad5b-5d2509741f2d-DEPLOY"
+   }
+  ]
+ }
+}

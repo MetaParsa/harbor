@@ -1,0 +1,172 @@
+{
+ "request": "GET /v2/releases/6ad9b02a07e024287d18fb92/build-logs",
+ "status": 200,
+ "body": {
+  "release": {
+   "_id": "6ad9b02a07e024287d18fb92",
+   "state": "READY"
+  },
+  "tail": [
+   {
+    "_id": "6ad9b02ca073b87920146ae7",
+    "line": "> Fetching the source code: 0%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:48.731Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02c8ab11135da147997",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:48.737Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02c1b6e6cf38027593f",
+    "line": "> Fetching the source code: 100%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:48.750Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02c1b6e6cf380275944",
+    "line": "> Pulling the base images...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:48.820Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02c8ab11135da14799b",
+    "line": "> All base images are already pulled.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:48.946Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02c1b6e6cf380275946",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:48.983Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146aea",
+    "line": "> Preparing the build environment...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.026Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146aed",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.105Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146af8",
+    "line": "Step 1/1 : FROM registry2.iran.liara.ir/platforms/flask-platform:release-2025-10-06T14-01-python3.12-node20",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.271Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146afe",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.325Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d8ab11135da1479c7",
+    "line": "# Executing 16 build trigger",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.406Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146b0f",
+    "line": "s",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.487Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d8ab11135da1479d7",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.538Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d1b6e6cf380275963",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.590Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146b2b",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.654Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d8ab11135da1479dc",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.695Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d1b6e6cf380275967",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.745Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02da073b87920146b72",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.782Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d8ab11135da1479e3",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.825Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9b02d8ab11135da1479e5",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b02a07e024287d18fb92",
+    "createdAt": "2026-10-22T06:41:49.902Z",
+    "__v": 0
+   }
+  ]
+ }
+}

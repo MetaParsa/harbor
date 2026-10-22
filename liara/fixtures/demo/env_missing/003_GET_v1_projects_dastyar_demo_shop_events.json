@@ -1,0 +1,69 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop/events",
+ "params": {
+  "start": "1792660833",
+  "end": "1792664433"
+ },
+ "status": 200,
+ "recorded_at": 1792664433,
+ "body": {
+  "data": [
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "die",
+    "action": "die",
+    "time": "1792664387",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   },
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "stop",
+    "action": "stop",
+    "time": "1792664387",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   },
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "kill",
+    "action": "kill",
+    "time": "1792664386",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   },
+   {
+    "id": "f5165e2df5f31a77f13717dbc0d6cd454a164226e95d753a12c662b6b06b392f",
+    "status": "start",
+    "action": "start",
+    "time": "1792664373",
+    "release": "6ad9e32a4d2d3476a039af35",
+    "tag": "v2"
+   },
+   {
+    "id": "f5165e2df5f31a77f13717dbc0d6cd454a164226e95d753a12c662b6b06b392f",
+    "status": "create",
+    "action": "create",
+    "time": "1792664371",
+    "release": "6ad9e32a4d2d3476a039af35",
+    "tag": "v2"
+   },
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "start",
+    "action": "start",
+    "time": "1792664305",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   },
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "create",
+    "action": "create",
+    "time": "1792664303",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   }
+  ]
+ }
+}

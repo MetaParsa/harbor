@@ -1,0 +1,145 @@
+{
+ "label": "v3_oom",
+ "at": 1792665015,
+ "release": "6ad9e42b4d2d3476a039ee07",
+ "releases": [
+  [
+   "v5",
+   "DEPLOY",
+   "READY"
+  ],
+  [
+   "v4",
+   "DEPLOY",
+   "READY"
+  ],
+  [
+   "v3",
+   "ENV_UPDATE",
+   "READY"
+  ],
+  [
+   "v2",
+   "ENV_UPDATE",
+   "READY"
+  ],
+  [
+   "v1",
+   "DEPLOY",
+   "READY"
+  ]
+ ],
+ "events": [
+  [
+   "start",
+   "v4",
+   1792664626
+  ],
+  [
+   "create",
+   "v5",
+   1792664666
+  ],
+  [
+   "start",
+   "v5",
+   1792664668
+  ],
+  [
+   "kill",
+   "v4",
+   1792664681
+  ],
+  [
+   "die",
+   "v4",
+   1792664682
+  ],
+  [
+   "stop",
+   "v4",
+   1792664682
+  ],
+  [
+   "destroy",
+   "v3",
+   1792664683
+  ],
+  [
+   "destroy",
+   "v4",
+   1792664683
+  ],
+  [
+   "oom",
+   "v5",
+   1792664912
+  ],
+  [
+   "die",
+   "v5",
+   1792664913
+  ],
+  [
+   "start",
+   "v5",
+   1792664915
+  ],
+  [
+   "destroy",
+   "v4",
+   1792665002
+  ]
+ ],
+ "memory_mb": 177.5,
+ "memory_pct": 34.7,
+ "cpu_cores": 0.022193725497166722,
+ "probes": {
+  "/": [
+   {
+    "status": 200,
+    "ms": 1561,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 199,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 196,
+    "marker": true
+   }
+  ],
+  "/checkout?id=1": [
+   {
+    "status": 500,
+    "ms": 492,
+    "marker": true
+   },
+   {
+    "status": 500,
+    "ms": 142,
+    "marker": true
+   },
+   {
+    "status": 500,
+    "ms": 150,
+    "marker": true
+   }
+  ]
+ },
+ "log_lines": 100,
+ "statuses_from_logs": {
+  "/": {
+   "200": 6
+  },
+  "/resize": {
+   "200": 87
+  }
+ },
+ "stderr_tail": [
+  "multirun: one or more of the provided commands ended abnormally"
+ ]
+}

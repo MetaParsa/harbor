@@ -1,0 +1,20 @@
+{
+ "request": "GET /v2/releases/6ad9b1234d2d3476a02ceb9f/build-logs",
+ "status": 200,
+ "body": {
+  "release": {
+   "_id": "6ad9b1234d2d3476a02ceb9f",
+   "state": "READY"
+  },
+  "tail": [
+   {
+    "_id": "6ad9b1408ab11135da148e37",
+    "line": "Pushing... 100% Total size: 1.63GB",
+    "stream": "STDOUT",
+    "releaseID": "6ad9b1234d2d3476a02ceb9f",
+    "createdAt": "2026-10-22T06:46:24.093Z",
+    "__v": 0
+   }
+  ]
+ }
+}

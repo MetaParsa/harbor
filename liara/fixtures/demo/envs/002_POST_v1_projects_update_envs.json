@@ -1,0 +1,9 @@
+{
+ "request": "POST /v1/projects/update-envs",
+ "params": {},
+ "status": 201,
+ "recorded_at": 1792664444,
+ "body": {
+  "message": "success"
+ }
+}

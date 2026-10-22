@@ -1,0 +1,146 @@
+[
+ {
+  "t": 1792665048,
+  "mb": 270.8,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 834,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "start",
+    "v5"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792665071,
+  "mb": 327.0,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1088,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "start",
+    "v5"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792665098,
+  "mb": 2.5,
+  "container": "2d3ad48-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 2206,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "kill",
+    "v5"
+   ],
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "stop",
+    "v5"
+   ]
+  ]
+ },
+ {
+  "t": 1792665120,
+  "mb": 26.0,
+  "container": "2d3ad48-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1083,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "kill",
+    "v5"
+   ],
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "stop",
+    "v5"
+   ]
+  ]
+ },
+ {
+  "t": 1792665142,
+  "mb": 23.8,
+  "container": "2d3ad48-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 701,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "kill",
+    "v5"
+   ],
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "stop",
+    "v5"
+   ]
+  ]
+ },
+ {
+  "t": 1792665166,
+  "mb": 24.3,
+  "container": "2d3ad48-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1179,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "kill",
+    "v5"
+   ],
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "stop",
+    "v5"
+   ]
+  ]
+ }
+]

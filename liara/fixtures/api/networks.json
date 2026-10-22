@@ -1,0 +1,17 @@
+{
+ "request": "GET /v1/networks",
+ "params": {},
+ "status": 200,
+ "ms": 68,
+ "body": {
+  "networks": [
+   {
+    "_id": "6ad9b01d07e024287d18f90f",
+    "name": "default",
+    "createdAt": "2026-10-22T06:41:33.392Z",
+    "projectCount": 0,
+    "databaseCount": 0
+   }
+  ]
+ }
+}

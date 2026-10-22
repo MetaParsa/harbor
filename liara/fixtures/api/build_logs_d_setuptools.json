@@ -1,0 +1,11 @@
+{
+ "request": "GET /v2/releases/6ad9b0b0615e2e0c8f27b9e7/build-logs",
+ "status": 200,
+ "body": {
+  "release": {
+   "_id": "6ad9b0b0615e2e0c8f27b9e7",
+   "state": "READY"
+  },
+  "tail": []
+ }
+}

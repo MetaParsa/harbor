@@ -1,0 +1,11 @@
+{
+ "request": "POST /v1/networks",
+ "params": {},
+ "status": 201,
+ "ms": 415,
+ "body": {
+  "network": {
+   "_id": "6ad9b01d07e024287d18f90f"
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop/metrics/memory",
+ "params": {
+  "since": "1792663426"
+ },
+ "status": 200,
+ "recorded_at": 1792664327,
+ "body": {
+  "end": 1792664330,
+  "result": [
+   {
+    "values": [
+     [
+      1792664326,
+      "1736704"
+     ]
+    ],
+    "applet": "6ad9e2b8615e2e0c8f34561a.1.65402a89-db97-4424-a716-983f0ebde91c-DEPLOY"
+   }
+  ]
+ }
+}

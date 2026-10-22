@@ -1,0 +1,144 @@
+{
+ "request": "GET /v2/releases/6ad9e3a084eee4f3946584e3/build-logs",
+ "params": {
+  "since": "2026-10-22T10:21:22.105Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664481,
+ "body": {
+  "release": {
+   "_id": "6ad9e3a084eee4f3946584e3",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e3a28ab11135da1ed345",
+    "line": "> Fetching the source code: 100%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.116Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a2a073b879201df8d0",
+    "line": "> Pulling the base images...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.151Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed34d",
+    "line": "> All base images are already pulled.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.262Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed34f",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.309Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed360",
+    "line": "> Preparing the build environment...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.361Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed367",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.412Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed3ec",
+    "line": "Step 1/1 : FROM registry2.iran.liara.ir/platforms/node-platform:release-2026-10-17T11-44-node22",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.633Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed3ee",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.671Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed3f0",
+    "line": "# Executing 17 build trigger",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.721Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a2c5e512f48f746569",
+    "line": "s",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.785Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed3fa",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.837Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a2c5e512f48f74656b",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.881Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed3fc",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.929Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed3ff",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.960Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed401",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.992Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a38ab11135da1ed40b",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:23.070Z",
+    "__v": 0
+   }
+  ]
+ }
+}

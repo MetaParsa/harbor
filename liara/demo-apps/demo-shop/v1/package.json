@@ -1,0 +1,13 @@
+{
+  "name": "demo-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo shop for the Liara deploy + SRE assistant",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

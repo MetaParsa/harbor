@@ -1,0 +1,1 @@
+{"synthetic": true, "note": "the recorded L0 list was empty (no apps yet); this lists the L0 app so REPLAY mode has one", "status": 200, "body": {"projects": [{"project_id": "l0-dyar-6b46", "type": "flask", "status": "ACTIVE", "scale": 1, "planID": "small-g2", "bundlePlanID": "basic", "hourlyPrice": 659.72, "isDeployed": true}]}}

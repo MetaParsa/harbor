@@ -1,0 +1,49 @@
+{
+ "request": "GET /v2/projects/dastyar-demo-shop/logs",
+ "params": {
+  "start": "1792662528",
+  "direction": "backward",
+  "last_lines": "true"
+ },
+ "status": 200,
+ "recorded_at": 1792664331,
+ "body": {
+  "data": [
+   {
+    "metaData": {
+     "releaseId": "6ad9e2c163b87278cbb18303"
+    },
+    "values": [
+     [
+      "1792664307352241190",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 200 1.6ms\"}"
+     ],
+     [
+      "1792664306825393310",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 113.2ms\"}"
+     ],
+     [
+      "1792664306560503422",
+      "{\"type\":\"stdout\",\"_entry\":\"demo-shop v1 listening on 3000\"}"
+     ],
+     [
+      "1792664306262423513",
+      "{\"type\":\"stdout\",\"_entry\":\"\"}"
+     ],
+     [
+      "1792664306262347906",
+      "{\"type\":\"stdout\",\"_entry\":\"> node server.js\"}"
+     ],
+     [
+      "1792664306262252633",
+      "{\"type\":\"stdout\",\"_entry\":\"> demo-shop@1.0.0 start\"}"
+     ],
+     [
+      "1792664306262053923",
+      "{\"type\":\"stdout\",\"_entry\":\"\"}"
+     ]
+    ]
+   }
+  ]
+ }
+}

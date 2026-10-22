@@ -1,0 +1,34 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop/metrics/summary",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664940,
+ "body": {
+  "cpuUsage": [
+   {
+    "value": [
+     1792664943,
+     "0.029296950219256067"
+    ],
+    "applet": "6ad9e2b8615e2e0c8f34561a.1.08833928-593d-4403-bdd1-5417c381aac5-DEPLOY"
+   }
+  ],
+  "memoryUsage": [
+   {
+    "value": [
+     1792664943,
+     "25198592"
+    ],
+    "applet": "6ad9e2b8615e2e0c8f34561a.1.b6ed1d3a-ba5c-4306-9fda-164c104217c8-DEPLOY"
+   },
+   {
+    "value": [
+     1792664943,
+     "43102208"
+    ],
+    "applet": "6ad9e2b8615e2e0c8f34561a.1.08833928-593d-4403-bdd1-5417c381aac5-DEPLOY"
+   }
+  ],
+  "disksUsage": []
+ }
+}

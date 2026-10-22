@@ -1,0 +1,31 @@
+{
+ "request": "GET /v1/releases/6ad9e5bc41fc53102532c7cd",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792665017,
+ "body": {
+  "release": {
+   "_id": "6ad9e5bc41fc53102532c7cd",
+   "type": "DEPLOY",
+   "projectType": "node",
+   "state": "PENDING",
+   "disks": [],
+   "platformConfig": {
+    "version": "22",
+    "mirror": true,
+    "mirrorURL": "http://10.16.100.42/repository/npm-proxy",
+    "githubMirrorURL": "http://10.16.100.42/repository/github-proxy",
+    "mapboxMirrorURL": "http://10.16.100.42/repository/mapbox-proxy"
+   },
+   "createdAt": "2026-10-22T10:30:20.144Z"
+  },
+  "queue": 33,
+  "platformConfig": {
+   "version": "22",
+   "mirror": true,
+   "mirrorURL": "http://10.16.100.42/repository/npm-proxy",
+   "githubMirrorURL": "http://10.16.100.42/repository/github-proxy",
+   "mapboxMirrorURL": "http://10.16.100.42/repository/mapbox-proxy"
+  }
+ }
+}

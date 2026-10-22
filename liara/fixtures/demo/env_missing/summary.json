@@ -1,0 +1,116 @@
+{
+ "label": "env_missing",
+ "at": 1792664435,
+ "release": "6ad9e32a4d2d3476a039af35",
+ "releases": [
+  [
+   "v2",
+   "ENV_UPDATE",
+   "READY"
+  ],
+  [
+   "v1",
+   "DEPLOY",
+   "READY"
+  ]
+ ],
+ "events": [
+  [
+   "create",
+   "v1",
+   1792664303
+  ],
+  [
+   "start",
+   "v1",
+   1792664305
+  ],
+  [
+   "create",
+   "v2",
+   1792664371
+  ],
+  [
+   "start",
+   "v2",
+   1792664373
+  ],
+  [
+   "kill",
+   "v1",
+   1792664386
+  ],
+  [
+   "die",
+   "v1",
+   1792664387
+  ],
+  [
+   "stop",
+   "v1",
+   1792664387
+  ]
+ ],
+ "memory_mb": 24.2,
+ "memory_pct": 4.7,
+ "cpu_cores": 0.008690003333333331,
+ "probes": {
+  "/": [
+   {
+    "status": 200,
+    "ms": 75,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 16,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 19,
+    "marker": true
+   }
+  ],
+  "/checkout?id=1": [
+   {
+    "status": 500,
+    "ms": 62,
+    "marker": true
+   },
+   {
+    "status": 500,
+    "ms": 17,
+    "marker": true
+   },
+   {
+    "status": 500,
+    "ms": 17,
+    "marker": true
+   }
+  ]
+ },
+ "log_lines": 100,
+ "statuses_from_logs": {
+  "/api/products": {
+   "200": 5
+  },
+  "/checkout": {
+   "500": 9
+  },
+  "/resize": {
+   "404": 5
+  },
+  "/": {
+   "200": 4
+  }
+ },
+ "stderr_tail": [
+  "    at checkout (/app/server.js:30:19)",
+  "    at /checkout (/app/server.js:37:44)",
+  "    at Server.<anonymous> (/app/server.js:48:39)",
+  "    at Server.emit (node:events:519:28)",
+  "    at parserOnIncoming (node:_http_server:1186:12)",
+  "    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)"
+ ]
+}

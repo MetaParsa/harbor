@@ -1,0 +1,33 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46",
+ "params": {},
+ "status": 200,
+ "ms": 151,
+ "body": {
+  "project": {
+   "_id": "6ad9b01d615e2e0c8f27a024",
+   "project_id": "l0-dyar-6b46",
+   "type": "flask",
+   "status": "ACTIVE",
+   "readOnlyRootFilesystem": true,
+   "defaultSubdomain": true,
+   "defaultSubdomainExpired": false,
+   "keepDefaultSubdomain": false,
+   "zeroDowntime": false,
+   "scale": 1,
+   "planID": "small-g2",
+   "bundlePlanID": "basic",
+   "network": {
+    "_id": "6ad9b01d07e024287d18f90f",
+    "name": "default"
+   },
+   "dns": [],
+   "created_at": "2026-10-22T06:41:33.948Z",
+   "hourlyPrice": 659.72,
+   "bundleHourlyPrice": 381.94,
+   "isDeployed": true,
+   "reservedDiskSpace": 0,
+   "envs": []
+  }
+ }
+}

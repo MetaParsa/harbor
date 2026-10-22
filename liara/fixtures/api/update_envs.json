@@ -1,0 +1,9 @@
+{
+ "request": "POST /v1/projects/update-envs",
+ "params": {},
+ "status": 201,
+ "ms": 570,
+ "body": {
+  "message": "success"
+ }
+}

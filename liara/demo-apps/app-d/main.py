@@ -1,10 +1,4 @@
-"""Demo app D: a tiny Flask site with two deliberate deploy bugs.
-
-1. The app lives in main.py, but Liara's Flask platform looks for app.py
-   (fix: liara.json {"flask": {"appModule": "main:app"}}).
-2. It imports python-dotenv, which requirements.txt forgot
-   (fix: add python-dotenv to requirements.txt).
-"""
+"""A tiny Flask shop page (reads SHOP_NAME from the environment or a local .env file)."""
 
 import os
 

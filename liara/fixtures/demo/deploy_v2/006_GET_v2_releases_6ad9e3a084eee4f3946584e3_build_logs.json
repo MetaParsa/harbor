@@ -1,0 +1,40 @@
+{
+ "request": "GET /v2/releases/6ad9e3a084eee4f3946584e3/build-logs",
+ "params": {
+  "since": "2026-10-22T10:21:23.070Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664482,
+ "body": {
+  "release": {
+   "_id": "6ad9e3a084eee4f3946584e3",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e3a48ab11135da1ed4cb",
+    "line": "> Using Liara mirror to install packages.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:24.102Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a48ab11135da1ed4cf",
+    "line": "> Running npm install...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:24.163Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a48ab11135da1ed52e",
+    "line": "\nup to date in 644ms\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:24.948Z",
+    "__v": 0
+   }
+  ]
+ }
+}

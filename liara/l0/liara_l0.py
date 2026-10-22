@@ -262,6 +262,19 @@ def cmd_deploy(c, args):
     put_state(**{f"releases:{args.app}": releases})
 
 
+def cmd_watch(c, args):
+    """Re-attach to a release (default: the app's newest) without starting a new build."""
+    st, rels = call(c, "GET", f"/v1/projects/{args.app}/releases", params={"page": 1, "count": 1})
+    rid = args.release or ((rels.get("releases") or [{}])[0].get("_id") if isinstance(rels, dict) else None)
+    if not rid:
+        sys.exit(f"No release found: {st} {rels}")
+    summary = stream_release(c, args.app, rid, args.label)
+    s = state()
+    releases = s.get(f"releases:{args.app}", [])
+    releases.append({"label": args.label, "sourceID": None, "body": None, **summary})
+    put_state(**{f"releases:{args.app}": releases})
+
+
 def cmd_redeploy(c, args):
     need_yes(args, "redeploying (uses build quota)")
     releases = state().get(f"releases:{args.app}", [])
@@ -377,7 +390,7 @@ def cmd_delete(c, args):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("cmd", choices=["read", "create", "deploy", "redeploy", "inspect", "envtest", "delete"])
+    ap.add_argument("cmd", choices=["read", "create", "deploy", "watch", "redeploy", "inspect", "envtest", "delete"])
     ap.add_argument("--app")
     ap.add_argument("--dir")
     ap.add_argument("--platform", default="flask")
@@ -389,6 +402,9 @@ def main():
     ap.add_argument("--release", help="label of a stored release (redeploy)")
     ap.add_argument("--yes", action="store_true")
     args = ap.parse_args()
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # Windows console + Persian log lines
+    if not os.environ.get("LIARA_TEAM_ID") and state().get("team_id"):
+        os.environ["LIARA_TEAM_ID"] = state()["team_id"]
     if args.cmd != "read" and not args.app:
         sys.exit("--app is required")
     global TOKEN

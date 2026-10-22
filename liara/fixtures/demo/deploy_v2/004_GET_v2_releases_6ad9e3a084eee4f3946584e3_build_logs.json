@@ -1,0 +1,30 @@
+{
+ "request": "GET /v2/releases/6ad9e3a084eee4f3946584e3/build-logs",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664479,
+ "body": {
+  "release": {
+   "_id": "6ad9e3a084eee4f3946584e3",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e3a28ab11135da1ed33e",
+    "line": "> Fetching the source code: 0%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.082Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e3a28ab11135da1ed342",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e3a084eee4f3946584e3",
+    "createdAt": "2026-10-22T10:21:22.105Z",
+    "__v": 0
+   }
+  ]
+ }
+}

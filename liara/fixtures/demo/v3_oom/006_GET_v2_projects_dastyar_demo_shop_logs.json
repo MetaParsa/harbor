@@ -1,0 +1,428 @@
+{
+ "request": "GET /v2/projects/dastyar-demo-shop/logs",
+ "params": {
+  "start": "1792663212",
+  "direction": "backward",
+  "last_lines": "true"
+ },
+ "status": 200,
+ "recorded_at": 1792665013,
+ "body": {
+  "data": [
+   {
+    "metaData": {
+     "releaseId": "6ad9e42b4d2d3476a039ee07"
+    },
+    "values": [
+     [
+      "1792665005095260225",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.2ms\"}"
+     ],
+     [
+      "1792665003095412944",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.6ms\"}"
+     ],
+     [
+      "1792665001094851102",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.1ms\"}"
+     ],
+     [
+      "1792664999104127408",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 20.7ms\"}"
+     ],
+     [
+      "1792664997093393581",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.4ms\"}"
+     ],
+     [
+      "1792664995088725345",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 6.8ms\"}"
+     ],
+     [
+      "1792664987089567601",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.6ms\"}"
+     ],
+     [
+      "1792664985091698645",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.4ms\"}"
+     ],
+     [
+      "1792664983085387996",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.0ms\"}"
+     ],
+     [
+      "1792664975081965172",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 8.0ms\"}"
+     ],
+     [
+      "1792664973080170526",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.8ms\"}"
+     ],
+     [
+      "1792664971080383902",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 14.0ms\"}"
+     ],
+     [
+      "1792664947068439767",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 14.0ms\"}"
+     ],
+     [
+      "1792664945285356335",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.7ms\"}"
+     ],
+     [
+      "1792664945071606597",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 19.1ms\"}"
+     ],
+     [
+      "1792664943064679888",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.1ms\"}"
+     ],
+     [
+      "1792664941062592987",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.6ms\"}"
+     ],
+     [
+      "1792664939058648538",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.7ms\"}"
+     ],
+     [
+      "1792664937052099079",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 4.8ms\"}"
+     ],
+     [
+      "1792664935058267489",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.2ms\"}"
+     ],
+     [
+      "1792664933059171536",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.7ms\"}"
+     ],
+     [
+      "1792664931054581379",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.4ms\"}"
+     ],
+     [
+      "1792664929053650252",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.8ms\"}"
+     ],
+     [
+      "1792664927051245243",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 5.7ms\"}"
+     ],
+     [
+      "1792664925058236969",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 17.3ms\"}"
+     ],
+     [
+      "1792664923055838217",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.9ms\"}"
+     ],
+     [
+      "1792664922342554628",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 62.7ms\"}"
+     ],
+     [
+      "1792664921051097053",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.0ms\"}"
+     ],
+     [
+      "1792664919071240397",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 14.5ms\"}"
+     ],
+     [
+      "1792664917130581690",
+      "{\"type\":\"stdout\",\"_entry\":\"demo-shop v3 listening on 3000\"}"
+     ],
+     [
+      "1792664917053289479",
+      "{\"type\":\"stdout\",\"_entry\":\"self-load: 0.5 req/s on /resize\"}"
+     ],
+     [
+      "1792664916746785946",
+      "{\"type\":\"stdout\",\"_entry\":\"\"}"
+     ],
+     [
+      "1792664916746652974",
+      "{\"type\":\"stdout\",\"_entry\":\"> node server.js\"}"
+     ],
+     [
+      "1792664916746535177",
+      "{\"type\":\"stdout\",\"_entry\":\"> demo-shop@3.0.0 start\"}"
+     ],
+     [
+      "1792664916746321142",
+      "{\"type\":\"stdout\",\"_entry\":\"\"}"
+     ],
+     [
+      "1792664912647099769",
+      "{\"type\":\"stderr\",\"_entry\":\"multirun: one or more of the provided commands ended abnormally\"}"
+     ],
+     [
+      "1792664910036004612",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.9ms\"}"
+     ],
+     [
+      "1792664892008507751",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 6.0ms\"}"
+     ],
+     [
+      "1792664890016806939",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 15.9ms\"}"
+     ],
+     [
+      "1792664888016967777",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.0ms\"}"
+     ],
+     [
+      "1792664880010552995",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.3ms\"}"
+     ],
+     [
+      "1792664878012760958",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 14.0ms\"}"
+     ],
+     [
+      "1792664870006221577",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.5ms\"}"
+     ],
+     [
+      "1792664868004028794",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.6ms\"}"
+     ],
+     [
+      "1792664866007042563",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.5ms\"}"
+     ],
+     [
+      "1792664864005984669",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.9ms\"}"
+     ],
+     [
+      "1792664862001607384",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.3ms\"}"
+     ],
+     [
+      "1792664859993813510",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 5.6ms\"}"
+     ],
+     [
+      "1792664857998253674",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.1ms\"}"
+     ],
+     [
+      "1792664856000739159",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.8ms\"}"
+     ],
+     [
+      "1792664853997486839",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.6ms\"}"
+     ],
+     [
+      "1792664852355694818",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 1.0ms\"}"
+     ],
+     [
+      "1792664851994923017",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.3ms\"}"
+     ]
+    ]
+   },
+   {
+    "metaData": {
+     "releaseId": "6ad9e42b4d2d3476a039ee07"
+    },
+    "values": [
+     [
+      "1792665011109366705",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 9.3ms\"}"
+     ],
+     [
+      "1792665009111586450",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.9ms\"}"
+     ],
+     [
+      "1792665007097873811",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.2ms\"}"
+     ],
+     [
+      "1792664993092141489",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.7ms\"}"
+     ],
+     [
+      "1792664991088995803",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.1ms\"}"
+     ],
+     [
+      "1792664989089266104",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.9ms\"}"
+     ],
+     [
+      "1792664981085369470",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.6ms\"}"
+     ],
+     [
+      "1792664979083772219",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.2ms\"}"
+     ],
+     [
+      "1792664977082852932",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.6ms\"}"
+     ],
+     [
+      "1792664969071157065",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 5.5ms\"}"
+     ],
+     [
+      "1792664967077423379",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.7ms\"}"
+     ],
+     [
+      "1792664965073016099",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 8.5ms\"}"
+     ],
+     [
+      "1792664963073153088",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 9.6ms\"}"
+     ],
+     [
+      "1792664961071355032",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 5.6ms\"}"
+     ],
+     [
+      "1792664959072998548",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.6ms\"}"
+     ],
+     [
+      "1792664957073933526",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.6ms\"}"
+     ],
+     [
+      "1792664955071728122",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.2ms\"}"
+     ],
+     [
+      "1792664953072174977",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.4ms\"}"
+     ],
+     [
+      "1792664951069943265",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.4ms\"}"
+     ],
+     [
+      "1792664949075247339",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.3ms\"}"
+     ],
+     [
+      "1792664908037624267",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.2ms\"}"
+     ],
+     [
+      "1792664906032854900",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 15.4ms\"}"
+     ],
+     [
+      "1792664904026812030",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.4ms\"}"
+     ],
+     [
+      "1792664902027130425",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.0ms\"}"
+     ],
+     [
+      "1792664900025061205",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.6ms\"}"
+     ],
+     [
+      "1792664899898712992",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.6ms\"}"
+     ],
+     [
+      "1792664898021976764",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.6ms\"}"
+     ],
+     [
+      "1792664896017797317",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.9ms\"}"
+     ],
+     [
+      "1792664894019264265",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 14.5ms\"}"
+     ],
+     [
+      "1792664886012520125",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.8ms\"}"
+     ],
+     [
+      "1792664884008639671",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 9.4ms\"}"
+     ],
+     [
+      "1792664882011343740",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.7ms\"}"
+     ],
+     [
+      "1792664876011579074",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.5ms\"}"
+     ],
+     [
+      "1792664875635624743",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 1.4ms\"}"
+     ],
+     [
+      "1792664874019350003",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 23.0ms\"}"
+     ],
+     [
+      "1792664872005995939",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.9ms\"}"
+     ],
+     [
+      "1792664847990800311",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.3ms\"}"
+     ],
+     [
+      "1792664845992412633",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.7ms\"}"
+     ],
+     [
+      "1792664843990101638",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.7ms\"}"
+     ],
+     [
+      "1792664841998538389",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 21.2ms\"}"
+     ],
+     [
+      "1792664839987939269",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 12.1ms\"}"
+     ],
+     [
+      "1792664837983513950",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.7ms\"}"
+     ],
+     [
+      "1792664835990211191",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 13.6ms\"}"
+     ],
+     [
+      "1792664833984070306",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.1ms\"}"
+     ],
+     [
+      "1792664831982895242",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 11.7ms\"}"
+     ],
+     [
+      "1792664829979234080",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 200 10.0ms\"}"
+     ],
+     [
+      "1792664828966079041",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.8ms\"}"
+     ]
+    ]
+   }
+  ]
+ }
+}

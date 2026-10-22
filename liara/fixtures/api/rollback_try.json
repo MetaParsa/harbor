@@ -1,0 +1,10 @@
+{
+ "/v2/projects/l0-dyar-6b46/releases/6ad9b1234d2d3476a02ceb9f/rollback": {
+  "status": 404,
+  "body": "{\"error\":\"Not Found\"}"
+ },
+ "/v1/projects/l0-dyar-6b46/releases/6ad9b1234d2d3476a02ceb9f/rollback": {
+  "status": 404,
+  "body": "{\"error\":\"Not Found\"}"
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "request": "POST /v2/projects/dastyar-demo-shop/releases",
+ "params": {},
+ "status": 201,
+ "recorded_at": 1792664478,
+ "body": {
+  "releaseID": "6ad9e3a084eee4f3946584e3"
+ }
+}

@@ -1,0 +1,13 @@
+{
+ "request": "GET /v2/releases/6ad9e42b4d2d3476a039ee07/build-logs",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664617,
+ "body": {
+  "release": {
+   "_id": "6ad9e42b4d2d3476a039ee07",
+   "state": "PENDING"
+  },
+  "buildOutput": []
+ }
+}

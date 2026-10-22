@@ -1,0 +1,94 @@
+{
+ "request": "GET /v2/releases/6ad9e2c163b87278cbb18303/build-logs",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664256,
+ "body": {
+  "release": {
+   "_id": "6ad9e2c163b87278cbb18303",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e2c2c5e512f48f743932",
+    "line": "> Fetching the source code: 0%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:38.710Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c21b6e6cf38032ce10",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:38.730Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c2a073b879201dd592",
+    "line": "> Fetching the source code: 100%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:38.766Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c21b6e6cf38032ce12",
+    "line": "> Pulling the base images...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:38.809Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c2a073b879201dd594",
+    "line": "> All base images are already pulled.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:38.935Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c2c5e512f48f74393c",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:38.983Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c38ab11135da1ea367",
+    "line": "> Preparing the build environment...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.056Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c31b6e6cf38032ce18",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.112Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c38ab11135da1ea371",
+    "line": "Step 1/1 : FROM registry2.iran.liara.ir/platforms/node-platform:release-2026-10-17T11-44-node22",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.257Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3c5e512f48f74394b",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.316Z",
+    "__v": 0
+   }
+  ]
+ }
+}

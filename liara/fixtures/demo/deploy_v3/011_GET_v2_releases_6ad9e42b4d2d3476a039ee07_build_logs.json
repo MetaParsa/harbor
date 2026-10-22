@@ -1,0 +1,48 @@
+{
+ "request": "GET /v2/releases/6ad9e42b4d2d3476a039ee07/build-logs",
+ "params": {
+  "since": "2026-10-22T10:23:51.753Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664631,
+ "body": {
+  "release": {
+   "_id": "6ad9e42b4d2d3476a039ee07",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e4381b6e6cf3803302d8",
+    "line": " ---> 83617227ce60\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:52.580Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e438c5e512f48f748be8",
+    "line": "Successfully built 83617227ce60\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:52.607Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e438a073b879201e2774",
+    "line": "Successfully tagged apps/6ad9e2b8615e2e0c8f34561a:rscisvsylg2n\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:52.669Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e439c5e512f48f748bf8",
+    "line": "Pushing... 0% Total size: 1.56GB",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:53.605Z",
+    "__v": 0
+   }
+  ]
+ }
+}

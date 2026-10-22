@@ -1,0 +1,9 @@
+{
+ "request": "POST /v2/projects/dastyar-demo-shop/sources",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664254,
+ "body": {
+  "sourceID": "b7579100-3ed5-498f-a300-6abb654e8760.tar.gz"
+ }
+}

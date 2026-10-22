@@ -1,0 +1,78 @@
+{
+ "request": "GET /v2/releases/6ad9e42b4d2d3476a039ee07/build-logs",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664619,
+ "body": {
+  "release": {
+   "_id": "6ad9e42b4d2d3476a039ee07",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e42e8ab11135da1eead0",
+    "line": "> Fetching the source code: 100%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.172Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42ea073b879201e238c",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.184Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42e1b6e6cf38033012b",
+    "line": "> Fetching the source code: 0%\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.211Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42e8ab11135da1eead7",
+    "line": "> Pulling the base images...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.261Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42ec5e512f48f748b0e",
+    "line": "> All base images are already pulled.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.383Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42e8ab11135da1eeaef",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.446Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42ec5e512f48f748b10",
+    "line": "> Preparing the build environment...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.499Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e42e8ab11135da1eeaf3",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:42.569Z",
+    "__v": 0
+   }
+  ]
+ }
+}

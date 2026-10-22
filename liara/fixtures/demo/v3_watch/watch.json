@@ -1,0 +1,338 @@
+[
+ {
+  "t": 1792664644,
+  "mb": 2.0,
+  "container": "04217c8-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 947,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "die",
+    "v4"
+   ],
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "start",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664668,
+  "mb": 24.0,
+  "container": "04217c8-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1178,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "die",
+    "v4"
+   ],
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "start",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664690,
+  "mb": 2.4,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 372,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664711,
+  "mb": 80.2,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 90,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664734,
+  "mb": 117.0,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 825,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664757,
+  "mb": 177.5,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 992,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664779,
+  "mb": 226.2,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 532,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664803,
+  "mb": 282.5,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 614,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664826,
+  "mb": 310.6,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 550,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664849,
+  "mb": 379.0,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1096,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664872,
+  "mb": 407.2,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1038,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664896,
+  "mb": 467.4,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1808,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "stop",
+    "v4"
+   ],
+   [
+    "destroy",
+    "v3"
+   ],
+   [
+    "destroy",
+    "v4"
+   ]
+  ]
+ },
+ {
+  "t": 1792664919,
+  "mb": 467.4,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 848,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "oom",
+    "v5"
+   ],
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "start",
+    "v5"
+   ]
+  ]
+ },
+ {
+  "t": 1792664942,
+  "mb": 41.1,
+  "container": "381aac5-DEPLOY",
+  "probe": {
+   "status": 200,
+   "ms": 1111,
+   "marker": true
+  },
+  "last_events": [
+   [
+    "oom",
+    "v5"
+   ],
+   [
+    "die",
+    "v5"
+   ],
+   [
+    "start",
+    "v5"
+   ]
+  ]
+ }
+]

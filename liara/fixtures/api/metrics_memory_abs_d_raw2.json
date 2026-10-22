@@ -1,0 +1,22 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46/metrics/memory",
+ "params": {
+  "since": 1792649615
+ },
+ "status": 200,
+ "ms": 319,
+ "body": {
+  "end": 1792651418,
+  "result": [
+   {
+    "values": [
+     [
+      1792651415,
+      "4886528"
+     ]
+    ],
+    "applet": "6ad9b01d615e2e0c8f27a024.1.edecabb4-aea9-4e70-ad5b-5d2509741f2d-DEPLOY"
+   }
+  ]
+ }
+}

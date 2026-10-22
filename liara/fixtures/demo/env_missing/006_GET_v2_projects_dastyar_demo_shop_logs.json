@@ -1,0 +1,428 @@
+{
+ "request": "GET /v2/projects/dastyar-demo-shop/logs",
+ "params": {
+  "start": "1792662634",
+  "direction": "backward",
+  "last_lines": "true"
+ },
+ "status": 200,
+ "recorded_at": 1792664435,
+ "body": {
+  "data": [
+   {
+    "metaData": {
+     "releaseId": "6ad9e32a4d2d3476a039af35"
+    },
+    "values": [
+     [
+      "1792664417587311740",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.5ms\"}"
+     ],
+     [
+      "1792664416781898102",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 0.9ms\"}"
+     ],
+     [
+      "1792664416780908090",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664416780820156",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664416780724026",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664416780613591",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664416780474386",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664416780371789",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664416780263776",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664416780064094",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664415885802110",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.6ms\"}"
+     ],
+     [
+      "1792664414980806508",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 0.9ms\"}"
+     ],
+     [
+      "1792664414979866906",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664414979588240",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664414979295959",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664414978795037",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664414978515263",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664414978225599",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664414977906068",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664414977402109",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664414143507871",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.8ms\"}"
+     ],
+     [
+      "1792664408295270325",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.1ms\"}"
+     ],
+     [
+      "1792664408294871022",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664408294805463",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664408294742349",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664408294676763",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664408294602167",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664408294479084",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664408294169544",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664408294009860",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664407396571988",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.6ms\"}"
+     ],
+     [
+      "1792664406453543735",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.4ms\"}"
+     ],
+     [
+      "1792664406453278017",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664406453210932",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664406453145907",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664406453075869",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664406453007614",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664406452919816",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664406452828909",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664406452652523",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664405571921468",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.8ms\"}"
+     ],
+     [
+      "1792664404691258781",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 1.0ms\"}"
+     ],
+     [
+      "1792664403870508436",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664403870404888",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664403870301256",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664403870196984",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664403870069242",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664403869941697",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664403869699472",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664403869601700",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.0ms\"}"
+     ],
+     [
+      "1792664403869538306",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664398012652797",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664398012570590",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664398012479178",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664398012385237",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664398012316508",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ]
+    ]
+   },
+   {
+    "metaData": {
+     "releaseId": "6ad9e32a4d2d3476a039af35"
+    },
+    "values": [
+     [
+      "1792664413217662418",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.6ms\"}"
+     ],
+     [
+      "1792664412400059265",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664412400018979",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664412399976036",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664412399933487",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664412399887523",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664412399847360",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664412399797511",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664412399721726",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664412399404482",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 0.7ms\"}"
+     ],
+     [
+      "1792664411479123327",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.6ms\"}"
+     ],
+     [
+      "1792664410715965688",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664410715900336",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664410715831092",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664410715639854",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.0ms\"}"
+     ],
+     [
+      "1792664410715622504",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664410715555800",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664410715483363",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664410715408957",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664410715242122",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664409910690134",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.6ms\"}"
+     ],
+     [
+      "1792664409194776835",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.7ms\"}"
+     ],
+     [
+      "1792664403016677718",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.6ms\"}"
+     ],
+     [
+      "1792664402135610401",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.1ms\"}"
+     ],
+     [
+      "1792664402134221791",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664402134154834",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664402134086518",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664402134009009",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664402133941654",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664402133868276",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664402133792181",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664402133634550",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664401250640965",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.8ms\"}"
+     ],
+     [
+      "1792664400453060229",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.5ms\"}"
+     ],
+     [
+      "1792664399677124613",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664399677061166",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664399676996608",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664399676929850",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:48:39)\"}"
+     ],
+     [
+      "1792664399676863463",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:37:44)\"}"
+     ],
+     [
+      "1792664399676798655",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:30:19)\"}"
+     ],
+     [
+      "1792664399676725323",
+      "{\"type\":\"stderr\",\"_entry\":\"    at new URL (node:internal/url:818:25)\"}"
+     ],
+     [
+      "1792664399676638440",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Invalid URL\"}"
+     ],
+     [
+      "1792664399676287515",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.0ms\"}"
+     ],
+     [
+      "1792664398796231128",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.5ms\"}"
+     ]
+    ]
+   }
+  ]
+ }
+}

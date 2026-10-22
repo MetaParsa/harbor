@@ -1,0 +1,109 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop/events",
+ "params": {
+  "start": "1792664090",
+  "end": "1792664690"
+ },
+ "status": 200,
+ "recorded_at": 1792664690,
+ "body": {
+  "data": [
+   {
+    "id": "9980dda1bcc7e4947afaafaad111d5b04f9b9cf3b5b13724366528421e5328e8",
+    "status": "destroy",
+    "action": "destroy",
+    "time": "1792664683",
+    "release": "6ad9e37f615e2e0c8f348bbf",
+    "tag": "v3"
+   },
+   {
+    "id": "d72eba85cbde05e59e806a0272f61248528759430c8820a4e066db4e3f4c979d",
+    "status": "destroy",
+    "action": "destroy",
+    "time": "1792664683",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "1015c2681f1cf6e8dfb7a25a14b586c947fbb9e8f8e639d8c29528eb667883ea",
+    "status": "die",
+    "action": "die",
+    "time": "1792664682",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "1015c2681f1cf6e8dfb7a25a14b586c947fbb9e8f8e639d8c29528eb667883ea",
+    "status": "stop",
+    "action": "stop",
+    "time": "1792664682",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "1015c2681f1cf6e8dfb7a25a14b586c947fbb9e8f8e639d8c29528eb667883ea",
+    "status": "kill",
+    "action": "kill",
+    "time": "1792664681",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "3c6d0ba533013b598c10332869572693823ca6554977c54e3124b061354a3f2a",
+    "status": "start",
+    "action": "start",
+    "time": "1792664668",
+    "release": "6ad9e42b4d2d3476a039ee07",
+    "tag": "v5"
+   },
+   {
+    "id": "3c6d0ba533013b598c10332869572693823ca6554977c54e3124b061354a3f2a",
+    "status": "create",
+    "action": "create",
+    "time": "1792664666",
+    "release": "6ad9e42b4d2d3476a039ee07",
+    "tag": "v5"
+   },
+   {
+    "id": "1015c2681f1cf6e8dfb7a25a14b586c947fbb9e8f8e639d8c29528eb667883ea",
+    "status": "start",
+    "action": "start",
+    "time": "1792664626",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "1015c2681f1cf6e8dfb7a25a14b586c947fbb9e8f8e639d8c29528eb667883ea",
+    "status": "create",
+    "action": "create",
+    "time": "1792664623",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "d72eba85cbde05e59e806a0272f61248528759430c8820a4e066db4e3f4c979d",
+    "status": "die",
+    "action": "die",
+    "time": "1792664623",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "d72eba85cbde05e59e806a0272f61248528759430c8820a4e066db4e3f4c979d",
+    "status": "stop",
+    "action": "stop",
+    "time": "1792664623",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   },
+   {
+    "id": "d72eba85cbde05e59e806a0272f61248528759430c8820a4e066db4e3f4c979d",
+    "status": "kill",
+    "action": "kill",
+    "time": "1792664622",
+    "release": "6ad9e3a084eee4f3946584e3",
+    "tag": "v4"
+   }
+  ]
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46/metrics/summary",
+ "params": {},
+ "status": 200,
+ "ms": 272,
+ "body": {
+  "cpuUsage": [],
+  "memoryUsage": [
+   {
+    "value": [
+     1792651518,
+     "4104192"
+    ],
+    "applet": "6ad9b01d615e2e0c8f27a024.1.edecabb4-aea9-4e70-ad5b-5d2509741f2d-DEPLOY"
+   },
+   {
+    "value": [
+     1792651518,
+     "4214784"
+    ],
+    "applet": "6ad9b01d615e2e0c8f27a024.1.84a16f1a-f259-44c9-ba4d-e4b4f2cc1879-DEPLOY"
+   }
+  ],
+  "disksUsage": []
+ }
+}

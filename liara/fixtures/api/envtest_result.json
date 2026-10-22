@@ -1,0 +1,13 @@
+{
+ "secret_encrypted_flag": true,
+ "secret_value_comes_back_equal": true,
+ "secret_value_len_returned": 18,
+ "plain_value_comes_back_equal": true,
+ "releases_before": 3,
+ "releases_after": 4,
+ "seconds_until_running": 65,
+ "env_keys_after": [
+  "L0_PLAIN",
+  "L0_SECRET"
+ ]
+}

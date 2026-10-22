@@ -1,0 +1,76 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop/releases",
+ "params": {
+  "page": "1",
+  "count": "5"
+ },
+ "status": 200,
+ "recorded_at": 1792664433,
+ "body": {
+  "total": 2,
+  "currentRelease": "6ad9e32a4d2d3476a039af35",
+  "readyReleasesCount": 2,
+  "releases": [
+   {
+    "_id": "6ad9e32a4d2d3476a039af35",
+    "type": "ENV_UPDATE",
+    "imageName": "registry.c1.liara.ir/apps/6ad9e2b8615e2e0c8f34561a:mlcuzlfykhol",
+    "projectType": "node",
+    "state": "READY",
+    "port": 3000,
+    "buildArgs": {
+     "__NODE_MIRROR": "true",
+     "__NODE_MIRRORURL": "http://10.16.100.42/repository/npm-proxy",
+     "__NODE_GITHUBMIRRORURL": "http://10.16.100.42/repository/github-proxy",
+     "__NODE_MAPBOXMIRRORURL": "http://10.16.100.42/repository/mapbox-proxy"
+    },
+    "buildLocation": "iran",
+    "buildTimeout": 5,
+    "message": "demo-shop v1",
+    "disks": [],
+    "createdAt": "2026-10-22T10:19:22.544Z",
+    "finishedAt": null,
+    "platformConfig": {
+     "version": "22",
+     "mirror": true,
+     "mirrorURL": "http://10.16.100.42/repository/npm-proxy",
+     "githubMirrorURL": "http://10.16.100.42/repository/github-proxy",
+     "mapboxMirrorURL": "http://10.16.100.42/repository/mapbox-proxy"
+    },
+    "tag": "v2",
+    "sourceAvailable": true
+   },
+   {
+    "_id": "6ad9e2c163b87278cbb18303",
+    "type": "DEPLOY",
+    "imageName": "registry.c1.liara.ir/apps/6ad9e2b8615e2e0c8f34561a:mlcuzlfykhol",
+    "projectType": "node",
+    "state": "READY",
+    "port": 3000,
+    "buildArgs": {
+     "__NODE_MIRROR": "true",
+     "__NODE_MIRRORURL": "http://10.16.100.42/repository/npm-proxy",
+     "__NODE_GITHUBMIRRORURL": "http://10.16.100.42/repository/github-proxy",
+     "__NODE_MAPBOXMIRRORURL": "http://10.16.100.42/repository/mapbox-proxy"
+    },
+    "buildLocation": "iran",
+    "buildTimeout": 5,
+    "message": "demo-shop v1",
+    "client": "python-httpx/0.28.1",
+    "disks": [],
+    "finishedAt": "2026-10-22T10:17:55.376Z",
+    "platformConfig": {
+     "version": "22",
+     "mirror": true,
+     "mirrorURL": "http://10.16.100.42/repository/npm-proxy",
+     "githubMirrorURL": "http://10.16.100.42/repository/github-proxy",
+     "mapboxMirrorURL": "http://10.16.100.42/repository/mapbox-proxy"
+    },
+    "createdAt": "2026-10-22T10:17:37.371Z",
+    "tag": "v1",
+    "sourceAvailable": true
+   }
+  ],
+  "platform": "node"
+ }
+}

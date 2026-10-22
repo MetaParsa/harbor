@@ -1,0 +1,15 @@
+{
+ "request": "GET /v2/releases/6ad9e42b4d2d3476a039ee07/build-logs",
+ "params": {
+  "since": "2026-10-22T10:23:58.921Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664638,
+ "body": {
+  "release": {
+   "_id": "6ad9e42b4d2d3476a039ee07",
+   "state": "DEPLOYING"
+  },
+  "buildOutput": []
+ }
+}

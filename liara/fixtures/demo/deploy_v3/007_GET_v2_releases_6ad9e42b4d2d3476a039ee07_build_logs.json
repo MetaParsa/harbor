@@ -1,0 +1,24 @@
+{
+ "request": "GET /v2/releases/6ad9e42b4d2d3476a039ee07/build-logs",
+ "params": {
+  "since": "2026-10-22T10:23:44.180Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664623,
+ "body": {
+  "release": {
+   "_id": "6ad9e42b4d2d3476a039ee07",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e4318ab11135da1eec62",
+    "line": "\nup to date in 939ms\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e42b4d2d3476a039ee07",
+    "createdAt": "2026-10-22T10:23:45.346Z",
+    "__v": 0
+   }
+  ]
+ }
+}

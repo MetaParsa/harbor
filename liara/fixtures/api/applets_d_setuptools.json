@@ -1,0 +1,9 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46/applets",
+ "params": {},
+ "status": 500,
+ "ms": 154,
+ "body": {
+  "error": "Internal Server Error"
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "request": "GET /v2/releases/6ad9e2c163b87278cbb18303/build-logs",
+ "params": {
+  "since": "2026-10-22T10:17:50.488Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664272,
+ "body": {
+  "release": {
+   "_id": "6ad9e2c163b87278cbb18303",
+   "state": "DEPLOYING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e2d3c5e512f48f743de4",
+    "line": "Pushing... 100% Total size: 1.56GB",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:55.284Z",
+    "__v": 0
+   }
+  ]
+ }
+}

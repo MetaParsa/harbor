@@ -1,0 +1,73 @@
+{
+ "label": "v1_healthy",
+ "at": 1792664335,
+ "release": "6ad9e2c163b87278cbb18303",
+ "releases": [
+  [
+   "v1",
+   "DEPLOY",
+   "READY"
+  ]
+ ],
+ "events": [
+  [
+   "create",
+   "v1",
+   1792664303
+  ],
+  [
+   "start",
+   "v1",
+   1792664305
+  ]
+ ],
+ "memory_mb": 1.7,
+ "memory_pct": 0.3,
+ "cpu_cores": null,
+ "probes": {
+  "/": [
+   {
+    "status": 200,
+    "ms": 2734,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 119,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 123,
+    "marker": true
+   }
+  ],
+  "/checkout?id=1": [
+   {
+    "status": 200,
+    "ms": 414,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 162,
+    "marker": true
+   },
+   {
+    "status": 200,
+    "ms": 165,
+    "marker": true
+   }
+  ]
+ },
+ "log_lines": 7,
+ "statuses_from_logs": {
+  "/": {
+   "200": 1
+  },
+  "/checkout": {
+   "200": 1
+  }
+ },
+ "stderr_tail": []
+}

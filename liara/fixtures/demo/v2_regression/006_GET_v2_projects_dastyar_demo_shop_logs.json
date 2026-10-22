@@ -1,0 +1,428 @@
+{
+ "request": "GET /v2/projects/dastyar-demo-shop/logs",
+ "params": {
+  "start": "1792662797",
+  "direction": "backward",
+  "last_lines": "true"
+ },
+ "status": 200,
+ "recorded_at": 1792664598,
+ "body": {
+  "data": [
+   {
+    "metaData": {
+     "releaseId": "6ad9e3a084eee4f3946584e3"
+    },
+    "values": [
+     [
+      "1792664578165887911",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.7ms\"}"
+     ],
+     [
+      "1792664577201718213",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.1ms\"}"
+     ],
+     [
+      "1792664577201475663",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664577201383168",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664577201302174",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664577201221533",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664577201131393",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664577201042646",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664577200878748",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664576207631706",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 1.0ms\"}"
+     ],
+     [
+      "1792664575234943831",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.5ms\"}"
+     ],
+     [
+      "1792664574362436344",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.1ms\"}"
+     ],
+     [
+      "1792664574361659337",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664574361583709",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664574361527785",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664574361488323",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664574361444950",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664574361400719",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664574361290482",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664568337543028",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.6ms\"}"
+     ],
+     [
+      "1792664568337293920",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664568337254119",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664568337212017",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664568337187475",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664568337161862",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664568337126266",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664568337008071",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664567485956093",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.9ms\"}"
+     ],
+     [
+      "1792664566547264315",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.9ms\"}"
+     ],
+     [
+      "1792664565731340960",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.6ms\"}"
+     ],
+     [
+      "1792664565729252100",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664565729130038",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664565729021751",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664565728925911",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664565728835384",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664565728729867",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664565728544709",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664564806683107",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.6ms\"}"
+     ],
+     [
+      "1792664563988798334",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664563988559165",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664563988435178",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664563988246876",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664563987987535",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664563987370701",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.1ms\"}"
+     ],
+     [
+      "1792664563987264770",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664563987058000",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664563070666913",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.8ms\"}"
+     ],
+     [
+      "1792664562235277354",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.5ms\"}"
+     ],
+     [
+      "1792664561423315044",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664561423250693",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664561423182921",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664561423116220",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664561422965483",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664561422772759",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.2ms\"}"
+     ],
+     [
+      "1792664561422604766",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664561422391707",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664560567849982",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.6ms\"}"
+     ],
+     [
+      "1792664559803507154",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.5ms\"}"
+     ],
+     [
+      "1792664559802737177",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664559802603772",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664559802478864",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664559802385610",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664559802294246",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664559802200028",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664559802025127",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664558934160583",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.6ms\"}"
+     ],
+     [
+      "1792664558033938666",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 1.1ms\"}"
+     ]
+    ]
+   },
+   {
+    "metaData": {
+     "releaseId": "6ad9e3a084eee4f3946584e3"
+    },
+    "values": [
+     [
+      "1792664579909810081",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.7ms\"}"
+     ],
+     [
+      "1792664579030249937",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.2ms\"}"
+     ],
+     [
+      "1792664579029708624",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664579029621393",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664579029522160",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664579029442982",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664579029388896",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664579029334876",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664579029143026",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664573417174580",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.4ms\"}"
+     ],
+     [
+      "1792664572512555899",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.7ms\"}"
+     ],
+     [
+      "1792664572511900588",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664572511831816",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664572511766984",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664572511697360",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664572511630672",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664572511546369",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664572511367010",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664571772711717",
+      "{\"type\":\"stdout\",\"_entry\":\"GET / 200 0.5ms\"}"
+     ],
+     [
+      "1792664571204866167",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /resize 404 0.6ms\"}"
+     ],
+     [
+      "1792664570420800802",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /checkout 500 1.2ms\"}"
+     ],
+     [
+      "1792664570420715424",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664570420628915",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664570420545710",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664570420449339",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ],
+     [
+      "1792664570420362096",
+      "{\"type\":\"stderr\",\"_entry\":\"    at /checkout (/app/server.js:46:44)\"}"
+     ],
+     [
+      "1792664570420263390",
+      "{\"type\":\"stderr\",\"_entry\":\"    at checkout (/app/server.js:37:34)\"}"
+     ],
+     [
+      "1792664570420096318",
+      "{\"type\":\"stderr\",\"_entry\":\"TypeError: Cannot read properties of undefined (reading 'percent')\"}"
+     ],
+     [
+      "1792664569062374860",
+      "{\"type\":\"stdout\",\"_entry\":\"GET /api/products 200 0.9ms\"}"
+     ],
+     [
+      "1792664557202666085",
+      "{\"type\":\"stderr\",\"_entry\":\"    at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\"}"
+     ],
+     [
+      "1792664557202597259",
+      "{\"type\":\"stderr\",\"_entry\":\"    at parserOnIncoming (node:_http_server:1186:12)\"}"
+     ],
+     [
+      "1792664557202529143",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.emit (node:events:519:28)\"}"
+     ],
+     [
+      "1792664557202463594",
+      "{\"type\":\"stderr\",\"_entry\":\"    at Server.<anonymous> (/app/server.js:57:39)\"}"
+     ]
+    ]
+   }
+  ]
+ }
+}

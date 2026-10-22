@@ -1,0 +1,4543 @@
+{
+ "request": "GET /v1/me",
+ "params": {},
+ "status": 200,
+ "ms": 220,
+ "body": {
+  "plans": {
+   "mail": {
+    "free-included": {
+     "name": "free-included",
+     "price": 90,
+     "available": false,
+     "numberOfFreeMails": 100,
+     "maxAccount": 5,
+     "maxForwarder": 10,
+     "maxSmtpCredentials": "<redacted>"
+    },
+    "premium": {
+     "name": "premium",
+     "price": 90,
+     "available": false,
+     "numberOfFreeMails": 0,
+     "maxAccount": 15,
+     "maxForwarder": 20,
+     "maxSmtpCredentials": "<redacted>"
+    },
+    "free-included-g2": {
+     "name": "free-included-g2",
+     "price": 49,
+     "available": false,
+     "numberOfFreeMails": 100,
+     "maxAccount": 5,
+     "maxForwarder": 10,
+     "maxSmtpCredentials": "<redacted>"
+    },
+    "premium-g2": {
+     "name": "premium-g2",
+     "price": 49,
+     "available": false,
+     "numberOfFreeMails": 0,
+     "maxAccount": 15,
+     "maxForwarder": 20,
+     "maxSmtpCredentials": "<redacted>"
+    },
+    "m1": {
+     "name": "m1",
+     "price": 0,
+     "maxOutboundPerDay": 10,
+     "maxOutboundPerMonth": 100,
+     "maxInbound": "infinite",
+     "maxAccount": 1,
+     "available": false,
+     "maxForwarder": 1,
+     "maxInboundMailRetention": 50,
+     "maxOutboundMailRetention": 50,
+     "maxSmtpCredentials": "<redacted>"
+    },
+    "m2": {
+     "name": "m2",
+     "price": 1475000,
+     "maxOutboundPerDay": 500,
+     "maxOutboundPerMonth": 5000,
+     "maxInbound": "infinite",
+     "maxAccount": 2,
+     "available": true,
+     "maxForwarder": 2,
+     "maxInboundMailRetention": 2500,
+     "maxOutboundMailRetention": 2500,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 5
+    },
+    "m3": {
+     "name": "m3",
+     "price": 2650000,
+     "maxOutboundPerDay": 1000,
+     "maxOutboundPerMonth": 10000,
+     "maxInbound": "infinite",
+     "maxAccount": 4,
+     "available": true,
+     "maxForwarder": 4,
+     "maxInboundMailRetention": 5000,
+     "maxOutboundMailRetention": 5000,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 10
+    },
+    "m4": {
+     "name": "m4",
+     "price": 4600000,
+     "maxOutboundPerDay": 2000,
+     "maxOutboundPerMonth": 20000,
+     "maxInbound": "infinite",
+     "maxAccount": 8,
+     "available": true,
+     "maxForwarder": 8,
+     "maxInboundMailRetention": 10000,
+     "maxOutboundMailRetention": 10000,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 10
+    },
+    "m5": {
+     "name": "m5",
+     "price": 8000000,
+     "maxOutboundPerDay": 4000,
+     "maxOutboundPerMonth": 40000,
+     "maxInbound": "infinite",
+     "maxAccount": 16,
+     "available": true,
+     "maxForwarder": 16,
+     "maxInboundMailRetention": 20000,
+     "maxOutboundMailRetention": 20000,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 10
+    },
+    "m6": {
+     "name": "m6",
+     "price": 14000000,
+     "maxOutboundPerDay": 8000,
+     "maxOutboundPerMonth": 80000,
+     "maxInbound": "infinite",
+     "maxAccount": 32,
+     "available": true,
+     "maxForwarder": 32,
+     "maxInboundMailRetention": 40000,
+     "maxOutboundMailRetention": 40000,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 10
+    },
+    "m7": {
+     "name": "m7",
+     "price": 24600000,
+     "maxOutboundPerDay": 16000,
+     "maxOutboundPerMonth": 160000,
+     "maxInbound": "infinite",
+     "maxAccount": 64,
+     "available": true,
+     "maxForwarder": 64,
+     "maxInboundMailRetention": 80000,
+     "maxOutboundMailRetention": 80000,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 20
+    },
+    "m8": {
+     "name": "m8",
+     "price": 43000000,
+     "maxOutboundPerDay": 32000,
+     "maxOutboundPerMonth": 320000,
+     "maxInbound": "infinite",
+     "maxAccount": 128,
+     "available": true,
+     "maxForwarder": 128,
+     "maxInboundMailRetention": 160000,
+     "maxOutboundMailRetention": 160000,
+     "maxSmtpCredentials": "<redacted>",
+     "maxCCAndBCC": 20
+    }
+   },
+   "projects": {
+    "shared": {
+     "available": false,
+     "price": 50,
+     "volume": 1,
+     "RAM": {
+      "amount": 0.5,
+      "shared": true
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "512mb": {
+     "available": false,
+     "price": 100,
+     "volume": 5,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "1g": {
+     "available": false,
+     "price": 200,
+     "volume": 10,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "2g": {
+     "available": false,
+     "price": 400,
+     "volume": 20,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "4g": {
+     "available": false,
+     "price": 800,
+     "volume": 40,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "8g": {
+     "available": false,
+     "price": 1600,
+     "volume": 80,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "nano": {
+     "available": false,
+     "price": 100,
+     "volume": 2,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "micro": {
+     "available": false,
+     "price": 200,
+     "volume": 5,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "standard-1x": {
+     "available": false,
+     "price": 400,
+     "volume": 10,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "performance-1x": {
+     "available": false,
+     "price": 1200,
+     "volume": 40,
+     "RAM": {
+      "amount": 6,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "performance-2x": {
+     "available": false,
+     "price": 1600,
+     "volume": 60,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "small": {
+     "available": false,
+     "region": "germany",
+     "storageClass": "NVMe",
+     "price": 100,
+     "volume": 2.5,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.25,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "medium": {
+     "available": false,
+     "region": "germany",
+     "storageClass": "NVMe",
+     "price": 200,
+     "volume": 5,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "standard": {
+     "available": false,
+     "region": "germany",
+     "storageClass": "NVMe",
+     "price": 400,
+     "volume": 10,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "standard-2x": {
+     "available": false,
+     "region": "germany",
+     "storageClass": "NVMe",
+     "price": 800,
+     "volume": 20,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "large": {
+     "available": false,
+     "storageClass": "NVMe",
+     "price": 1200,
+     "volume": 30,
+     "RAM": {
+      "amount": 6,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 3,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "large-2x": {
+     "available": false,
+     "region": "germany",
+     "storageClass": "NVMe",
+     "price": 1600,
+     "volume": 40,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "large-3x": {
+     "available": false,
+     "region": "germany",
+     "storageClass": "NVMe",
+     "price": 3200,
+     "volume": 80,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "free": {
+     "available": false,
+     "region": "iran",
+     "price": 0,
+     "volume": 0,
+     "RAM": {
+      "amount": 0.125,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.125,
+      "shared": true
+     },
+     "PIDs": 256,
+     "sourceCodeSpace": 256
+    },
+    "ir-mini": {
+     "available": false,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 763.88,
+     "volume": 2.5,
+     "RAM": {
+      "amount": 0.25,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.25,
+      "shared": true
+     },
+     "PIDs": 256,
+     "sourceCodeSpace": 256
+    },
+    "ir-small": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 1319.44,
+     "volume": 5,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     },
+     "PIDs": 256,
+     "sourceCodeSpace": 256
+    },
+    "ir-medium": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 2291.66,
+     "volume": 10,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "PIDs": 512,
+     "sourceCodeSpace": 256
+    },
+    "ir-standard": {
+     "available": false,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 4097.22,
+     "volume": 20,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "PIDs": 1024,
+     "sourceCodeSpace": 256
+    },
+    "ir-standard-2x": {
+     "available": false,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 7361.11,
+     "volume": 40,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "PIDs": 2048,
+     "sourceCodeSpace": 256
+    },
+    "ir-large": {
+     "available": false,
+     "storageClass": "SSD",
+     "price": 7222.22,
+     "volume": 60,
+     "RAM": {
+      "amount": 6,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 6,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    },
+    "ir-large-2x": {
+     "available": false,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 12777.77,
+     "volume": 80,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     },
+     "PIDs": 4096,
+     "sourceCodeSpace": 256
+    },
+    "ir-large-3x": {
+     "available": false,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 22222.22,
+     "volume": 160,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 16,
+      "shared": true
+     },
+     "PIDs": 8192,
+     "sourceCodeSpace": 256
+    },
+    "standard-base": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 4097.22,
+     "volume": 20,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "PIDs": 1024,
+     "sourceCodeSpace": 256
+    },
+    "standard-plus": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 7361.11,
+     "volume": 40,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "PIDs": 2048,
+     "sourceCodeSpace": 256
+    },
+    "pro": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 12777.77,
+     "volume": 80,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "PIDs": 4096,
+     "sourceCodeSpace": 256
+    },
+    "pro-plus": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 22222.22,
+     "volume": 160,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     },
+     "PIDs": 8192,
+     "sourceCodeSpace": 256
+    },
+    "pro-max": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "price": 38888.88,
+     "volume": 320,
+     "RAM": {
+      "amount": 32,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 16,
+      "shared": true
+     },
+     "PIDs": 16384,
+     "sourceCodeSpace": 256
+    },
+    "mini-g2": {
+     "available": false,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 275000,
+     "price": 381.94,
+     "volume": 2.5,
+     "rootFilesystemSize": "0.125G",
+     "shmSize": 67108864,
+     "RAM": {
+      "amount": 0.25,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.25,
+      "shared": true
+     },
+     "PIDs": 256,
+     "sourceCodeSpace": 256
+    },
+    "small-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 475000,
+     "price": 659.72,
+     "volume": 5,
+     "rootFilesystemSize": "0.25G",
+     "shmSize": 67108864,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     },
+     "PIDs": 256,
+     "sourceCodeSpace": 256
+    },
+    "medium-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 825000,
+     "price": 1145.83,
+     "volume": 10,
+     "rootFilesystemSize": "0.5G",
+     "shmSize": 134217728,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "PIDs": 512,
+     "sourceCodeSpace": 256
+    },
+    "standard-base-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 1475000,
+     "price": 2048.61,
+     "volume": 20,
+     "rootFilesystemSize": "1G",
+     "shmSize": 134217728,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     },
+     "PIDs": 1024,
+     "sourceCodeSpace": 256
+    },
+    "standard-plus-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 2650000,
+     "price": 3680.55,
+     "volume": 40,
+     "rootFilesystemSize": "2G",
+     "shmSize": 268435456,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     },
+     "PIDs": 2048,
+     "sourceCodeSpace": 256
+    },
+    "pro-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 4600000,
+     "price": 6388.88,
+     "volume": 80,
+     "rootFilesystemSize": "4G",
+     "shmSize": 268435456,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     },
+     "PIDs": 4096,
+     "sourceCodeSpace": 256
+    },
+    "pro-plus-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 8000000,
+     "price": 11111.11,
+     "volume": 160,
+     "rootFilesystemSize": "8G",
+     "shmSize": 536870912,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     },
+     "PIDs": 8192,
+     "sourceCodeSpace": 256
+    },
+    "pro-max-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 14000000,
+     "price": 19444.44,
+     "volume": 320,
+     "rootFilesystemSize": "16G",
+     "shmSize": 536870912,
+     "RAM": {
+      "amount": 32,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 16,
+      "shared": true
+     },
+     "PIDs": 16384,
+     "sourceCodeSpace": 256
+    },
+    "express-g2": {
+     "available": true,
+     "region": "iran",
+     "storageClass": "SSD",
+     "displayPrice": 24600000,
+     "price": 34166.66,
+     "volume": 640,
+     "rootFilesystemSize": "16G",
+     "shmSize": 536870912,
+     "RAM": {
+      "amount": 64,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 32,
+      "shared": true
+     },
+     "PIDs": 16384,
+     "sourceCodeSpace": 256
+    },
+    "database-control-panel": {
+     "available": false,
+     "price": 0,
+     "volume": 0,
+     "RAM": {
+      "amount": 1,
+      "shared": true
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     },
+     "sourceCodeSpace": 256
+    }
+   },
+   "databases": {
+    "nano": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres"
+     ],
+     "price": 50,
+     "volume": 2,
+     "RAM": {
+      "amount": 0.25,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "micro": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres"
+     ],
+     "price": 100,
+     "volume": 5,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "standard-1x": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres"
+     ],
+     "price": 200,
+     "volume": 10,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "standard-2x": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql"
+     ],
+     "price": 400,
+     "volume": 20,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "performance-1x": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql"
+     ],
+     "price": 800,
+     "volume": 40,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "performance-2x": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql"
+     ],
+     "price": 1200,
+     "volume": 60,
+     "RAM": {
+      "amount": 6,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     }
+    },
+    "performance-3x": {
+     "available": false,
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql"
+     ],
+     "price": 1600,
+     "volume": 80,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     }
+    },
+    "redis-nano": {
+     "available": false,
+     "supports": [
+      "redis"
+     ],
+     "price": 50,
+     "volume": 0,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "redis-micro": {
+     "available": false,
+     "supports": [
+      "redis"
+     ],
+     "price": 100,
+     "volume": 0,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "redis-standard": {
+     "available": false,
+     "supports": [
+      "redis"
+     ],
+     "price": 200,
+     "volume": 0,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "redis-performance": {
+     "available": false,
+     "supports": [
+      "redis"
+     ],
+     "price": 400,
+     "volume": 0,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "small": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis"
+     ],
+     "price": 100,
+     "volume": 2.5,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.25,
+      "shared": true
+     }
+    },
+    "medium": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis",
+      "elasticsearch"
+     ],
+     "price": 200,
+     "volume": 5,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     }
+    },
+    "standard": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch"
+     ],
+     "price": 400,
+     "volume": 10,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "large": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch"
+     ],
+     "price": 800,
+     "volume": 20,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "large-2x": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch"
+     ],
+     "price": 1200,
+     "volume": 30,
+     "RAM": {
+      "amount": 6,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 3,
+      "shared": true
+     }
+    },
+    "large-3x": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch"
+     ],
+     "price": 1600,
+     "volume": 40,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     }
+    },
+    "large-4x": {
+     "available": false,
+     "storageClass": "NVMe",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch"
+     ],
+     "price": 3200,
+     "volume": 80,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     }
+    },
+    "free": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mariadb",
+      "postgres",
+      "redis"
+     ],
+     "price": 0,
+     "volume": 1.25,
+     "backupSpace": 0,
+     "RAM": {
+      "amount": 0.125,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.125,
+      "shared": true
+     }
+    },
+    "ir-nano": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mariadb",
+      "postgres",
+      "redis"
+     ],
+     "price": 31.25,
+     "volume": 1.25,
+     "RAM": {
+      "amount": 0.125,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.125,
+      "shared": true
+     }
+    },
+    "ir-mini": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis"
+     ],
+     "price": 763.88,
+     "volume": 2.5,
+     "RAM": {
+      "amount": 0.25,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.25,
+      "shared": true
+     }
+    },
+    "ir-small": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis",
+      "rabbitmq"
+     ],
+     "price": 1319.44,
+     "volume": 5,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     }
+    },
+    "ir-medium": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis",
+      "elasticsearch",
+      "rabbitmq"
+     ],
+     "price": 2291.66,
+     "volume": 10,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "ir-standard": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "clickhouse"
+     ],
+     "price": 4097.22,
+     "volume": 20,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "ir-large": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "clickhouse"
+     ],
+     "price": 7361.11,
+     "volume": 40,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     }
+    },
+    "ir-large-2x": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "clickhouse"
+     ],
+     "price": 7222.22,
+     "volume": 60,
+     "RAM": {
+      "amount": 6,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 6,
+      "shared": true
+     }
+    },
+    "ir-large-3x": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "clickhouse"
+     ],
+     "price": 12777.77,
+     "volume": 80,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     }
+    },
+    "ir-large-4x": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "clickhouse"
+     ],
+     "price": 22222.22,
+     "volume": 160,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 16,
+      "shared": true
+     }
+    },
+    "standard-base": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "price": 4097.22,
+     "volume": 20,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "standard-pro": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "price": 7361.11,
+     "volume": 40,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "pro": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "price": 12777.77,
+     "volume": 80,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     }
+    },
+    "pro-plus": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "price": 22222.22,
+     "volume": 160,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     }
+    },
+    "pro-max": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "price": 38888.88,
+     "volume": 320,
+     "RAM": {
+      "amount": 32,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 16,
+      "shared": true
+     }
+    },
+    "mini-g2": {
+     "available": false,
+     "storageClass": "SSD",
+     "supports": [
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis"
+     ],
+     "displayPrice": 275000,
+     "price": 381.94,
+     "volume": 2.5,
+     "shmSize": 67108864,
+     "RAM": {
+      "amount": 0.25,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.25,
+      "shared": true
+     }
+    },
+    "small-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis",
+      "rabbitmq"
+     ],
+     "displayPrice": 475000,
+     "price": 659.72,
+     "volume": 5,
+     "shmSize": 67108864,
+     "RAM": {
+      "amount": 0.5,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 0.5,
+      "shared": true
+     }
+    },
+    "medium-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "redis",
+      "elasticsearch",
+      "rabbitmq"
+     ],
+     "displayPrice": 825000,
+     "price": 1145.83,
+     "volume": 10,
+     "shmSize": 134217728,
+     "RAM": {
+      "amount": 1,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "standard-base-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "displayPrice": 1475000,
+     "price": 2048.61,
+     "volume": 20,
+     "shmSize": 134217728,
+     "RAM": {
+      "amount": 2,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 1,
+      "shared": true
+     }
+    },
+    "standard-pro-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "displayPrice": 2650000,
+     "price": 3680.55,
+     "volume": 40,
+     "shmSize": 268435456,
+     "RAM": {
+      "amount": 4,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 2,
+      "shared": true
+     }
+    },
+    "pro-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "displayPrice": 4600000,
+     "price": 6388.88,
+     "volume": 80,
+     "shmSize": 268435456,
+     "RAM": {
+      "amount": 8,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 4,
+      "shared": true
+     }
+    },
+    "pro-plus-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "displayPrice": 8000000,
+     "price": 11111.11,
+     "volume": 160,
+     "shmSize": 536870912,
+     "RAM": {
+      "amount": 16,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 8,
+      "shared": true
+     }
+    },
+    "pro-max-g2": {
+     "available": true,
+     "storageClass": "SSD",
+     "supports": [
+      "mysql",
+      "mariadb",
+      "mongodb",
+      "postgres",
+      "mssql",
+      "redis",
+      "elasticsearch",
+      "rabbitmq",
+      "clickhouse"
+     ],
+     "displayPrice": 14000000,
+     "price": 19444.44,
+     "volume": 320,
+     "shmSize": 536870912,
+     "RAM": {
+      "amount": 32,
+      "shared": false
+     },
+     "CPU": {
+      "amount": 16,
+      "shared": true
+     }
+    }
+   },
+   "objectStorage": {
+    "free": {
+     "type": "OBJECT_STORAGE",
+     "planID": "free",
+     "space": 2.5,
+     "price": 0,
+     "available": false,
+     "storageClass": "SSD"
+    },
+    "2.5g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "2.5g",
+     "space": 2.5,
+     "price": 138.88,
+     "available": false,
+     "storageClass": "SSD"
+    },
+    "5g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "5g",
+     "space": 5,
+     "price": 243.05,
+     "available": false,
+     "storageClass": "SSD"
+    },
+    "10g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "10g",
+     "space": 10,
+     "price": 381.94,
+     "available": false,
+     "storageClass": "SSD"
+    },
+    "20g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "20g",
+     "space": 20,
+     "price": 659.72,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "40g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "40g",
+     "space": 40,
+     "price": 1145.83,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "80g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "80g",
+     "space": 80,
+     "price": 2048.61,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "160g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "160g",
+     "space": 160,
+     "price": 3680.55,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "320g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "320g",
+     "space": 320,
+     "price": 6388.88,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "640g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "640g",
+     "space": 640,
+     "price": 11111.11,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "1280g": {
+     "type": "OBJECT_STORAGE",
+     "planID": "1280g",
+     "space": 1280,
+     "price": 19444.44,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "5g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "5g-g2",
+     "space": 5,
+     "displayPrice": 175000,
+     "price": 243.05,
+     "available": false,
+     "storageClass": "SSD"
+    },
+    "10g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "10g-g2",
+     "space": 10,
+     "displayPrice": 275000,
+     "price": 381.94,
+     "available": false,
+     "storageClass": "SSD"
+    },
+    "20g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "20g-g2",
+     "space": 20,
+     "displayPrice": 475000,
+     "price": 659.72,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "40g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "40g-g2",
+     "space": 40,
+     "displayPrice": 825000,
+     "price": 1145.83,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "80g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "80g-g2",
+     "space": 80,
+     "displayPrice": 1475000,
+     "price": 2048.61,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "160g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "160g-g2",
+     "space": 160,
+     "displayPrice": 2650000,
+     "price": 3680.55,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "320g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "320g-g2",
+     "space": 320,
+     "displayPrice": 4600000,
+     "price": 6388.88,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "640g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "640g-g2",
+     "space": 640,
+     "displayPrice": 8000000,
+     "price": 11111.11,
+     "available": true,
+     "storageClass": "SSD"
+    },
+    "1280g-g2": {
+     "type": "OBJECT_STORAGE",
+     "planID": "1280g-g2",
+     "space": 1280,
+     "displayPrice": 14000000,
+     "price": 19444.44,
+     "available": true,
+     "storageClass": "SSD"
+    }
+   },
+   "legacyStorageService": {
+    "5g": {
+     "price": 15.625,
+     "space": 5,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "10g": {
+     "price": 31.25,
+     "space": 10,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "20g": {
+     "price": 62.5,
+     "space": 20,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "40g": {
+     "price": 125,
+     "space": 40,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "60g": {
+     "price": 187.5,
+     "space": 60,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "80g": {
+     "price": 250,
+     "space": 80,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "100g": {
+     "price": 312.5,
+     "space": 100,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "120g": {
+     "price": 375,
+     "space": 120,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "140g": {
+     "price": 437.5,
+     "space": 140,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "160g": {
+     "price": 500,
+     "space": 160,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "180g": {
+     "price": 562.5,
+     "space": 180,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "200g": {
+     "price": 650,
+     "space": 200,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "400g": {
+     "price": 1250,
+     "space": 400,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "800g": {
+     "price": 2500,
+     "space": 800,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "1600g": {
+     "price": 5000,
+     "space": 1600,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-20g": {
+     "price": 486.11,
+     "space": 20,
+     "available": true,
+     "storageClass": "HDD"
+    },
+    "ir-40g": {
+     "price": 833.33,
+     "space": 40,
+     "available": true,
+     "storageClass": "HDD"
+    },
+    "ir-60g": {
+     "price": 187.5,
+     "space": 60,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-80g": {
+     "price": 1458.33,
+     "space": 80,
+     "available": true,
+     "storageClass": "HDD"
+    },
+    "ir-100g": {
+     "price": 312.5,
+     "space": 100,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-120g": {
+     "price": 375,
+     "space": 120,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-140g": {
+     "price": 437.5,
+     "space": 140,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-160g": {
+     "price": 2638.88,
+     "space": 160,
+     "available": true,
+     "storageClass": "HDD"
+    },
+    "ir-180g": {
+     "price": 562.5,
+     "space": 180,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-200g": {
+     "price": 625,
+     "space": 200,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-400g": {
+     "price": 1250,
+     "space": 400,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-800g": {
+     "price": 2500,
+     "space": 800,
+     "available": false,
+     "storageClass": "HDD"
+    },
+    "ir-1600g": {
+     "price": 5000,
+     "space": 1600,
+     "available": false,
+     "storageClass": "HDD"
+    }
+   },
+   "projectBundlePlans": {
+    "g1": {
+     "default": {
+      "available": true,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 3,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 10,
+      "maxDiskPerProject": 8,
+      "manualBackupRateLimit": 5,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 500
+     }
+    },
+    "free": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "standard": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "pro": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     }
+    },
+    "mini-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 243.05,
+      "displayHourlyPrice": 243,
+      "displayPrice": 175000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 381.94,
+      "displayHourlyPrice": 381,
+      "displayPrice": 275000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 22.5,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 659.72,
+      "displayHourlyPrice": 659,
+      "displayPrice": 475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 77.5,
+      "maxImageLayerSize": 500
+     }
+    },
+    "small-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 381.94,
+      "displayHourlyPrice": 381,
+      "displayPrice": 275000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 659.72,
+      "displayHourlyPrice": 659,
+      "displayPrice": 475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 45,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 1145.83,
+      "displayHourlyPrice": 1145,
+      "displayPrice": 825000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 155,
+      "maxImageLayerSize": 500
+     }
+    },
+    "medium-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 659.72,
+      "displayHourlyPrice": 659,
+      "displayPrice": 475000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 1145.83,
+      "displayHourlyPrice": 1145,
+      "displayPrice": 825000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 90,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 2048.61,
+      "displayHourlyPrice": 2048,
+      "displayPrice": 1475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 310,
+      "maxImageLayerSize": 500
+     }
+    },
+    "standard-base-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 1145.83,
+      "displayHourlyPrice": 1145,
+      "displayPrice": 825000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 2048.61,
+      "displayHourlyPrice": 2048,
+      "displayPrice": 1475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 180,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 2650000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 620,
+      "maxImageLayerSize": 500
+     }
+    },
+    "standard-plus-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 2048.61,
+      "displayHourlyPrice": 2048,
+      "displayPrice": 1475000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 2650000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 360,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 6388.88,
+      "displayHourlyPrice": 6388,
+      "displayPrice": 4600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 1240,
+      "maxImageLayerSize": 500
+     }
+    },
+    "pro-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 2650000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 6388.88,
+      "displayHourlyPrice": 6388,
+      "displayPrice": 4600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 720,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 11111.11,
+      "displayHourlyPrice": 11111,
+      "displayPrice": 8000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 2480,
+      "maxImageLayerSize": 500
+     }
+    },
+    "pro-plus-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 6388.88,
+      "displayHourlyPrice": 6388,
+      "displayPrice": 4600000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 11111.11,
+      "displayHourlyPrice": 11111,
+      "displayPrice": 8000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 1440,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 19444.44,
+      "displayHourlyPrice": 19444,
+      "displayPrice": 14000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 4960,
+      "maxImageLayerSize": 500
+     }
+    },
+    "pro-max-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 11111.11,
+      "displayHourlyPrice": 11111,
+      "displayPrice": 8000000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 19444.44,
+      "displayHourlyPrice": 19444,
+      "displayPrice": 14000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 1440,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 34166.66,
+      "displayHourlyPrice": 34166,
+      "displayPrice": 24600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 4960,
+      "maxImageLayerSize": 500
+     }
+    },
+    "express-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 0.05,
+      "maxReleaseRetention": 1,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 1,
+      "maxDeploymentCountInDay": 10,
+      "maxReportRetention": 0.05,
+      "maxFTPAccountsPerDisk": 1,
+      "maxDiskPerProject": 1,
+      "manualBackupRateLimit": 0,
+      "rollback": false,
+      "zeroDowntime": false,
+      "setDNS": false,
+      "setReadOnly": false,
+      "maxSourceSize": 128,
+      "germanyBuilder": false,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0,
+      "maxImageLayerSize": 200
+     },
+     "basic": {
+      "available": true,
+      "price": 19444.44,
+      "displayHourlyPrice": 19444,
+      "displayPrice": 14000000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 5,
+      "maxLogsRetention": 7,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 2,
+      "maxDeploymentCountInDay": 20,
+      "maxReportRetention": 7,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 2,
+      "manualBackupRateLimit": 0,
+      "rollback": true,
+      "zeroDowntime": false,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 128,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 34166.66,
+      "displayHourlyPrice": 34166,
+      "displayPrice": 24600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "buildTimeout": 15,
+      "maxLogsRetention": 30,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": 5,
+      "maxDeploymentCountInDay": 50,
+      "maxReportRetention": 30,
+      "maxFTPAccountsPerDisk": 2,
+      "maxDiskPerProject": 5,
+      "manualBackupRateLimit": 2,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 1440,
+      "maxImageLayerSize": 350
+     },
+     "pro": {
+      "available": true,
+      "price": 59722.22,
+      "displayHourlyPrice": 59722,
+      "displayPrice": 43000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "buildTimeout": 60,
+      "maxLogsRetention": 60,
+      "maxReleaseRetention": 10,
+      "maxDestinationsBackup": 0,
+      "maxDomainsCount": "infinite",
+      "maxDeploymentCountInDay": "infinite",
+      "maxReportRetention": 60,
+      "maxFTPAccountsPerDisk": 100,
+      "maxDiskPerProject": 10,
+      "manualBackupRateLimit": 10,
+      "rollback": true,
+      "zeroDowntime": true,
+      "setDNS": true,
+      "setReadOnly": true,
+      "maxSourceSize": 256,
+      "germanyBuilder": true,
+      "vipBuilder": false,
+      "antiBoycott": false,
+      "freeSSL": true,
+      "backupSpace": 4960,
+      "maxImageLayerSize": 500
+     }
+    }
+   },
+   "databaseBundlePlans": {
+    "g1": {
+     "default": {
+      "available": true,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 3,
+       "daily": 7
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 5,
+      "editParameters": false,
+      "publicNetwork": true,
+      "backupSpace": 0
+     }
+    },
+    "free": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "pro": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     }
+    },
+    "mini-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 243.05,
+      "displayHourlyPrice": 243,
+      "displayPrice": 175000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 381.94,
+      "displayHourlyPrice": 381,
+      "displayPrice": 275000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 22.5
+     },
+     "pro": {
+      "available": true,
+      "price": 659.72,
+      "displayHourlyPrice": 659,
+      "displayPrice": 475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 77.5
+     }
+    },
+    "small-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 381.94,
+      "displayHourlyPrice": 381,
+      "displayPrice": 275000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 659.72,
+      "displayHourlyPrice": 659,
+      "displayPrice": 475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 45
+     },
+     "pro": {
+      "available": true,
+      "price": 1145.83,
+      "displayHourlyPrice": 1145,
+      "displayPrice": 825000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 155
+     }
+    },
+    "medium-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 659.72,
+      "displayHourlyPrice": 659,
+      "displayPrice": 475000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 1145.83,
+      "displayHourlyPrice": 1145,
+      "displayPrice": 825000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 90
+     },
+     "pro": {
+      "available": true,
+      "price": 2048.61,
+      "displayHourlyPrice": 2048,
+      "displayPrice": 1475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 310
+     }
+    },
+    "standard-base-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 1145.83,
+      "displayHourlyPrice": 1145,
+      "displayPrice": 825000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 2048.61,
+      "displayHourlyPrice": 2048,
+      "displayPrice": 1475000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 180
+     },
+     "pro": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 2650000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 620
+     }
+    },
+    "standard-pro-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 2048.61,
+      "displayHourlyPrice": 2048,
+      "displayPrice": 1475000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 2650000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 360
+     },
+     "pro": {
+      "available": true,
+      "price": 6388.88,
+      "displayHourlyPrice": 6388,
+      "displayPrice": 4600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 1240
+     }
+    },
+    "pro-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 2650000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 3680.55,
+      "displayHourlyPrice": 3680,
+      "displayPrice": 4600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 720
+     },
+     "pro": {
+      "available": true,
+      "price": 11111.11,
+      "displayHourlyPrice": 11111,
+      "displayPrice": 8000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 2480
+     }
+    },
+    "pro-plus-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 6388.88,
+      "displayHourlyPrice": 6388,
+      "displayPrice": 4600000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 11111.11,
+      "displayHourlyPrice": 11111,
+      "displayPrice": 8000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 1440
+     },
+     "pro": {
+      "available": true,
+      "price": 19444.44,
+      "displayHourlyPrice": 19444,
+      "displayPrice": 14000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 4960
+     }
+    },
+    "pro-max-g2": {
+     "free": {
+      "available": false,
+      "price": 0,
+      "displayHourlyPrice": 0,
+      "displayPrice": 0,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 0.05,
+      "manualBackupRateLimit": 0,
+      "editParameters": false,
+      "publicNetwork": false,
+      "backupSpace": 0
+     },
+     "basic": {
+      "available": true,
+      "price": 11111.11,
+      "displayHourlyPrice": 11111,
+      "displayPrice": 8000000,
+      "availableBackupInterval": [],
+      "backupRetention": {
+       "manual": 0,
+       "daily": 0,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 7,
+      "manualBackupRateLimit": 0,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 0
+     },
+     "standard": {
+      "available": true,
+      "price": 19444.44,
+      "displayHourlyPrice": 19444,
+      "displayPrice": 14000000,
+      "availableBackupInterval": [
+       "daily",
+       "manual"
+      ],
+      "backupRetention": {
+       "manual": 2,
+       "daily": 7,
+       "weekly": 0,
+       "monthly": 0,
+       "hourly": 0
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 30,
+      "manualBackupRateLimit": 2,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 1440
+     },
+     "pro": {
+      "available": true,
+      "price": 34166.66,
+      "displayHourlyPrice": 34166,
+      "displayPrice": 24600000,
+      "availableBackupInterval": [
+       "daily",
+       "manual",
+       "weekly",
+       "monthly",
+       "hourly"
+      ],
+      "backupRetention": {
+       "manual": 5,
+       "daily": 7,
+       "weekly": 4,
+       "monthly": 3,
+       "hourly": 12
+      },
+      "maxDestinationsBackup": 0,
+      "maxReportRetention": 60,
+      "manualBackupRateLimit": 10,
+      "editParameters": true,
+      "publicNetwork": true,
+      "backupSpace": 4960
+     }
+    }
+   },
+   "subscription": {
+    "free": {
+     "planID": "free",
+     "type": "SUBSCRIPTION_PLAN",
+     "yearlyPrice": 0,
+     "firstYearlyPrice": 0,
+     "maxBillingTickets": "infinite",
+     "maxResponseTime": 24,
+     "frozenServicesRetention": 1,
+     "freeProjectsCount": 1,
+     "freeDatabasesCount": 1,
+     "freeBucketsCount": 1,
+     "sla": 0,
+     "unusedFreeServicesShutdown": true,
+     "additionalTechnicalTicketPrice": 0,
+     "firstMonthlyPrice": 0,
+     "monthlyPrice": 0,
+     "maxTechnicalTicketsPerMonth": "infinite",
+     "maxSMSChannels": 1,
+     "maxEmailChannels": 1,
+     "maxTelegramChannels": 1
+    },
+    "standard": {
+     "planID": "standard",
+     "type": "SUBSCRIPTION_PLAN",
+     "yearlyPrice": 2650000,
+     "firstYearlyPrice": 2650000,
+     "additionalTechnicalTicketPrice": 24750,
+     "maxBillingTickets": "infinite",
+     "maxResponseTime": 16,
+     "frozenServicesRetention": 30,
+     "freeProjectsCount": 1,
+     "freeDatabasesCount": 1,
+     "freeBucketsCount": 1,
+     "sla": 99,
+     "unusedFreeServicesShutdown": false,
+     "firstMonthlyPrice": 475000,
+     "monthlyPrice": 475000,
+     "maxTechnicalTicketsPerMonth": "infinite",
+     "maxSMSChannels": 5,
+     "maxEmailChannels": 5,
+     "maxTelegramChannels": 5
+    },
+    "enterprise": {
+     "planID": "enterprise",
+     "type": "SUBSCRIPTION_PLAN",
+     "yearlyPrice": 265000000,
+     "firstYearlyPrice": 265000000,
+     "additionalTechnicalTicketPrice": 0,
+     "maxBillingTickets": "infinite",
+     "maxResponseTime": 2,
+     "frozenServicesRetention": 30,
+     "freeProjectsCount": 1,
+     "freeDatabasesCount": 1,
+     "freeBucketsCount": 1,
+     "sla": 99.9,
+     "unusedFreeServicesShutdown": false,
+     "firstMonthlyPrice": 47500000,
+     "monthlyPrice": 47500000,
+     "maxTechnicalTicketsPerMonth": "infinite",
+     "maxSMSChannels": 10,
+     "maxEmailChannels": 10,
+     "maxTelegramChannels": 10
+    }
+   }
+  }
+ }
+}

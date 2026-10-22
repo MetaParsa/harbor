@@ -1,0 +1,288 @@
+{
+ "request": "GET /v2/projects/l0-dyar-6b46/logs",
+ "params": {
+  "start": 1792649615,
+  "direction": "forward",
+  "last_lines": "false"
+ },
+ "status": 200,
+ "ms": 150,
+ "body": {
+  "data": [
+   {
+    "metaData": {
+     "releaseId": "6ad9b02a07e024287d18fb92"
+    },
+    "values": [
+     [
+      "1792651390780240467",
+      "{\"type\":\"stdout\",\"_entry\":\"> [GUNICORN] Starting...\"}"
+     ],
+     [
+      "1792651390780409662",
+      "{\"type\":\"stdout\",\"_entry\":\"> [NGINX] Starting...\"}"
+     ],
+     [
+      "1792651391423903828",
+      "{\"type\":\"stderr\",\"_entry\":\"Traceback (most recent call last):\"}"
+     ],
+     [
+      "1792651391424060735",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/bin/gunicorn\\\", line 3, in <module>\"}"
+     ],
+     [
+      "1792651391424491807",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.wsgiapp import run\"}"
+     ],
+     [
+      "1792651391424744130",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py\\\", line 9, in <module>\"}"
+     ],
+     [
+      "1792651391425241452",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.base import Application\"}"
+     ],
+     [
+      "1792651391425397462",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py\\\", line 11, in <module>\"}"
+     ],
+     [
+      "1792651391425738323",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn import util\"}"
+     ],
+     [
+      "1792651391425855089",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/util.py\\\", line 25, in <module>\"}"
+     ],
+     [
+      "1792651391429575257",
+      "{\"type\":\"stderr\",\"_entry\":\"    import pkg_resources\"}"
+     ],
+     [
+      "1792651391429746100",
+      "{\"type\":\"stderr\",\"_entry\":\"ModuleNotFoundError: No module named 'pkg_resources'\"}"
+     ],
+     [
+      "1792651391636421449",
+      "{\"type\":\"stderr\",\"_entry\":\"multirun: one or more of the provided commands ended abnormally\"}"
+     ],
+     [
+      "1792651397975967325",
+      "{\"type\":\"stdout\",\"_entry\":\"> [GUNICORN] Starting...\"}"
+     ],
+     [
+      "1792651397976153308",
+      "{\"type\":\"stdout\",\"_entry\":\"> [NGINX] Starting...\"}"
+     ],
+     [
+      "1792651398535547484",
+      "{\"type\":\"stderr\",\"_entry\":\"Traceback (most recent call last):\"}"
+     ],
+     [
+      "1792651398536151307",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/bin/gunicorn\\\", line 3, in <module>\"}"
+     ],
+     [
+      "1792651398536699739",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.wsgiapp import run\"}"
+     ],
+     [
+      "1792651398536778183",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py\\\", line 9, in <module>\"}"
+     ],
+     [
+      "1792651398537764827",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.base import Application\"}"
+     ],
+     [
+      "1792651398537861695",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py\\\", line 11, in <module>\"}"
+     ],
+     [
+      "1792651398541696356",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn import util\"}"
+     ],
+     [
+      "1792651398541828456",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/util.py\\\", line 25, in <module>\"}"
+     ],
+     [
+      "1792651398541903463",
+      "{\"type\":\"stderr\",\"_entry\":\"    import pkg_resources\"}"
+     ],
+     [
+      "1792651398541971735",
+      "{\"type\":\"stderr\",\"_entry\":\"ModuleNotFoundError: No module named 'pkg_resources'\"}"
+     ],
+     [
+      "1792651398869107033",
+      "{\"type\":\"stderr\",\"_entry\":\"multirun: one or more of the provided commands ended abnormally\"}"
+     ]
+    ]
+   },
+   {
+    "metaData": {
+     "releaseId": "6ad9b02a07e024287d18fb92"
+    },
+    "values": [
+     [
+      "1792651383069727258",
+      "{\"type\":\"stdout\",\"_entry\":\"> [GUNICORN] Starting...\"}"
+     ],
+     [
+      "1792651383069903707",
+      "{\"type\":\"stdout\",\"_entry\":\"> [NGINX] Starting...\"}"
+     ],
+     [
+      "1792651383693783073",
+      "{\"type\":\"stderr\",\"_entry\":\"Traceback (most recent call last):\"}"
+     ],
+     [
+      "1792651383693961835",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/bin/gunicorn\\\", line 3, in <module>\"}"
+     ],
+     [
+      "1792651383694161219",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.wsgiapp import run\"}"
+     ],
+     [
+      "1792651383694305920",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py\\\", line 9, in <module>\"}"
+     ],
+     [
+      "1792651383694915119",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.base import Application\"}"
+     ],
+     [
+      "1792651383695105524",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py\\\", line 11, in <module>\"}"
+     ],
+     [
+      "1792651383695385418",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn import util\"}"
+     ],
+     [
+      "1792651383695586214",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/util.py\\\", line 25, in <module>\"}"
+     ],
+     [
+      "1792651383695770516",
+      "{\"type\":\"stderr\",\"_entry\":\"    import pkg_resources\"}"
+     ],
+     [
+      "1792651383696080662",
+      "{\"type\":\"stderr\",\"_entry\":\"ModuleNotFoundError: No module named 'pkg_resources'\"}"
+     ],
+     [
+      "1792651383949837903",
+      "{\"type\":\"stderr\",\"_entry\":\"multirun: one or more of the provided commands ended abnormally\"}"
+     ],
+     [
+      "1792651404767185164",
+      "{\"type\":\"stdout\",\"_entry\":\"> [GUNICORN] Starting...\"}"
+     ],
+     [
+      "1792651404767496377",
+      "{\"type\":\"stdout\",\"_entry\":\"> [NGINX] Starting...\"}"
+     ],
+     [
+      "1792651405438219740",
+      "{\"type\":\"stderr\",\"_entry\":\"Traceback (most recent call last):\"}"
+     ],
+     [
+      "1792651405438401821",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/bin/gunicorn\\\", line 3, in <module>\"}"
+     ],
+     [
+      "1792651405439145150",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.wsgiapp import run\"}"
+     ],
+     [
+      "1792651405439199811",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py\\\", line 9, in <module>\"}"
+     ],
+     [
+      "1792651405439254373",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.base import Application\"}"
+     ],
+     [
+      "1792651405439297927",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py\\\", line 11, in <module>\"}"
+     ],
+     [
+      "1792651405439482555",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn import util\"}"
+     ],
+     [
+      "1792651405439553455",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/util.py\\\", line 25, in <module>\"}"
+     ],
+     [
+      "1792651405439890628",
+      "{\"type\":\"stderr\",\"_entry\":\"    import pkg_resources\"}"
+     ],
+     [
+      "1792651405440032455",
+      "{\"type\":\"stderr\",\"_entry\":\"ModuleNotFoundError: No module named 'pkg_resources'\"}"
+     ],
+     [
+      "1792651405710824444",
+      "{\"type\":\"stderr\",\"_entry\":\"multirun: one or more of the provided commands ended abnormally\"}"
+     ],
+     [
+      "1792651411371203695",
+      "{\"type\":\"stdout\",\"_entry\":\"> [GUNICORN] Starting...\"}"
+     ],
+     [
+      "1792651411371448006",
+      "{\"type\":\"stdout\",\"_entry\":\"> [NGINX] Starting...\"}"
+     ],
+     [
+      "1792651411981067850",
+      "{\"type\":\"stderr\",\"_entry\":\"Traceback (most recent call last):\"}"
+     ],
+     [
+      "1792651411981209504",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/bin/gunicorn\\\", line 3, in <module>\"}"
+     ],
+     [
+      "1792651411982244142",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.wsgiapp import run\"}"
+     ],
+     [
+      "1792651411982378310",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py\\\", line 9, in <module>\"}"
+     ],
+     [
+      "1792651411982459894",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn.app.base import Application\"}"
+     ],
+     [
+      "1792651411982533726",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/app/base.py\\\", line 11, in <module>\"}"
+     ],
+     [
+      "1792651411982603857",
+      "{\"type\":\"stderr\",\"_entry\":\"    from gunicorn import util\"}"
+     ],
+     [
+      "1792651411982670074",
+      "{\"type\":\"stderr\",\"_entry\":\"  File \\\"/usr/local/lib/python3.12/site-packages/gunicorn/util.py\\\", line 25, in <module>\"}"
+     ],
+     [
+      "1792651411982742508",
+      "{\"type\":\"stderr\",\"_entry\":\"    import pkg_resources\"}"
+     ],
+     [
+      "1792651411982808217",
+      "{\"type\":\"stderr\",\"_entry\":\"ModuleNotFoundError: No module named 'pkg_resources'\"}"
+     ],
+     [
+      "1792651412233112674",
+      "{\"type\":\"stderr\",\"_entry\":\"multirun: one or more of the provided commands ended abnormally\"}"
+     ]
+    ]
+   }
+  ]
+ }
+}

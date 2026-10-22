@@ -1,0 +1,29 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop/events",
+ "params": {
+  "start": "1792660726",
+  "end": "1792664326"
+ },
+ "status": 200,
+ "recorded_at": 1792664326,
+ "body": {
+  "data": [
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "start",
+    "action": "start",
+    "time": "1792664305",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   },
+   {
+    "id": "9c81324d9da8324d6aee77504b884d5fba03e58fa9204756ef9c572a8e0993cb",
+    "status": "create",
+    "action": "create",
+    "time": "1792664303",
+    "release": "6ad9e2c163b87278cbb18303",
+    "tag": "v1"
+   }
+  ]
+ }
+}

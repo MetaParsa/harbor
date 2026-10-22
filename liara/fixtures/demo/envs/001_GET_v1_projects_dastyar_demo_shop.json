@@ -1,0 +1,33 @@
+{
+ "request": "GET /v1/projects/dastyar-demo-shop",
+ "params": {},
+ "status": 200,
+ "recorded_at": 1792664444,
+ "body": {
+  "project": {
+   "_id": "6ad9e2b8615e2e0c8f34561a",
+   "project_id": "dastyar-demo-shop",
+   "type": "node",
+   "status": "ACTIVE",
+   "readOnlyRootFilesystem": true,
+   "defaultSubdomain": true,
+   "defaultSubdomainExpired": false,
+   "keepDefaultSubdomain": false,
+   "zeroDowntime": false,
+   "scale": 1,
+   "envs": [],
+   "planID": "small-g2",
+   "bundlePlanID": "basic",
+   "network": {
+    "_id": "6ad9b01d07e024287d18f90f",
+    "name": "default"
+   },
+   "dns": [],
+   "created_at": "2026-10-22T10:17:28.429Z",
+   "hourlyPrice": 659.72,
+   "bundleHourlyPrice": 381.94,
+   "isDeployed": true,
+   "reservedDiskSpace": 0
+  }
+ }
+}

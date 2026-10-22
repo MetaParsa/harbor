@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>دستیار دیپلوی و SRE لیارا</title>
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<main>
+  <div class="top">
+    <div><h1>دستیار دیپلوی و SRE لیارا</h1>
+      <div class="muted">مشکل سایتت رو بگو؛ شواهد رو از لیارا می‌خونم، علت رو می‌گم و با تأیید تو درستش می‌کنم.</div></div>
+    <span id="conn" class="pill">وصل نیست</span>
+  </div>
+
+  <div id="banner" class="box banner hidden" role="alert"></div>
+
+  <section id="connect" class="box">
+    <div><b>وصل شدن به حساب لیارا</b></div>
+    <div id="demoHint" class="box banner small hidden">این نسخه‌ی نمایشیه: سه برنامه‌ی ضبط‌شده از لیارای واقعی (متغیر جاافتاده،
+      باگ کد، نشت حافظه)، بدون حساب و بدون هزینه. هر متنی رو به‌جای کلید بنویس و «وصل شو» رو بزن.</div>
+    <ol class="small">
+      <li>در console.liara.ir به بخش «کلیدهای API» برو.</li>
+      <li>یک کلید با مدت اعتبار کوتاه بساز (مثلاً تا آخر هفته).</li>
+      <li>کلید رو این‌جا بذار. فقط در حافظه‌ی این سرور می‌مونه و هیچ‌جا ذخیره نمی‌شه.</li>
+    </ol>
+    <form id="connectForm">
+      <label for="token" class="small">کلید API لیارا</label>
+      <input id="token" class="ltr" type="password" autocomplete="off" placeholder="eyJ…">
+      <div class="row"><button id="connectBtn">وصل شو</button><span id="connectMsg" class="muted" role="status"></span></div>
+    </form>
+  </section>
+
+  <section id="live" class="hidden">
+    <div id="apps" class="chips"></div>
+
+
+    <div id="home" class="box hidden">
+      <div class="home-head">
+        <div><span id="hDot" class="dot"></span><b id="hName"></b> <span id="hState" class="muted"></span></div>
+        <a id="hLink" class="small" target="_blank" rel="noopener noreferrer">باز کردن سایت ↗</a>
+      </div>
+      <div class="meter"><div class="lbl"><span>حافظه (RAM)</span><span id="hRam">—</span></div><div class="bar" id="hRamBar" role="meter" aria-label="مصرف حافظه" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
+      <div class="meter"><div class="lbl"><span>پردازنده (CPU)</span><span id="hCpu">—</span></div><div class="bar" id="hCpuBar" role="meter" aria-label="مصرف پردازنده" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
+      <div class="muted small mt" id="hPlan"></div>
+      <div class="muted small"><span id="hZd"></span> <button class="ghost hidden" id="zdBtn">روشنش کن</button></div>
+      <div class="muted small" id="hRel"></div>
+      <div class="row"><button class="ghost" id="checkBtn">الان بررسی کن</button>
+        <button class="ghost" id="domainBtn">وصل کردن دامنه</button></div>
+      <form id="domainForm" class="row hidden"><input id="domainText" class="ltr" aria-label="دامنه" placeholder="shop.example.ir" autocomplete="off">
+        <button>وصل کن</button></form>
+    </div>
+
+    <div class="box" id="newBox">
+      <div><b>پروژه‌ی تازه رو آنلاین کن</b></div>
+      <div class="muted small">فایل zip پروژه‌ات رو بده (بدون node_modules). اول فقط نگاهش می‌کنم؛ تا تأیید نکنی چیزی روی لیارا ساخته نمی‌شه.</div>
+      <div class="row"><label class="file"><input id="zip" type="file" accept=".zip,application/zip">
+        <span class="pick">انتخاب فایل zip</span><span class="fname" id="zipName">فایلی انتخاب نشده</span></label>
+        <button id="zipBtn">بررسی پروژه</button></div>
+    </div>
+    <div class="box">
+      <div class="row split">
+        <span><b>ایجنت کدنویسی</b> <span id="agentState" class="pill">وصل نیست</span></span>
+        <button class="ghost" id="pairBtn">وصل کردن به ایجنت کدنویسی</button>
+      </div>
+      <div id="pairOut" class="hidden"><div class="code" id="pairCode"></div><div class="muted small" id="pairMsg"></div></div>
+    </div>
+
+    <div id="feed" aria-live="polite"></div>
+    <div id="statusLine" class="status" role="status" aria-live="polite"></div>
+
+    <details class="box"><summary>کارهایی که انجام شد</summary><pre id="log"></pre></details>
+  </section>
+</main>
+
+<div id="composer" class="composer hidden">
+  <form id="ask"><input id="askText" aria-label="مشکل سایت" autocomplete="off" placeholder="مشکل رو با زبان خودت بگو؛ مثلاً «صفحه‌ی پرداخت خطا می‌ده» یا «سایتم کند شده»">
+    <button id="askBtn">بفرست</button></form>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

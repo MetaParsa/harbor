@@ -1,0 +1,46 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46/releases",
+ "params": {
+  "page": 1,
+  "count": 20
+ },
+ "status": 200,
+ "ms": 82,
+ "body": {
+  "total": 1,
+  "currentRelease": "6ad9b02a07e024287d18fb92",
+  "readyReleasesCount": 1,
+  "releases": [
+   {
+    "_id": "6ad9b02a07e024287d18fb92",
+    "type": "DEPLOY",
+    "imageName": "registry.c1.liara.ir/apps/6ad9b01d615e2e0c8f27a024:i2cnd3h3gdbq",
+    "projectType": "flask",
+    "state": "READY",
+    "port": 80,
+    "buildArgs": {
+     "__FLASK_MIRROR": "true",
+     "__FLASK_MIRRORURL": "http://10.16.100.42/repository/pypi-proxy",
+     "__FLASK_APPMODULE": "main:app"
+    },
+    "buildLocation": "iran",
+    "buildTimeout": 5,
+    "message": "L0 app D raw (dotenv missing)",
+    "client": "python-httpx/0.28.1",
+    "disks": [],
+    "finishedAt": "2026-10-22T06:42:17.484Z",
+    "platformConfig": {
+     "mirror": true,
+     "pythonVersion": "3.12",
+     "nodeVersion": "20",
+     "mirrorURL": "http://10.16.100.42/repository/pypi-proxy",
+     "appModule": "main:app"
+    },
+    "createdAt": "2026-10-22T06:41:46.821Z",
+    "tag": "v1",
+    "sourceAvailable": true
+   }
+  ],
+  "platform": "flask"
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "request": "GET /v1/projects/l0-dyar-6b46/metrics/summary",
+ "params": {},
+ "status": 200,
+ "ms": 413,
+ "body": {
+  "cpuUsage": [],
+  "memoryUsage": [],
+  "disksUsage": []
+ }
+}

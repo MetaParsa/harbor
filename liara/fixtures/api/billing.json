@@ -1,0 +1,13 @@
+{
+ "request": "GET /v1/billing",
+ "params": {},
+ "status": 200,
+ "ms": 191,
+ "body": {
+  "user": {
+   "balance": 0,
+   "accountType": "REAL_PERSON",
+   "minCreditAmount": 20000
+  }
+ }
+}

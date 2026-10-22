@@ -1,0 +1,9 @@
+{
+ "request": "GET /v1/me/free-credit",
+ "params": {},
+ "status": 200,
+ "ms": 78,
+ "body": {
+  "remainingFreeCredit": 0
+ }
+}

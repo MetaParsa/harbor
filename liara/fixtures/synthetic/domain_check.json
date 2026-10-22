@@ -1,0 +1,15 @@
+{
+ "synthetic": true,
+ "note": "shape from docs/liara-ops-api.md §7 ({domain:{...}}), not live-tested",
+ "status": 200,
+ "body": {
+  "domain": {
+   "_id": "dom-1",
+   "name": "example.ir",
+   "status": "PENDING",
+   "certificatesStatus": "INACTIVE",
+   "CNameRecord": "l0-dyar-6b46.liara.run",
+   "verificationCode": "liara-verify-abc"
+  }
+ }
+}

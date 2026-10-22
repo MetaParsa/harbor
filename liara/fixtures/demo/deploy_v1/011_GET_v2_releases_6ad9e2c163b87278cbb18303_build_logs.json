@@ -1,0 +1,48 @@
+{
+ "request": "GET /v2/releases/6ad9e2c163b87278cbb18303/build-logs",
+ "params": {
+  "since": "2026-10-22T10:17:41.253Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664266,
+ "body": {
+  "release": {
+   "_id": "6ad9e2c163b87278cbb18303",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e2cba073b879201dd736",
+    "line": "> Configuring timezone: Asia/Tehran\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:47.818Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2ccc5e512f48f743c36",
+    "line": " ---> 3e2f4c64f2ac\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:48.728Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2ccc5e512f48f743c38",
+    "line": "Successfully built 3e2f4c64f2ac\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:48.762Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2cca073b879201dd764",
+    "line": "Successfully tagged apps/6ad9e2b8615e2e0c8f34561a:mlcuzlfykhol\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:48.788Z",
+    "__v": 0
+   }
+  ]
+ }
+}

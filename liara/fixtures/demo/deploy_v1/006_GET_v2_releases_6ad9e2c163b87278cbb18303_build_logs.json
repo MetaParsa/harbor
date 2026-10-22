@@ -1,0 +1,96 @@
+{
+ "request": "GET /v2/releases/6ad9e2c163b87278cbb18303/build-logs",
+ "params": {
+  "since": "2026-10-22T10:17:39.316Z"
+ },
+ "status": 200,
+ "recorded_at": 1792664258,
+ "body": {
+  "release": {
+   "_id": "6ad9e2c163b87278cbb18303",
+   "state": "BUILDING"
+  },
+  "buildOutput": [
+   {
+    "_id": "6ad9e2c3c5e512f48f74396d",
+    "line": "# Executing 17 build trigger",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.658Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3c5e512f48f74396f",
+    "line": "s",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.700Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3c5e512f48f743974",
+    "line": "\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.747Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3a073b879201dd5ab",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.785Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3c5e512f48f743976",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.850Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3c5e512f48f74397a",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.885Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3a073b879201dd5c4",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.942Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c3c5e512f48f74397c",
+    "line": " ---> Using cache\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:39.975Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c48ab11135da1ea40e",
+    "line": "> Using Liara mirror to install packages.\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:40.420Z",
+    "__v": 0
+   },
+   {
+    "_id": "6ad9e2c48ab11135da1ea410",
+    "line": "> Running npm install...\n",
+    "stream": "STDOUT",
+    "releaseID": "6ad9e2c163b87278cbb18303",
+    "createdAt": "2026-10-22T10:17:40.469Z",
+    "__v": 0
+   }
+  ]
+ }
+}
