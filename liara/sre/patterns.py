@@ -227,10 +227,18 @@ def diagnose(f: Facts, ledger: list[Evidence], symptom: dict, env_history: list[
     if not hyps and all_probes_ok and not err_reqs_cur and not tbs_cur and not ooms and not restarts:
         ask = "کدوم صفحه یا چه کاری مشکل داره؟" if not symptom.get("route") else None
         meds = [e.value["median_ms"] for e in ledger if e.kind == "probe" and e.value.get("median_ms")]
-        speed = (f" صفحه‌ها حدود {fa_num(max(meds) / 1000, 1)} ثانیه جواب می‌دن؛ الان کند نیست."
+        took = (f"{fa_num(max(meds) / 1000, 1)} ثانیه" if meds and max(meds) >= 1000 else f"{fa_num(max(meds or [0]))} میلی‌ثانیه")
+        speed = (f" صفحه‌ها حدود {took} جواب می‌دن؛ الان کند نیست."
                  if meds and symptom.get("kind") == "slow" else "")      # answer the question that was asked
-        hyps.append(Hypothesis("H0", "الان سایت سالم جواب می‌ده و در لاگ خطایی نیست." + speed
-                               + (" بگو کدوم صفحه یا چه کاری مشکل داره تا همون رو بررسی کنم." if ask else ""),
+        named = next((e for e in ledger if e.kind == "probe" and symptom.get("route")
+                      and e.value["route"].split("?")[0] == symptom["route"].split("?")[0]), None)
+        page = (f" صفحه‌ای که گفتی ({ltr(named.value['route'].split('?')[0])}) رو {fa_num(len(named.value['codes']))} بار "
+                "بررسی کردم و هر بار درست جواب داد." if named else "")
+        # the message didn't describe a problem at all: say what this box is for and where the rest lives
+        other = symptom.get("kind") == "other" and not symptom.get("route")
+        tail = (" اگه مشکل خاصی دیدی بگو کدوم صفحه؛ دامنه، پروژه‌ی تازه و هزینه هم دکمه یا کارت خودشون رو دارن." if other
+                else " بگو کدوم صفحه یا چه کاری مشکل داره تا همون رو بررسی کنم." if ask else "")
+        hyps.append(Hypothesis("H0", "الان سایت سالم جواب می‌ده و در لاگ خطایی نیست." + page + speed + tail,
                                0.7, _ids(ledger, "probe") + _ids(ledger, "events"),
                                [{"kind": "wait", "seconds": 0, "label": "", "question": ask}]))
     if not hyps:

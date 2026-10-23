@@ -182,3 +182,21 @@ def test_judge_mode_answers_three_recorded_scenarios_and_refuses_writes(tmp_path
     act = next(a for a in page.get("/api/actions").json()["actions"] if a["id"] == card["pending_action_id"])
     res = page.post(f"/api/actions/{act['id']}/approve", json={"args_hash": act["args_hash"]}, headers=ORIGIN).json()
     assert res["status"] == "failed" and "نمایش ضبط‌شده" in res["message"]
+
+
+def test_healthy_answer_names_the_checked_page_and_points_elsewhere_for_non_problems(tmp_path, monkeypatch):
+    monkeypatch.setenv("LIARA_REPLAY", "demo")
+    monkeypatch.setenv("LIARA_DATA_DIR", str(tmp_path))
+    from liara.liara_api import replay
+    monkeypatch.setitem(replay.DEMO_APPS, "shop-healthy", "v1_healthy")
+    import liara.app as app_mod
+    app_mod = importlib.reload(app_mod)
+    page = TestClient(app_mod.app)
+    page.post("/api/session", json={"token": "any"}, headers=ORIGIN)
+
+    def headline(text):
+        return page.post("/api/troubleshoot", json={"app": "shop-healthy", "text": text}, headers=ORIGIN).json()["headline"]
+
+    assert "/checkout" in headline("صفحه‌ی پرداخت خطا می‌ده") and "هر بار درست جواب داد" in headline("صفحه‌ی پرداخت خطا می‌ده")
+    assert "دامنه، پروژه‌ی تازه و هزینه" in headline("دامنه‌ام رو وصل کن")
+    assert "کند نیست" in headline("site kond shode")

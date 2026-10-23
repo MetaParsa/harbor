@@ -28,9 +28,9 @@ URL = re.compile(r"https?://\S+")
 KEEP_TOP_WITHIN = 0.15        # the model may reorder, but not demote the rules' top pick by more than this
 Redact = Callable[[str], str]
 
-SLOW = re.compile(r"(کند|کُند|دیر|طول می|لود نمی|slow|lag|timeout|تایم ?اوت)")
-DOWN = re.compile(r"(باز نمی|بالا نمی|از دسترس|قطع|down|offline|۵۰۲|۵۰۳|502|503)")
-ERROR = re.compile(r"(خطا|ارور|error|۵۰۰|500|کار نمی|خراب|مشکل)")
+SLOW = re.compile(r"(کند|کُند|دیر|طول می|لود نمی|slow|lag|timeout|تایم ?اوت|kond)")
+DOWN = re.compile(r"(باز نمی|بالا نمی|از دسترس|قطع|کرش|ری‌?استارت|down|offline|crash|restart|۵۰۲|۵۰۳|502|503)")
+ERROR = re.compile(r"(خطا|ارور|error|۵۰۰|500|کار نمی|خراب|مشکل|kharab)")
 # Without the model, the commonest page words still point the probe at the right route; the model does the rest.
 PAGE_WORDS = {"پرداخت": "/checkout", "checkout": "/checkout", "سبد": "/cart", "ورود": "/login", "لاگین": "/login"}
 

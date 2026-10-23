@@ -18,8 +18,10 @@ import time
 from pathlib import Path
 
 from fastapi import Cookie, Depends, FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from liara.agent.actions import APP_NAME
 from liara.agent.budget import DEFAULT_DIR, Budget
@@ -74,6 +76,23 @@ class Refused(Exception):
 @app.exception_handler(Refused)
 async def refused(_request: Request, e: Refused):
     return JSONResponse({"error": e.error, "message": e.message}, status_code=e.status)
+
+
+FRAMEWORK_FA = {404: "این آدرس وجود نداره.", 405: "این آدرس این نوع درخواست رو قبول نمی‌کنه."}
+
+
+@app.exception_handler(StarletteHTTPException)
+async def framework_refused(_request: Request, e: StarletteHTTPException):
+    """Routing errors (unknown path, wrong method) answer in the same {"error", "message"} shape, in Persian."""
+    return JSONResponse({"error": f"http_{e.status_code}", "message": FRAMEWORK_FA.get(e.status_code, "درخواست قابل انجام نیست.")},
+                        status_code=e.status_code)
+
+
+@app.exception_handler(RequestValidationError)
+async def malformed(_request: Request, e: RequestValidationError):
+    fields = sorted({".".join(str(x) for x in err.get("loc", [])[1:]) or "body" for err in e.errors()})
+    return JSONResponse({"error": "bad_request", "fields": fields,
+                         "message": "درخواست ناقص یا نادرسته (" + "، ".join(fields) + ")."}, status_code=422)
 
 
 NO_SESSION = ("no_session", "اول توکن لیارا رو وصل کن.", 401)

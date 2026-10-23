@@ -224,7 +224,10 @@ cd starcoach-agents
 uv sync
 uv run --frozen python -m liara.dev_server          # نسخه‌ی نمایشی: سه برنامه‌ی ضبط‌شده، بدون حساب و هزینه → http://127.0.0.1:8771
 uv run --frozen python -m liara.dev_server --live   # لیارای واقعی با کلید API که در صفحه می‌گذارید
-uv run --frozen pytest liara/tests -q               # ۱۲۱ تست، همه روی پاسخ‌های ضبط‌شده (بدون هزینه)
+uv run --frozen pytest liara/tests -q               # ۱۲۴ تست، همه روی پاسخ‌های ضبط‌شده (بدون هزینه)
+uv run --frozen python liara/scripts/stress_symptoms.py   # ۳۹ جمله‌ی مختلف × ۳ برنامه‌ی نمایشی: ۱۱۷ از ۱۱۷ علت درست
+uv run --frozen python liara/scripts/stress_healthy.py    # برنامه‌ی سالم × ۱۸ جمله: هیچ علت ساختگی‌ای گفته نمی‌شه
+uv run --frozen python liara/scripts/fuzz_routes.py       # ۲۶۷ درخواست خراب به همه‌ی مسیرها: بدون خطای سرور، همه با پیام فارسی
 ```
 
 متغیرهای اختیاری:

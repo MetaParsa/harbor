@@ -95,3 +95,17 @@ def test_busy_session_is_not_swept(web):
     s.subscribers.clear()
     app_mod.get_session("someone-else")
     assert sid not in app_mod.sessions
+
+
+def test_unknown_paths_and_malformed_bodies_answer_in_persian(tmp_path, monkeypatch):
+    monkeypatch.setenv("LIARA_DATA_DIR", str(tmp_path))
+    import importlib
+
+    import liara.app as app_mod
+    app_mod = importlib.reload(app_mod)
+    from fastapi.testclient import TestClient
+    c = TestClient(app_mod.app)
+    r = c.get("/api/apps/a%2Fb/overview")
+    assert r.status_code == 404 and "وجود نداره" in r.json()["message"]
+    r = c.post("/api/session", json={"nope": 1}, headers={"origin": "http://testserver"})
+    assert r.status_code == 422 and "token" in r.json()["fields"] and "نادرسته" in r.json()["message"]
