@@ -15,4 +15,5 @@ os.environ.setdefault("LIARA_DATA_DIR", "/tmp/liara-assistant")      # a Liara a
 
 if __name__ == "__main__":
     uvicorn.run("liara.app:app", host=os.environ.get("HOST", "0.0.0.0"), port=int(os.environ.get("PORT", "80")),
-                proxy_headers=True, forwarded_allow_ips=os.environ.get("FORWARDED_ALLOW_IPS", "127.0.0.1"))
+                proxy_headers=True, # the platform's proxy is the only way in, so trust it for the visitor's IP (per-IP limits); the VPS sets its own
+                forwarded_allow_ips=os.environ.get("FORWARDED_ALLOW_IPS", "*"))

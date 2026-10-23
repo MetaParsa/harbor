@@ -1,7 +1,7 @@
 """Dry-run demo-shop on the real Liara account and record everything for L3 (fixtures/demo/<label>/).
 
 Uses our own L1 client (dogfooding). Every response is saved redacted; /v1/me is never recorded (personal data).
-Spends credit: an app (~25k toman/day) and builds — within the budget the user approved on 2026-10-22.
+Spends credit: an app (~25k toman/day) and builds, so run it on purpose.
 
   uv run --frozen python -m liara.scripts.demo_dry_run create
   uv run --frozen python -m liara.scripts.demo_dry_run deploy v1 --env PAYMENT_API_URL=https://pay.example.ir/api
@@ -15,6 +15,7 @@ Spends credit: an app (~25k toman/day) and builds — within the budget the user
 import argparse
 import asyncio
 import json
+import os
 import re
 import sys
 import time
@@ -29,7 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 APPS = ROOT / "demo-apps" / "demo-shop"
 OUT = ROOT / "fixtures" / "demo"
 STATE = Path(__file__).with_name("demo_state.json")
-TOKEN_FILE = ROOT.parents[1] / "Liara" / "api.txt"
+TOKEN_FILE = Path(os.environ.get("LIARA_TOKEN_FILE") or ROOT.parents[1] / "Liara" / "api.txt")   # outside the repo
 L0_STATE = ROOT / "l0" / "state.json"
 
 
@@ -74,7 +75,7 @@ def put(**kw) -> None:
 
 
 def make_client() -> tuple[LiaraClient, Recorder]:
-    token = TOKEN_FILE.read_text(encoding="utf-8").strip().splitlines()[0].strip()
+    token = os.environ.get("LIARA_TOKEN", "").strip() or TOKEN_FILE.read_text(encoding="utf-8").strip().splitlines()[0].strip()
     team = json.loads(L0_STATE.read_text(encoding="utf-8"))["team_id"]
     rec = Recorder(Redactor([token]))
     return LiaraClient(token, team, transport=rec, timeout_s=60), rec

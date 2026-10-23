@@ -1,4 +1,4 @@
-"""Record Claude's real answers for the three judge-mode apps (user-approved spend, 2026-10-23: ≤ $0.20).
+"""Record Claude's real answers for the three judge-mode apps (real model spend, about $0.20).
 
 Runs the normal diagnosis over each demo recording with the real model on, and saves what the model answered for
 its two jobs (understand the complaint, rank + explain the evidence) to fixtures/demo/llm/<app>.json, with the model

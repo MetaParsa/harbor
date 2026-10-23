@@ -275,6 +275,8 @@ async def deploy_loop(policy: Policy, s: Session, job: Job, *, prober=probe, sle
         job.builds += 1
         n = job.builds
         _emit(s, job, "build", f"بیلد {fa_num(n)} از {fa_num(MAX_BUILDS)}: بسته‌بندی و ارسال کد…", attempt=n)
+        if policy.budget.killed():
+            return _stop(s, job, "اجرای هر تغییری روی لیارا فعلاً خاموش شده (کلید توقف اضطراری).")
         try:
             data, info = await asyncio.to_thread(package_dir, job.work, a.platform)
             args["source_id"] = await s.client.upload_source(app, data)

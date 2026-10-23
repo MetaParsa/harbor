@@ -1,4 +1,4 @@
-"""Host the assistant itself on Liara, with its own Liara client (user-approved 2026-10-23: one app + ~3 builds).
+"""Host the assistant itself on Liara, with its own Liara client (one app + a few builds).
 
 Creates the app (small plan, python platform) on the token's team if it doesn't exist, packs this repo the way the
 assistant packs any project (.gitignore rules, no secrets), releases it with the hosted settings (empty key = judge
@@ -45,7 +45,7 @@ async def main(name: str) -> int:
         say("packed", info)
         source = await c.upload_source(name, tar)
         envs = {"LIARA_REPLAY": "auto", "LIARA_DEV": "0", "LIARA_PUBLIC_ORIGIN": f"https://{name}.liara.run",
-                "LIARA_DATA_DIR": "/tmp/liara-assistant", "LLM_ENABLED": "0", "LIARA_WATCH_PUSH": "0",
+                "LIARA_DATA_DIR": "/tmp/liara-assistant", "FORWARDED_ALLOW_IPS": "*", "LLM_ENABLED": "0", "LIARA_WATCH_PUSH": "0",
                 "LIARA_MAX_SESSIONS": "200", "LIARA_MAX_SOURCE_MB": "64", "LIARA_JOBS_TOTAL": "6",
                 "LIARA_DEPLOYS_PER_DAY": "60", "LIARA_APPS_PER_DAY": "10", "LIARA_WRITES_PER_HOUR_TOTAL": "200"}
         body = c.release_body(source, "python", 80, platform_config={"version": "3.12"}, envs=envs,

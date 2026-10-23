@@ -1,4 +1,4 @@
-"""Live run of the first-deploy chapter against the local assistant (user-approved 2026-10-22).
+"""Live run of the first-deploy chapter against the local assistant (spends real builds; run it on purpose).
 
 Reads the Liara token from LIARA_TOKEN, else the file named by LIARA_TOKEN_FILE (default ../Liara/api.txt, outside the
 repo; never printed), opens a session on the local backend, uploads a

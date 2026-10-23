@@ -693,6 +693,8 @@ async def bridge_deploy(request: Request, app_name: str, port: int | None = None
         raise Refused("bad_source", "بدنه باید یک فایل tar.gz باشه.", 400)
     try:
         app_info = await s.client.get_app(app_name)
+        if policy.budget.killed():                       # an upload is already a write on the account
+            raise Refused("kill_switch", "اجرای هر تغییری روی لیارا فعلاً خاموش شده (کلید توقف اضطراری). فقط خواندن ممکنه.", 403)
         source_id = await s.client.upload_source(app_name, data)
     except LiaraError as e:
         return JSONResponse({"error": e.kind, "message": e.fa}, status_code=400)
