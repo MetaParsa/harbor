@@ -126,6 +126,12 @@ class FakeLLM:
         return LLMResult(text, [], {"prompt_tokens": 0, "completion_tokens": 0}, "fake", role, 0)
 
 
+def _quick_thinking(model: str) -> dict:
+    """No reasoning pass for these short steps: Sonnet 5.5 rejects «disabled» and takes «between_tools» instead
+    (at effort high or below); Haiku 5.5 takes «disabled» (at high or below)."""
+    return {"type": "between_tools"} if model.startswith("claude-sonnet-5-5") else {"type": "disabled"}
+
+
 class LLMClient:
     """Calls providers in order; on timeout / 429 / 5xx / bad JSON it tries the next one."""
 
@@ -195,12 +201,15 @@ class LLMClient:
 
     def _anthropic(self, p: "AnthropicProvider", model, messages, max_tokens, json_mode, tools, schema=None):
         """Claude through the official SDK. The app speaks OpenAI-shaped messages; they are translated both ways.
-        Thinking off and low effort: every call here is a short, latency-sensitive step (route, name a photo, answer)."""
+        Thinking off (or the nearest the model allows) and low effort: every call is a short, latency-sensitive step."""
         system, msgs = to_anthropic_messages(messages)
         if json_mode:
             system = (system + "\n\n" if system else "") + "Reply with one JSON object only, no prose and no code fence."
         kw: dict = {"model": model, "max_tokens": max_tokens, "messages": msgs,
-                    "thinking": {"type": "disabled"}, "output_config": {"effort": "low"}}
+                    "thinking": _quick_thinking(model), "output_config": {"effort": "low"}}
+        if model.startswith("claude-sonnet-5-5"):   # a refused request is re-run by Anthropic's default fallback model
+            kw["extra_headers"] = {"anthropic-beta": "server-side-fallback-2026-07-01"}
+            kw["extra_body"] = {"fallbacks": "default"}
         if schema:   # structured outputs: the reply is JSON matching the schema, never prose
             kw["output_config"]["format"] = {"type": "json_schema", "schema": schema}
         if system:
@@ -274,7 +283,7 @@ def to_anthropic_messages(messages: list[dict]) -> tuple[str, list[dict]]:
     return "\n\n".join(s for s in system if s), out
 
 
-HAIKU = "claude-haiku-5-5"   # every role runs on Claude Haiku 5.5; MODEL_* env can still override
+SONNET = "claude-sonnet-5-5"   # every role runs on Claude Sonnet 5.5; MODEL_* env can still override
 
 
 def from_env(fake: FakeLLM | None = None) -> LLMClient:
@@ -289,12 +298,12 @@ def from_env(fake: FakeLLM | None = None) -> LLMClient:
             if base and key:
                 providers.append(Provider(os.environ.get(f"{prefix}_NAME", prefix.lower()), base, key))
     models = {
-        "router": os.environ.get("MODEL_ROUTER", HAIKU),
-        "chat": os.environ.get("MODEL_CHAT", HAIKU),
-        "call": os.environ.get("MODEL_CALL", HAIKU),
-        "vision": os.environ.get("MODEL_VISION", HAIKU),
-        "judge": os.environ.get("MODEL_JUDGE", HAIKU),
-        "ui": os.environ.get("MODEL_UI", HAIKU),
+        "router": os.environ.get("MODEL_ROUTER", SONNET),
+        "chat": os.environ.get("MODEL_CHAT", SONNET),
+        "call": os.environ.get("MODEL_CALL", SONNET),
+        "vision": os.environ.get("MODEL_VISION", SONNET),
+        "judge": os.environ.get("MODEL_JUDGE", SONNET),
+        "ui": os.environ.get("MODEL_UI", SONNET),
     }
     guard = SpendGuard(int(os.environ.get("LLM_DAILY_TOKENS", "200000")),
                        int(os.environ.get("LLM_SESSION_TOKENS", "40000")))
