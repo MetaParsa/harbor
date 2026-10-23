@@ -767,7 +767,7 @@ def _versioned_index() -> str:
     """index.html with app.js / app.css addressed by their content hash: a CDN in front (seen live: ArvanCloud
     caches them despite no-cache) can then never serve an old script with a new page."""
     html = (WEB / "index.html").read_text(encoding="utf-8")
-    for name in ("app.js", "app.css"):
+    for name in ("app.js", "app.css", "favicon.svg"):
         tag = hashlib.sha256((WEB / name).read_bytes()).hexdigest()[:10]
         html = html.replace(f'"/{name}"', f'"/{name}?v={tag}"')
     return html
