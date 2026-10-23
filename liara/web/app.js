@@ -697,7 +697,7 @@ function listen() {
 
 async function refreshLog() {
   const [code, res] = await api("/api/log");
-  if (code === 200) $("log").textContent = res.log.map((e) => JSON.stringify(e)).join("\n") + `\n— تماس‌های API با لیارا: ${fa(res.api_calls)}`;
+  if (code === 200) { $("log").textContent = res.log.map((e) => JSON.stringify(e)).join("\n"); $("logCount").textContent = `تماس‌های API با لیارا در این نشست: ${fa(res.api_calls)}`; }
 }
 
 // already connected in this tab's cookie?
