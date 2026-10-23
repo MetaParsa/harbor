@@ -130,6 +130,7 @@ async def run_once(s: Session) -> None:
     for gone in [a for a in state if a not in apps]:
         state.pop(gone)                                  # an app deleted (or past the first five) is no longer watched
     s.watch.update(last_run=time.time(), error=None)
+    s.watch.setdefault("first_run", s.watch["last_run"])
     s.emit("watch", status(s))
 
 
@@ -148,7 +149,8 @@ def status(s: Session) -> dict:
     """What the page's watcher strip shows: per app the last summary and open conditions, plus recent alerts."""
     apps = {a: {"summary": r["summary"], "problems": list(r["conditions"].values())}
             for a, r in (s.watch.get("apps") or {}).items()}
-    return s.redactor.obj({"interval_s": INTERVAL_S, "demo": s.demo is not None, "max_apps": MAX_APPS, "last_run": s.watch.get("last_run"), "error": s.watch.get("error"),
+    return s.redactor.obj({"interval_s": INTERVAL_S, "demo": s.demo is not None, "max_apps": MAX_APPS,
+                           "first_run": s.watch.get("first_run"), "last_run": s.watch.get("last_run"), "error": s.watch.get("error"),
                            "apps": apps, "alerts": s.alerts[-10:]})
 
 
@@ -159,6 +161,13 @@ async def loop(s: Session, alive) -> None:
         with contextlib.suppress(Exception):
             await run_once(s)
         await asyncio.sleep(INTERVAL_S)
+
+
+def check_soon(s: Session) -> None:
+    """One extra round right away (after a fix was verified), so the watcher says «برطرف شد» without the minute's wait."""
+    if s.watch.get("last_run"):
+        task = asyncio.get_running_loop().create_task(run_once(s))
+        task.add_done_callback(lambda t: t.cancelled() or t.exception())   # a failed extra round is just skipped
 
 
 def ensure_running(s: Session, alive) -> None:

@@ -191,7 +191,7 @@ function retireBoards(incident, exceptId) {
     el.dataset.retired = "1";
     el.classList.add("stale");
     el.querySelectorAll("button").forEach((b) => (b.disabled = true));
-    el.prepend(h("div", { class: "muted small", text: "این تشخیص قدیمیه؛ آخرین تشخیص پایین‌تره." }));
+    el.prepend(h("div", { class: "muted small", text: exceptId ? "این تشخیص قدیمیه؛ آخرین تشخیص پایین‌تره." : "✓ این مشکل حل شد (نتیجه پایین‌تره)." }));
   }
 }
 
@@ -445,7 +445,8 @@ function renderWatch(w) {
   apps.forEach(([name, r]) => $("watchApps").append(h("li", { class: r.problems.length ? "bad" : "good",
     text: `${r.problems.length ? "✗" : "✓"} \u2066${name}\u2069: ${r.problems.length ? r.problems.join(" ") : r.summary}` })));
   $("watchAlerts").textContent = "";
-  (w.alerts || []).slice(-5).reverse().forEach((a) => $("watchAlerts").append(alertLine(a)));
+  // the open problems are listed above; here only what changed after the first round (new problems, recoveries)
+  (w.alerts || []).filter((a) => a.at > (w.first_run || 0) + 1).slice(-5).reverse().forEach((a) => $("watchAlerts").append(alertLine(a)));
 }
 
 function alertLine(a) {
@@ -699,7 +700,7 @@ async function refreshLog() {
 }
 
 // already connected in this tab's cookie?
-fetch("/api/actions", { credentials: "same-origin" }).then((r) => { if (r.status === 200) start({}); }).catch(() => {});
+fetch("/api/whoami", { credentials: "same-origin" }).then((r) => r.json()).then((w) => { if (w.connected) start({}); }).catch(() => {});
 fetch("/health").then((r) => r.json()).then((h) => {
   if (h.demo) $("demoHint").classList.remove("hidden");
   if (h.both) $("bothHint").classList.remove("hidden");

@@ -24,7 +24,7 @@ import httpx
 
 from fastapi import Cookie, Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, StreamingResponse
+from fastapi.responses import FileResponse, HTMLResponse, Response, JSONResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -63,6 +63,9 @@ SECURITY_HEADERS = {
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
 }
+FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0b6e5f"/>'
+           '<path d="M9 17l5 5 9-11" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" '
+           'stroke-linejoin="round"/></svg>')
 MAX_JSON_BYTES = 64 * 1024                 # every JSON route; code uploads have their own streaming caps
 UPLOAD_ROUTES = ("/api/projects", "/api/bridge/deploy")
 MAX_STREAMS_PER_SESSION = 4
@@ -372,6 +375,18 @@ async def reject(action_id: str, s: Session = Depends(page_write)):
     return policy.reject(s, action_id)
 
 
+@app.get("/api/whoami")
+async def whoami(lsid: str | None = Cookie(default=None)):
+    """Is this browser already connected? (200 either way, so a fresh page doesn't log an error.)"""
+    return {"connected": get_session(lsid) is not None}
+
+
+@app.get("/favicon.ico")
+@app.get("/favicon.svg")
+async def favicon():
+    return Response(FAVICON, media_type="image/svg+xml", headers={"Cache-Control": "max-age=86400"})
+
+
 @app.get("/api/watch")
 async def watch_status(s: Session = Depends(web_session)):
     """The watcher's last round: per app a one-line summary and open problems, plus recent alerts."""
@@ -467,7 +482,10 @@ def demo_verify_args(s: Session, incident_id: str | None) -> dict:
 
 @app.post("/api/incidents/{incident_id}/verify")
 async def api_verify(incident_id: str, s: Session = Depends(page_write)):
-    return await verify_fix(s, incident_id, **demo_verify_args(s, incident_id))
+    res = await verify_fix(s, incident_id, **demo_verify_args(s, incident_id))
+    if res.get("ok"):
+        watcher.check_soon(s)
+    return res
 
 
 # ---------- first deploy: zip → analysis + plan → create (two taps) → build/heal loop → live ----------
@@ -707,7 +725,10 @@ async def bridge_verify(body: BridgeVerifyIn, s: Session = Depends(bridge)):
         inc_id = max(incs, key=lambda i: i.opened_at).id if incs else None
     if not inc_id:
         raise Refused("no_incident", "برای این برنامه هنوز مشکلی بررسی نشده؛ اول troubleshoot رو اجرا کن.", 404)
-    return await verify_fix(s, inc_id, **demo_verify_args(s, inc_id))
+    res = await verify_fix(s, inc_id, **demo_verify_args(s, inc_id))
+    if res.get("ok"):
+        watcher.check_soon(s)
+    return res
 
 
 @app.post("/api/bridge/ci")
