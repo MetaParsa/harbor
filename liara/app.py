@@ -24,7 +24,7 @@ import httpx
 
 from fastapi import Cookie, Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, HTMLResponse, Response, JSONResponse, PlainTextResponse, StreamingResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -63,9 +63,6 @@ SECURITY_HEADERS = {
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
 }
-FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0b6e5f"/>'
-           '<path d="M9 17l5 5 9-11" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" '
-           'stroke-linejoin="round"/></svg>')
 MAX_JSON_BYTES = 64 * 1024                 # every JSON route; code uploads have their own streaming caps
 UPLOAD_ROUTES = ("/api/projects", "/api/bridge/deploy")
 MAX_STREAMS_PER_SESSION = 4
@@ -384,7 +381,8 @@ async def whoami(lsid: str | None = Cookie(default=None)):
 @app.get("/favicon.ico")
 @app.get("/favicon.svg")
 async def favicon():
-    return Response(FAVICON, media_type="image/svg+xml", headers={"Cache-Control": "max-age=86400"})
+    """Torob's pixel radish («تربچه»), as a 19×19 pixel-art SVG."""
+    return FileResponse(WEB / "favicon.svg", media_type="image/svg+xml", headers={"Cache-Control": "max-age=86400"})
 
 
 @app.get("/api/watch")
