@@ -398,9 +398,15 @@ def demo_args(s: Session, app_name: str) -> dict:
     return {"prober": s.demo.probe, "now": s.demo.now(app_name)} if s.demo else {}
 
 
+def session_llm(s: Session, app_name: str, text: str):
+    """Judge mode: Claude's recorded answers for that app; otherwise the real model only if LLM_ENABLED=1."""
+    return s.demo.llm(app_name, text) if s.demo else sre_llm()
+
+
 @app.post("/api/troubleshoot")
 async def api_troubleshoot(body: TroubleshootIn, s: Session = Depends(page_write)):
-    return await troubleshoot(s, check_app(body.app), body.text[:500], llm=sre_llm(), **demo_args(s, body.app))
+    return await troubleshoot(s, check_app(body.app), body.text[:500], llm=session_llm(s, body.app, body.text[:500]),
+                              **demo_args(s, body.app))
 
 
 @app.post("/api/incidents/{incident_id}/fix")
@@ -600,7 +606,8 @@ class BridgeCiIn(BaseModel):
 
 @app.post("/api/bridge/troubleshoot")
 async def bridge_troubleshoot(body: BridgeTroubleshootIn, s: Session = Depends(bridge)):
-    return await troubleshoot(s, check_app(body.app), body.symptom[:500], llm=sre_llm(), **demo_args(s, body.app))
+    return await troubleshoot(s, check_app(body.app), body.symptom[:500], llm=session_llm(s, body.app, body.symptom[:500]),
+                              **demo_args(s, body.app))
 
 
 @app.post("/api/bridge/deploy")

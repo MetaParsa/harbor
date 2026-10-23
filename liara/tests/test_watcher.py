@@ -70,3 +70,14 @@ def test_hosted_mode_empty_key_is_judge_mode_and_a_key_is_live(tmp_path, monkeyp
         pass                                    # a real key goes to the real Liara API (stopped here: no network)
     else:
         raise AssertionError("a real key must open a live client")
+
+
+def test_judge_mode_shows_claudes_recorded_answers_and_rules_for_other_wording(tmp_path, monkeypatch):
+    from liara.liara_api.replay import DEMO_RECORDED_TEXT
+    _, page, _ = demo_page(tmp_path, monkeypatch)
+    b = page.post("/api/troubleshoot", json={"app": "shop-missing-env", "text": DEMO_RECORDED_TEXT["shop-missing-env"]},
+                  headers=ORIGIN).json()
+    assert b["ai"]["provider"] == "recorded" and b["ai"]["symptom_source"] == "llm" and b["ai"]["explain_source"] == "llm"
+    assert "PAYMENT_API_URL" in b["headline"] and b["footer"]["model"] == "llm"
+    other = page.post("/api/troubleshoot", json={"app": "shop-code-bug", "text": "چک‌اوت کار نمی‌کنه"}, headers=ORIGIN).json()
+    assert other["ai"]["symptom_source"] == "rules" and other["ai"]["explain_source"] == "llm"

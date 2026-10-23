@@ -112,7 +112,8 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
     inc.fix = None                                   # a new diagnosis replaces any earlier plan
     board = {
         "id": uuid.uuid4().hex[:12], "incident": inc.id, "app": app, "headline": headline,
-        "symptom": symptom, "question": symptom.get("question"),
+        # the model may ask a follow-up; once the evidence already points to a cause, the board skips it
+        "symptom": symptom, "question": symptom.get("question") if top.confidence < 0.7 else None,
         "hypotheses": [{**hypothesis_dict(h), "confidence": round(h.confidence, 2),
                         "fixes": [{**fx, "contract_fa": contract_fa(fx["contract"]) if fx.get("contract") else None,
                                    **({"capability": capability(fx["capability"])} if fx["kind"] == "manual" else {})}

@@ -1,0 +1,53 @@
+{
+ "app": "shop-memory-leak",
+ "text": "سایت هی قطع میشه",
+ "recorded_at": 1792765113,
+ "answers": {
+  "router": {
+   "role": "router",
+   "text": "{\"kind\": \"down\", \"route\": null, \"since_min\": null, \"question\": \"کدام صفحه یا آدرس قطع می‌شود، و این مشکل از چه زمانی شروع شده؟\"}",
+   "model": "claude-sonnet-5-5",
+   "usage": {
+    "prompt_tokens": 235,
+    "completion_tokens": 70
+   },
+   "ms": 2027
+  },
+  "chat": {
+   "role": "chat",
+   "text": "{\"order\": [\"P3\"], \"headline\": \"برنامه‌ات یک بار به‌خاطر کمبود حافظه ری‌استارت شده و مصرف حافظه هم مدام بالا می‌رود، برای همین سایت گاهی قطع می‌شود؛ هرچند بررسی‌های ما الان سایت را سالم نشان می‌دهد.\", \"added\": null}",
+   "model": "claude-sonnet-5-5",
+   "usage": {
+    "prompt_tokens": 1100,
+    "completion_tokens": 136
+   },
+   "ms": 2217
+  }
+ },
+ "board_headline": "برنامه‌ات یک بار به‌خاطر کمبود حافظه ری‌استارت شده و مصرف حافظه هم مدام بالا می‌رود، برای همین سایت گاهی قطع می‌شود؛ هرچند بررسی‌های ما الان سایت را سالم نشان می‌دهد.",
+ "ai": {
+  "provider": "live",
+  "symptom_source": "llm",
+  "understood": {
+   "kind": "down",
+   "route": null
+  },
+  "rules_understood": {
+   "kind": "down",
+   "route": null
+  },
+  "explain_source": "llm",
+  "rules_order": [
+   {
+    "id": "P3",
+    "confidence": 0.85,
+    "title": "حافظه مدام بالا می‌ره و برنامه به‌خاطر کمبود حافظه ری‌استارت می‌شه (نشت حافظه)."
+   }
+  ],
+  "rules_headline": "حافظه مدام بالا می‌ره و برنامه به‌خاطر کمبود حافظه ری‌استارت می‌شه (نشت حافظه).",
+  "final_order": [
+   "P3"
+  ],
+  "added": null
+ }
+}

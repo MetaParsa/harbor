@@ -235,7 +235,7 @@ const KIND_FA = { error: "خطا", slow: "کندی", down: "از دسترس خا
 function aiPanel(ai) {
   const on = ai.symptom_source === "llm" || ai.explain_source === "llm";
   const who = ai.provider === "recorded" ? "پاسخ ضبط‌شده‌ی Claude برای همین شواهد (نمایشی؛ بدون هزینه)" : on ? `مدل ${ai.provider} (زنده)` : "خاموش";
-  const box = h("details", {}, h("summary", { text: `هوش مصنوعی چه کرد؟ (${on ? who : "مدل خاموش؛ تشخیص با قواعد"})` }));
+  const box = h("details", on ? { open: "" } : {}, h("summary", { text: `هوش مصنوعی چه کرد؟ (${on ? who : "مدل خاموش؛ تشخیص با قواعد"})` }));
   const u = ai.understood || {}, r = ai.rules_understood || {};
   const list = h("ul", { class: "ev" },
     h("li", { text: `۱. فهم حرف تو — ${ai.symptom_source === "llm" ? "مدل" : "قواعد"}: نوع «${KIND_FA[u.kind] || u.kind}»، صفحه ${u.route || "نامعلوم"}` +

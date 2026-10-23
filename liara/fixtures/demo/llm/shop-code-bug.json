@@ -1,0 +1,53 @@
+{
+ "app": "shop-code-bug",
+ "text": "صفحه‌ی پرداخت خطا میده",
+ "recorded_at": 1792765108,
+ "answers": {
+  "router": {
+   "role": "router",
+   "text": "{\"kind\": \"error\", \"route\": \"/checkout\", \"since_min\": null, \"question\": \"از چه زمانی این خطا را می‌بینید و خطا دقیقاً چه پیامی نشان می‌دهد؟\"}",
+   "model": "claude-sonnet-5-5",
+   "usage": {
+    "prompt_tokens": 242,
+    "completion_tokens": 77
+   },
+   "ms": 2715
+  },
+  "chat": {
+   "role": "chat",
+   "text": "{\"order\": [\"P1\"], \"headline\": \"بعد از آخرین به‌روزرسانی کد (v4)، صفحه‌ی پرداخت در خط ۳۷ فایل server.js خطا می‌دهد و هر ۱۰ درخواست آن شکست خورده؛ بقیه‌ی صفحه‌ها سالم‌اند.\", \"added\": null}",
+   "model": "claude-sonnet-5-5",
+   "usage": {
+    "prompt_tokens": 1403,
+    "completion_tokens": 132
+   },
+   "ms": 2218
+  }
+ },
+ "board_headline": "بعد از آخرین به‌روزرسانی کد (v4)، صفحه‌ی پرداخت در خط ۳۷ فایل server.js خطا می‌دهد و هر ۱۰ درخواست آن شکست خورده؛ بقیه‌ی صفحه‌ها سالم‌اند.",
+ "ai": {
+  "provider": "live",
+  "symptom_source": "llm",
+  "understood": {
+   "kind": "error",
+   "route": "/checkout"
+  },
+  "rules_understood": {
+   "kind": "error",
+   "route": "/checkout"
+  },
+  "explain_source": "llm",
+  "rules_order": [
+   {
+    "id": "P1",
+    "confidence": 0.8,
+    "title": "خطا با نسخه‌ی v4 (دیپلوی کد) شروع شده؛ مشکل در server.js خط ۳۷."
+   }
+  ],
+  "rules_headline": "خطا با نسخه‌ی v4 (دیپلوی کد) شروع شده؛ مشکل در server.js خط ۳۷.",
+  "final_order": [
+   "P1"
+  ],
+  "added": null
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "app": "shop-missing-env",
+ "text": "صفحه‌ی پرداخت خطا میده",
+ "recorded_at": 1792765103,
+ "answers": {
+  "router": {
+   "role": "router",
+   "text": "{\"kind\": \"error\", \"route\": \"/checkout\", \"since_min\": null, \"question\": \"از چه زمانی این خطا را می‌بینید و آدرس دقیق صفحه‌ی پرداخت چیست؟\"}",
+   "model": "claude-sonnet-5-5",
+   "usage": {
+    "prompt_tokens": 242,
+    "completion_tokens": 77
+   },
+   "ms": 4255
+  },
+  "chat": {
+   "role": "chat",
+   "text": "{\"order\": [\"P2\"], \"headline\": \"صفحه‌ی پرداخت خطا می‌دهد چون بعد از تغییر تنظیمات، آدرس سرویس پرداخت (PAYMENT_API_URL) گم شده و برنامه نمی‌تواند به آن وصل شود؛ بقیه‌ی صفحه‌ها سالم‌اند.\", \"added\": null}",
+   "model": "claude-sonnet-5-5",
+   "usage": {
+    "prompt_tokens": 1337,
+    "completion_tokens": 140
+   },
+   "ms": 2110
+  }
+ },
+ "board_headline": "صفحه‌ی پرداخت خطا می‌دهد چون بعد از تغییر تنظیمات، آدرس سرویس پرداخت (PAYMENT_API_URL) گم شده و برنامه نمی‌تواند به آن وصل شود؛ بقیه‌ی صفحه‌ها سالم‌اند.",
+ "ai": {
+  "provider": "live",
+  "symptom_source": "llm",
+  "understood": {
+   "kind": "error",
+   "route": "/checkout"
+  },
+  "rules_understood": {
+   "kind": "error",
+   "route": "/checkout"
+  },
+  "explain_source": "llm",
+  "rules_order": [
+   {
+    "id": "P2",
+    "confidence": 0.9,
+    "title": "خطا از وقتی شروع شد که تنظیمات (متغیرهای محیطی) عوض شد؛ متغیر PAYMENT_API_URL حذف شده."
+   }
+  ],
+  "rules_headline": "خطا از وقتی شروع شد که تنظیمات (متغیرهای محیطی) عوض شد؛ متغیر PAYMENT_API_URL حذف شده.",
+  "final_order": [
+   "P2"
+  ],
+  "added": null
+ }
+}

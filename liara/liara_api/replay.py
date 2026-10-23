@@ -67,6 +67,31 @@ DEMO_AFTER = {
 }
 WRITE_ANSWERS = {"set_envs": "envs", "rollback": "rollback_v1"}    # the recordings holding Liara's real answers
 DEMO_REFUSED = {"error": "replay_read_only", "message": "demo mode: only each app's recorded fix can run"}
+# The complaint each app's model answers were recorded with (scripts/record_llm.py → fixtures/demo/llm/<app>.json)
+DEMO_RECORDED_TEXT = {"shop-missing-env": "صفحه‌ی پرداخت خطا میده", "shop-code-bug": "صفحه‌ی پرداخت خطا میده",
+                      "shop-memory-leak": "سایت هی قطع میشه"}
+
+
+class RecordedLLM:
+    """Judge mode's model: Claude's real answers, recorded once for this app's broken state (no spend per visit).
+
+    The ranking/explain answer depends only on the evidence, which is the same recording, so it is replayed for any
+    wording. The complaint-understanding answer is replayed only for the exact recorded wording; any other wording
+    gets no answer here, so the rules read it (and the board says which one did).
+    """
+
+    recorded = True
+
+    def __init__(self, rec: dict, text: str):
+        self.rec, self.text = rec, text
+        self.models = {"chat": (rec["answers"].get("chat") or {}).get("model", "claude")}
+
+    def complete(self, role: str, _messages, **_kw):
+        from core.llm import LLMError, LLMResult
+        a = self.rec["answers"].get(role)
+        if not a or (role == "router" and self.text.strip() != self.rec["text"]):
+            raise LLMError("not recorded")
+        return LLMResult(a["text"], [], a.get("usage") or {}, "recorded", a.get("model", ""), 0)
 
 
 class DemoReplay(httpx.AsyncBaseTransport):
@@ -96,6 +121,13 @@ class DemoReplay(httpx.AsyncBaseTransport):
     def release_bodies() -> dict[str, dict[str, dict]]:
         """What a rollback needs: v1's source + body, stored when v1 was deployed (as in a live session)."""
         return {app: {V1_RELEASE: {"recorded": True}} for app, a in DEMO_AFTER.items() if a["fix"] == "rollback"}
+
+    def llm(self, app: str, text: str) -> RecordedLLM | None:
+        """Claude's recorded answers for this app, while it is still in its recorded broken state."""
+        f = FIXTURES / "demo" / "llm" / f"{app}.json"
+        if app in self.after or not f.exists():
+            return None
+        return RecordedLLM(json.loads(f.read_text(encoding="utf-8")), text)
 
     def env_history(self) -> dict[str, list[set[str]]]:
         """The env keys the session saw before the fault (as a live session that watched the app would have):
