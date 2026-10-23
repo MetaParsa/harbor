@@ -151,6 +151,7 @@ async function loadOverview() {
   $("hDot").className = "dot " + (o.on && o.state === "ACTIVE" ? "on" : "off");
   $("hState").textContent = o.on ? (o.state === "ACTIVE" ? "روشن" : o.state) : "خاموش";
   if (/^https:\/\//.test(o.url || "")) $("hLink").href = o.url; else $("hLink").removeAttribute("href");
+  $("hLink").classList.toggle("hidden", !/^https:\/\//.test(o.url || ""));
   $("hRam").textContent = o.ram_pct == null ? "نامعلوم" : `${fa(o.ram_mb)} مگ از ${fa(o.plan_ram_gb * 1024)} (${fa(o.ram_pct)}٪)`;
   $("hCpu").textContent = o.cpu_pct == null ? "نامعلوم" : `${fa(o.cpu_pct)}٪ از ${fa(o.plan_cpu, 1)} هسته`;
   setBar("hRamBar", o.ram_pct); setBar("hCpuBar", o.cpu_pct);
@@ -442,7 +443,7 @@ function renderProject(job) {
     h("dl", { class: "kv" },
       h("dt", { text: "چی دیدم" }), h("dd", { text: a.summary }),
       h("dt", { text: "روش" }), h("dd", { text: a.method }),
-      h("dt", { text: "پلن پیشنهادی" }), h("dd", { text: p.plan_id ? `${p.plan_id} — ${p.reason}` : p.reason || "—" }),
+      h("dt", { text: "پلن پیشنهادی" }), h("dd", { text: p.plan_id ? `${p.reason} (پلن ⁦${p.plan_id}⁩)` : p.reason || "—" }),
       h("dt", { text: "هزینه" }), h("dd", { text: p.month ? `حدود ${fa(p.month)} تومان در ماه (ساعتی از اعتبار کم می‌شه)` : "—" })));
   if (a.preflight.length) card.append(h("div", { class: "small", text: "قبل از ارسال درست کردم:" }),
     h("ul", { class: "steps" }, ...a.preflight.map((x) => h("li", { text: "🔧 " + x.title }))));

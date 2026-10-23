@@ -12,7 +12,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from liara.liara_api.models import Plans
-from liara.text import fa_num
+from liara.text import fa_num, ltr
 
 PY_ENV = re.compile(r"""os\.(?:environ(?:\.get)?\(?\[?|getenv\()\s*['"]([A-Z][A-Z0-9_]+)""")
 JS_ENV = re.compile(r"process\.env\.([A-Z][A-Z0-9_]+)|process\.env\[['\"]([A-Z][A-Z0-9_]+)")
@@ -132,8 +132,8 @@ def analyze(root: Path) -> Analysis:
     if a.database:
         a.warnings.append(f"این پروژه به دیتابیس {a.database} وصل می‌شه؛ بعد از آنلاین شدن باید دیتابیس بسازیم (هزینه داره و تأیید می‌خواد).")
     size = f"{fa_num(a.size_kb)} کیلوبایت" if a.size_kb >= 1 else "کمتر از ۱ کیلوبایت"
-    a.summary = (f"{a.framework} · {fa_num(a.files)} فایل · {size}"
-                 + (f" · متغیرهای محیطی: {', '.join(a.env_vars)}" if a.env_vars else ""))
+    a.summary = (f"{ltr(a.framework)} · {fa_num(a.files)} فایل · {size}"
+                 + (f" · متغیرهای محیطی: {ltr(', '.join(a.env_vars))}" if a.env_vars else ""))
     return a
 
 
@@ -148,4 +148,4 @@ def recommend_plan(a: Analysis, plans: Plans) -> dict:
         a.platform, f"{a.framework} ساده، بدون دیتابیس، بدون آپلود فایل" if not a.database else "دیتابیس داره")
     hour, month = plans.price(plan.id, "basic")
     return {"plan_id": plan.id, "bundle_id": "basic", "cpu": plan.cpu, "ram_gb": plan.ram_gb, "month": month, "hour": hour,
-            "reason": f"{why} ← {fa_num(plan.ram_gb, 1)} گیگ رم کافیه"}
+            "reason": f"{why}؛ {fa_num(plan.ram_gb, 1)} گیگ رم کافیه"}
