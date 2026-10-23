@@ -1,0 +1,7 @@
+# What the hosted assistant needs (Liara's python platform installs this file). Development uses uv (pyproject.toml).
+# The anthropic SDK is left out: the hosted copy runs with the model off (no AI spend per visitor).
+fastapi==0.115.6
+uvicorn==0.34.0
+httpx==0.28.1
+pydantic==2.14.1
+tzdata==2026.5

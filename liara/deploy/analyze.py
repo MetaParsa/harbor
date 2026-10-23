@@ -87,6 +87,8 @@ def analyze(root: Path) -> Analysis:
         sources = {p: _read(p) for p in _py_files(root)}
         if has("manage.py") or "django" in req_names:
             a = Analysis("django", "Django", 80)
+        elif "fastapi" in req_names:        # the root's own requirements win over a Flask app in some subfolder
+            a = Analysis("python", "FastAPI", 8000, {"pythonVersion": "3.12"})
         elif "flask" in req_names or any("Flask(" in t for t in sources.values()):
             a = Analysis("flask", "Flask", 80, {"pythonVersion": "3.12"})
             for p, text in sources.items():
@@ -100,8 +102,6 @@ def analyze(root: Path) -> Analysis:
                             f"در تنظیمات لیارا appModule رو {module}:{m.group(1)} گذاشتم.",
                             "liara.json", f'+ "flask": {{"appModule": "{module}:{m.group(1)}"}}'))
                     break
-        elif "fastapi" in req_names:
-            a = Analysis("python", "FastAPI", 8000, {"pythonVersion": "3.12"})
         else:
             a = Analysis("python", "Python", 80, {"pythonVersion": "3.12"})
         a.env_vars = sorted({m for t in sources.values() for m in PY_ENV.findall(t)})
@@ -128,6 +128,7 @@ def analyze(root: Path) -> Analysis:
     else:
         a = Analysis("unknown", "نامشخص", 80)
         a.warnings.append("نوع پروژه رو تشخیص ندادم؛ فایل package.json، requirements.txt یا Dockerfile پیدا نشد.")
+    _own_liara_json(root, a)
     a.files, a.size_kb = len(files), size_kb
     if a.database:
         a.warnings.append(f"این پروژه به دیتابیس {a.database} وصل می‌شه؛ بعد از آنلاین شدن باید دیتابیس بسازیم (هزینه داره و تأیید می‌خواد).")
@@ -135,6 +136,27 @@ def analyze(root: Path) -> Analysis:
     a.summary = (f"{ltr(a.framework)} · {fa_num(a.files)} فایل · {size}"
                  + (f" · متغیرهای محیطی: {ltr(', '.join(a.env_vars))}" if a.env_vars else ""))
     return a
+
+
+def _own_liara_json(root: Path, a: Analysis) -> None:
+    """The project's own liara.json is the developer's decision: its platform and port win over our guess."""
+    try:
+        own = json.loads(_read(root / "liara.json") or "{}") if (root / "liara.json").is_file() else {}
+    except ValueError:
+        a.warnings.append("فایل liara.json پروژه خونده نشد (JSON نامعتبر)؛ تشخیص خودم رو گذاشتم.")
+        return
+    if not isinstance(own, dict):
+        return
+    platform, port = own.get("platform"), own.get("port")
+    if isinstance(platform, str) and platform in DEFAULT_PORT and platform != a.platform:
+        a.platform, a.framework, a.platform_config = platform, f"{a.framework} (طبق liara.json)", {}
+        a.preflight = [f for f in a.preflight if f.rule != "flask-app-module"]
+    if isinstance(port, int) and 1 <= port <= 65535:
+        a.port = port
+    if isinstance(own.get(a.platform), dict):
+        a.platform_config = dict(own[a.platform])         # the same block the Liara CLI would send
+    if platform or port:
+        a.warnings.append("liara.json خود پروژه رو دیدم و پلتفرم و پورتش رو همون‌طور گذاشتم.")
 
 
 def recommend_plan(a: Analysis, plans: Plans) -> dict:

@@ -700,4 +700,7 @@ async function refreshLog() {
 
 // already connected in this tab's cookie?
 fetch("/api/actions", { credentials: "same-origin" }).then((r) => { if (r.status === 200) start({}); }).catch(() => {});
-fetch("/health").then((r) => r.json()).then((h) => { if (h.demo) $("demoHint").classList.remove("hidden"); }).catch(() => {});
+fetch("/health").then((r) => r.json()).then((h) => {
+  if (h.demo) $("demoHint").classList.remove("hidden");
+  if (h.both) $("bothHint").classList.remove("hidden");
+}).catch(() => {});

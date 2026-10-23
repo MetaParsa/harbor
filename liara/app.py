@@ -237,6 +237,9 @@ async def open_session(body: SessionIn, request: Request):
     if not same_origin(request):
         raise Refused("origin", "این کار فقط از صفحه‌ی خود دستیار ممکنه.", 403)
     replay = os.environ.get("LIARA_REPLAY")
+    if replay == "auto":
+        # hosted: an empty key (or the word "demo") opens judge mode; a real key opens a live session on that account
+        replay = "demo" if body.token.strip().lower() in ("", "demo") else None
     demo = DemoReplay() if replay == "demo" else None
     client = LiaraClient(body.token.strip(), transport=demo or (ReplayTransport(replay) if replay else None))
     try:
@@ -675,7 +678,8 @@ async def bridge_ticket(body: BridgeTicketIn, s: Session = Depends(bridge)):
 
 @app.get("/health")
 async def health():
-    return {"ok": True, "killed": policy.budget.killed(), "demo": os.environ.get("LIARA_REPLAY") == "demo"}
+    mode = os.environ.get("LIARA_REPLAY")
+    return {"ok": True, "killed": policy.budget.killed(), "demo": mode == "demo", "both": mode == "auto"}
 
 
 @app.get("/")

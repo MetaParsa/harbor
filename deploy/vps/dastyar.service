@@ -1,0 +1,27 @@
+[Unit]
+Description=Liara deploy + SRE assistant (hosted: judge mode for anyone, live mode with the visitor's own Liara key)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+User=dastyar
+Group=dastyar
+WorkingDirectory=/opt/dastyar
+EnvironmentFile=/etc/dastyar.env
+ExecStart=/opt/dastyar/.venv/bin/python main.py
+Restart=always
+RestartSec=3
+# Liara tokens live only in this process's memory: no swap-out to disk, no core dumps, nothing else writable
+MemoryMax=600M
+LimitCORE=0
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/dastyar
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target

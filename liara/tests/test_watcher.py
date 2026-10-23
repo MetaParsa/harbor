@@ -45,3 +45,28 @@ def test_watcher_flags_each_recorded_fault_then_clears_it_after_the_fix(tmp_path
 def test_watcher_needs_the_page_session(tmp_path, monkeypatch):
     _, page, _ = demo_page(tmp_path, monkeypatch)
     assert TestClient(page.app).get("/api/watch").status_code == 401
+
+
+def test_hosted_mode_empty_key_is_judge_mode_and_a_key_is_live(tmp_path, monkeypatch):
+    monkeypatch.setenv("LIARA_REPLAY", "auto")
+    monkeypatch.setenv("LIARA_DATA_DIR", str(tmp_path))
+    import liara.app as app_mod
+    app_mod = importlib.reload(app_mod)
+    page = TestClient(app_mod.app)
+    assert page.get("/health").json()["both"] is True
+    assert page.post("/api/session", json={"token": ""}, headers=ORIGIN).json()["replay"] is True
+    assert next(iter(app_mod.sessions.values())).demo is not None
+    live = TestClient(app_mod.app)
+
+    class NoNetwork(Exception):
+        pass
+
+    async def refuse(*_a, **_k):
+        raise NoNetwork
+    monkeypatch.setattr(app_mod.LiaraClient, "teams", refuse)
+    try:
+        live.post("/api/session", json={"token": "a-real-looking-key"}, headers=ORIGIN)
+    except NoNetwork:
+        pass                                    # a real key goes to the real Liara API (stopped here: no network)
+    else:
+        raise AssertionError("a real key must open a live client")

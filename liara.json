@@ -1,0 +1,9 @@
+{
+  "platform": "python",
+  "app": "dastyar",
+  "port": 80,
+  "python": {"version": "3.12"},
+  "build": {"location": "iran", "cache": true},
+  "healthCheck": {"command": "CMD curl --fail http://localhost:80/health || exit 1",
+                  "interval": 30, "timeout": 15, "retries": 2, "startPeriod": 10}
+}

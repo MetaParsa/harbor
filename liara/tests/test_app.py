@@ -71,7 +71,7 @@ def test_page_and_health(web):
     assert "دستیار دیپلوی" in page.text and "<script>" not in page.text      # no inline script: CSP blocks it
     assert page.headers["x-frame-options"] == "DENY" and "frame-ancestors 'none'" in page.headers["content-security-policy"]
     assert "EventSource" in c.get("/app.js").text
-    assert c.get("/health").json() == {"ok": True, "killed": False, "demo": False}   # no counters for strangers
+    assert c.get("/health").json() == {"ok": True, "killed": False, "demo": False, "both": False}   # no counters for strangers
 
 
 def test_login_needs_page_origin(web):
