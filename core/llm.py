@@ -144,7 +144,7 @@ class LLMClient:
             return self.fake.complete(role, messages)
         model = self.models[role]
         per_attempt = estimate_tokens(messages) + max_tokens
-        errors = []
+        errors, prose = [], ""
         for p in self.providers:
             self.guard.reserve(session_id, per_attempt)   # each attempt may be billed, so each one reserves
             t0, used = time.perf_counter(), 0
@@ -156,14 +156,20 @@ class LLMClient:
                     raise LLMError("empty reply")
                 res = LLMResult(text, tool_calls, usage, p.name, model, int((time.perf_counter() - t0) * 1000))
                 if json_mode:
-                    res.json()   # bad JSON counts as a provider failure (its tokens still count)
+                    try:
+                        res.json()   # bad JSON counts as a provider failure (its tokens still count)
+                    except ValueError:
+                        prose = text   # kept: a caller may want to know what the model said instead
+                        raise
                 self._note(role, res, used)
                 return res
             except Exception as e:   # any malformed reply → next provider; never leak the key (it's only in headers)
                 errors.append(f"{p.name}: {type(e).__name__}: {e}"[:200])
             finally:
                 self.guard.settle(session_id, per_attempt, used)   # used=0 when nothing came back (not billed)
-        raise LLMError("all providers failed: " + " | ".join(errors))
+        err = LLMError("all providers failed: " + " | ".join(errors))
+        err.text = prose   # the model's non-JSON reply, if that was the failure
+        raise err
 
     def _openai(self, p: "Provider", model, messages, max_tokens, json_mode, tools):
         """An OpenAI-compatible gateway: (text, tool_calls, usage, billed tokens)."""
