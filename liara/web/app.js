@@ -222,9 +222,34 @@ function renderBoard(b) {
   (b.limits || []).forEach((l) => list.append(h("li", { class: "q", text: l })));
   why.append(list);
   card.append(why);
+  if (b.ai) card.append(aiPanel(b.ai));
   state.boards.set(b.id, card);
   retireBoards(b.incident, b.id);
   say(card);
+}
+
+const KIND_FA = { error: "خطا", slow: "کندی", down: "از دسترس خارج", other: "نامشخص" };
+
+// What the language model did on this diagnosis, next to what the fixed rules alone said. With the model off,
+// the same board comes from the rules (that path always works); the panel says so instead of hiding it.
+function aiPanel(ai) {
+  const on = ai.symptom_source === "llm" || ai.explain_source === "llm";
+  const who = ai.provider === "recorded" ? "پاسخ ضبط‌شده‌ی Claude برای همین شواهد (نمایشی؛ بدون هزینه)" : on ? `مدل ${ai.provider} (زنده)` : "خاموش";
+  const box = h("details", {}, h("summary", { text: `هوش مصنوعی چه کرد؟ (${on ? who : "مدل خاموش؛ تشخیص با قواعد"})` }));
+  const u = ai.understood || {}, r = ai.rules_understood || {};
+  const list = h("ul", { class: "ev" },
+    h("li", { text: `۱. فهم حرف تو — ${ai.symptom_source === "llm" ? "مدل" : "قواعد"}: نوع «${KIND_FA[u.kind] || u.kind}»، صفحه ${u.route || "نامعلوم"}` +
+      (ai.symptom_source === "llm" && (r.kind !== u.kind || r.route !== u.route) ? ` (قواعد به‌تنهایی: «${KIND_FA[r.kind] || r.kind}»، ${r.route || "نامعلوم"})` : "") }),
+    h("li", { text: "۲. قواعد ثابت (بدون مدل) از روی شواهد این علت‌ها رو دادن: " +
+      ai.rules_order.map((x) => `${x.id} ${fa(Math.round(x.confidence * 100))}٪`).join("، ") }),
+    h("li", { text: ai.explain_source === "llm"
+      ? `۳. مدل شواهد رو خوند و ترتیب رو ${ai.final_order.join(" ← ") === ai.rules_order.map((x) => x.id).join(" ← ") ? "تأیید کرد" : "عوض کرد: " + ai.final_order.join(" ← ")}` +
+        (ai.added ? `؛ و یک علت تازه با استناد به دو شاهد اضافه کرد: «${ai.added}»` : "") + "، و جمله‌ی بالا رو به زبان ساده نوشت."
+      : "۳. مدل خاموشه؛ جمله‌ی بالا از الگوی ثابت همون علت اول ساخته شد." }),
+    h("li", { class: "q", text: "مدل فقط پیشنهاد و توضیح می‌ده: هر چیزی که به شاهد واقعی استناد نکنه حذف می‌شه، علت اول قواعد رو بیشتر از ۱۵٪ پایین نمی‌بره، و هیچ ابزاری برای تغییر یا تأیید نداره." }));
+  if (ai.explain_source === "llm" && ai.rules_headline) list.append(h("li", { class: "q", text: `جمله‌ی قواعد به‌تنهایی: «${ai.rules_headline}»` }));
+  box.append(list);
+  return box;
 }
 
 function fixButton(b, hid, option, fx, primary) {
@@ -310,6 +335,7 @@ function renderAction(a) {
   el.dataset.incident = a.incident_id || "";
   el.dataset.caller = a.caller || "";
   el.dataset.tool = a.tool || "";
+  el.dataset.demo = a.demo ? "1" : "";
   el.textContent = "";
   const c = a.card;
   el.append(h("h2", { text: c.title }));
@@ -318,6 +344,10 @@ function renderAction(a) {
     h("dt", { text: "ریسک" }), h("dd", { text: c.risk }), h("dt", { text: "هزینه" }), h("dd", { text: c.cost }),
     h("dt", { text: "قطعی" }), h("dd", { text: c.downtime }), h("dt", { text: "برگشت" }), h("dd", { text: c.undo }),
     h("dt", { text: "چطور می‌فهمم درست شد؟" }), h("dd", { text: c.success || "—" })));
+  if (a.demo) el.append(h("div", { class: "banner small", text: "نمایشی: با تأیید تو این تغییر فقط شبیه‌سازی می‌شه و چیزی روی لیارا عوض نمی‌شه؛ " +
+    "جواب لیارا و وضعیت «بعد» از ضبط واقعی همین برنامه روی لیارا میاد." }));
+  el.append(h("div", { class: "muted small", text: a.tier >= 3 ? "🔒 فقط با دو تأیید تو اجرا می‌شه؛ ایجنت کدنویسی و مدل زبانی دکمه‌ی تأیید ندارن."
+                                                               : "🔒 فقط با تأیید تو اجرا می‌شه؛ ایجنت کدنویسی و مدل زبانی دکمه‌ی تأیید ندارن." }));
   el.append(h("div", { class: "row" }), h("div", { class: "status st", role: "status" }));
   setStatus(a.id, a.status);
 }
@@ -337,7 +367,7 @@ function setStatus(id, s, message) {
     row.append(h("button", { class: "ghost", text: "بررسی نتیجه", onclick: () => runVerify(el.dataset.incident) }));
   }
   const st = el.querySelector(".st");
-  st.textContent = message || statusText(s);
+  st.textContent = message || statusText(s) + (s === "done" && el.dataset.demo ? " (شبیه‌سازی)" : "");
   st.className = "status st " + (s === "done" ? "good" : ["failed", "refused", "expired"].includes(s) ? "bad" : "");
   el.dataset.status = s;
 }
@@ -385,6 +415,7 @@ function renderVerify(v) {
     h("span", { text: a.route || b.route || "/" }), h("span", { class: "bad", text: codes(b.codes) }), h("span", { class: v.ok ? "good" : "bad", text: codes(a.codes) }));
   if (b.median_ms != null || a.median_ms != null) ba.append(h("span", { text: "زمان پاسخ" }), h("span", { text: `${fa(b.median_ms)} ms` }), h("span", { text: `${fa(a.median_ms)} ms` }));
   if (b.slope_mb_min != null && a.slope_mb_min != null) ba.append(h("span", { text: "روند حافظه" }), h("span", { text: `${fa(b.slope_mb_min, 1)} مگ/دقیقه` }), h("span", { text: `${fa(a.slope_mb_min, 1)} مگ/دقیقه` }));
+  if (v.recorded) card.append(h("div", { class: "banner small", text: `نمایشی: تغییر روی لیارا انجام نشد. «بعد» = ${v.recorded}.` }));
   card.append(ba, h("ul", { class: "ev" }, ...(v.checks || []).map((c) => h("li", { class: c.ok === true ? "good" : c.ok === false ? "bad" : "", text: `${c.ok === true ? "✓" : c.ok === false ? "✗" : "…"} ${c.text}` }))));
   if (v.report) card.append(h("details", {}, h("summary", { text: "گزارش کوتاه" }), h("ul", { class: "ev" }, ...v.report.map((l) => h("li", { text: l })))));
   const row = h("div", { class: "row" });
@@ -395,6 +426,32 @@ function renderVerify(v) {
   if (v.ok && !v.provisional) retireBoards(v.incident, null);
   say(card);
   loadOverview();
+}
+
+// ---------- watcher (background health + resource checks, liara/sre/watcher.py) ----------
+
+const clock = (t) => new Date(t * 1000).toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" });
+
+function renderWatch(w) {
+  if (!w) return;
+  const apps = Object.entries(w.apps || {});
+  const bad = apps.filter(([, r]) => r.problems.length);
+  $("watchState").textContent = w.error ? "خطا در خواندن" : !w.last_run ? "در حال شروع…" : bad.length ? `${fa(bad.length)} مشکل` : "همه سالم";
+  $("watchState").className = "pill" + (w.error || bad.length ? " bad" : w.last_run ? " ok" : "");
+  $("watchWhen").textContent = !w.last_run ? "" : w.demo ? "نمایشی: روی داده‌ی ضبط‌شده، هر دقیقه"
+    : `هر ${fa(Math.round(w.interval_s / 60) || 1)} دقیقه · آخرین بررسی ${clock(w.last_run)}`;
+  if (w.last_run) state.watchSeen = true;
+  $("watchApps").textContent = "";
+  apps.forEach(([name, r]) => $("watchApps").append(h("li", { class: r.problems.length ? "bad" : "good",
+    text: `${r.problems.length ? "✗" : "✓"} ${name}: ${r.problems.length ? r.problems.join(" ") : r.summary}` })));
+  $("watchAlerts").textContent = "";
+  (w.alerts || []).slice(-5).reverse().forEach((a) => $("watchAlerts").append(alertLine(a)));
+}
+
+function alertLine(a) {
+  const li = h("li", { class: a.ok ? "good" : "bad", text: `${clock(a.at)} · ${a.text} ` });
+  if (!a.ok) li.append(h("button", { class: "ghost", text: "بررسی کن", onclick: () => { pickApp(a.app); ask(a.text); } }));
+  return li;
 }
 
 // ---------- coding agent ----------
@@ -433,6 +490,19 @@ $("zipBtn").onclick = async () => {
   } catch { /* shown below */ }
   $("zipBtn").disabled = false; clearStatus(sid); $("zip").value = ""; $("zipName").textContent = "فایلی انتخاب نشده";
   if (!r || r.status !== 200) { note(res.message || "پروژه بررسی نشد.", "bad"); return; }
+  renderProject(res);
+};
+
+$("ghForm").onsubmit = async (e) => {
+  e.preventDefault();
+  const url = $("ghUrl").value.trim();
+  if (!url) { $("ghUrl").focus(); return; }
+  const btn = $("ghForm").querySelector("button"); btn.disabled = true;
+  const sid = status("دارم مخزن رو از گیت‌هاب می‌گیرم و نگاهش می‌کنم…");
+  const [code, res] = await api("/api/projects/github", { method: "POST", body: JSON.stringify({ url }) });
+  btn.disabled = false; clearStatus(sid);
+  if (code !== 200) { note(res.message || "پروژه بررسی نشد.", "bad"); return; }
+  $("ghUrl").value = "";
   renderProject(res);
 };
 
@@ -591,7 +661,9 @@ function renderActionKeep(a) {
 function listen() {
   if (state.es) state.es.close();
   const es = state.es = new EventSource("/api/stream");
-  es.addEventListener("hello", () => resync());
+  es.addEventListener("hello", (e) => { resync(); renderWatch(JSON.parse(e.data).watch); });
+  es.addEventListener("watch", (e) => renderWatch(JSON.parse(e.data)));
+  es.addEventListener("alert", (e) => { const a = JSON.parse(e.data); if (!a.ok && state.watchSeen) say(h("div", { class: "box" }, h("ul", { class: "ev" }, alertLine(a)))); });
   es.addEventListener("status", (e) => status(JSON.parse(e.data).text));
   es.addEventListener("diagnosis", (e) => { status(""); renderBoard(JSON.parse(e.data)); });
   es.addEventListener("verify", (e) => { status(""); renderVerify(JSON.parse(e.data)); });

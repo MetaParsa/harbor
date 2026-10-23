@@ -24,7 +24,7 @@ from pathlib import Path
 from liara.liara_api import LiaraClient, LiaraError
 
 from .actions import TOOLS, Card, Ctx, Tool, effective_tier, validate
-from .budget import Budget, BudgetRefused
+from .budget import Budget, BudgetRefused, Caps
 from .incident import Incident
 from .redact import Redactor
 
@@ -68,6 +68,7 @@ class PendingAction:
     approved_via: str | None = None
     armed_at: float | None = None            # first tap of a two-tap action
     executed_at: float | None = None         # when the write actually started (verify measures from here)
+    demo: bool = False                       # judge mode: the write is simulated (the card says so)
 
     @property
     def expired(self) -> bool:
@@ -78,7 +79,7 @@ class PendingAction:
         return {"id": self.id, "tool": self.tool, "tier": self.tier, "second_tap": TOOLS[self.tool].second_tap,
                 "card": asdict(self.card), "why": self.why, "args_hash": self.hash, "status": self.status,
                 "expires_in_s": max(0, round(APPROVAL_TTL_S - (time.time() - self.created))),
-                "incident_id": self.incident_id, "caller": self.caller}
+                "incident_id": self.incident_id, "caller": self.caller, "demo": self.demo}
 
 
 class ActionLog:
@@ -112,6 +113,9 @@ class Session:
     lock: asyncio.Lock = field(default_factory=asyncio.Lock)
     sre_locks: dict[str, asyncio.Lock] = field(default_factory=dict)   # app -> one diagnose/verify at a time
     demo: object | None = None          # DemoReplay in judge mode: recorded site checks and recording time
+    watch: dict = field(default_factory=dict)          # the watcher's last round per app (liara/sre/watcher.py)
+    alerts: list[dict] = field(default_factory=list)   # recent watcher alerts, newest last
+    watch_task: asyncio.Task | None = None
 
     def __post_init__(self):
         if self.ctx is None:
@@ -135,6 +139,12 @@ class Policy:
     def __init__(self, budget: Budget, log: ActionLog):
         self.budget = budget
         self.log = log
+        # judge-mode writes are simulated: they get their own counters, so judges can't use up the live caps
+        self.demo_budget = Budget(budget.dir / "demo", Caps(deploys_per_day=10**6, apps_per_day=0,
+                                                            writes_per_session_hour=30, writes_per_hour_total=2000))
+
+    def _budget(self, s: Session) -> Budget:
+        return self.demo_budget if s.demo else self.budget
 
     # ---------- the agent's entry point ----------
 
@@ -158,7 +168,7 @@ class Policy:
         if tier <= 1:
             return await self._execute_now(s, tool, tier, args, caller)
         try:
-            self.budget.check(s.id, write=True, deploy=tool.deploy, create_app=tool.create_app)
+            self._budget(s).check(s.id, write=True, deploy=tool.deploy, create_app=tool.create_app)
         except BudgetRefused as e:
             self.log.write(s, {"event": "refused", "tool": tool_name, "caller": caller, "reason": e.reason})
             return {"status": "refused", "reason": e.reason, "message": e.fa}
@@ -172,6 +182,7 @@ class Policy:
         card = Card(**s.redactor.obj(asdict(card)))
         act = PendingAction(tool_name, args, tier, card, s.id, caller, s.redactor.text(why), incident_id, fp)
         act.hash = args_hash(tool_name, args)
+        act.demo = s.demo is not None
         s.actions[act.id] = act
         self.log.write(s, {"event": "proposed", "action": act.id, "tool": tool_name, "tier": tier, "caller": caller,
                            "why": act.why, "incident": incident_id})
@@ -184,13 +195,13 @@ class Policy:
         if tier >= 1:
             async with s.lock:                         # check + reserve atomically, before the write
                 try:
-                    self.budget.check(s.id, write=True, deploy=tool.deploy, create_app=tool.create_app)
+                    self._budget(s).check(s.id, write=True, deploy=tool.deploy, create_app=tool.create_app)
                 except BudgetRefused as e:
                     self.log.write(s, {"event": "refused", "tool": tool.name, "caller": caller, "reason": e.reason})
                     return {"status": "refused", "reason": e.reason, "message": e.fa}
                 ran_out = tier != effective_tier(tool, s.ctx, args)    # the free builds ran out meanwhile
                 if not ran_out:
-                    self.budget.spend(s.id, deploy=tool.deploy, create_app=tool.create_app)
+                    self._budget(s).spend(s.id, deploy=tool.deploy, create_app=tool.create_app)
                     if tool.name == "deploy":
                         s.ctx.builds_on_created[args["app"]] = s.ctx.builds_on_created.get(args["app"], 0) + 1
             if ran_out:
@@ -262,12 +273,12 @@ class Policy:
                 return {"status": "refused", "reason": "incident_mutation_budget",
                         "message": "برای این مشکل سه تغییر انجام دادیم و حل نشد؛ گزارشش رو برای پشتیبانی آماده می‌کنم."}
             try:
-                self.budget.check(s.id, write=True, deploy=tool.deploy, create_app=tool.create_app)
+                self._budget(s).check(s.id, write=True, deploy=tool.deploy, create_app=tool.create_app)
             except BudgetRefused as e:
                 act.status = "refused"
                 self.log.write(s, {"event": "refused", "action": act.id, "reason": e.reason})
                 return {"status": "refused", "reason": e.reason, "message": e.fa}
-            self.budget.spend(s.id, deploy=tool.deploy, create_app=tool.create_app)   # an attempt counts
+            self._budget(s).spend(s.id, deploy=tool.deploy, create_app=tool.create_app)   # an attempt counts
             if incident:
                 incident.record_action(act.id)
         run_args = copy.deepcopy(act.args)

@@ -155,7 +155,9 @@ async def test_first_deploy_heals_twice_and_goes_live_in_three_builds(loop_env):
     assert "+setuptools<80" in patch and "+python-dotenv" in patch and "main.py" not in patch
     assert flow.liara_json(job) == {"platform": "flask", "app": "app-d-test", "port": 80,
                                     "build": {"location": "iran", "cache": True},
-                                    "flask": {"pythonVersion": "3.12", "appModule": "main:app"}}
+                                    "flask": {"pythonVersion": "3.12", "appModule": "main:app"},
+                                    "healthCheck": {"command": "CMD curl --fail http://localhost:80 || exit 1",
+                                                    "interval": 30, "timeout": 15, "retries": 2, "startPeriod": 10}}
     wf = flow.github_workflow(job, "team-1")
     assert '--app="app-d-test" --port=80 --team-id="team-1"' in wf and "secrets.LIARA_API_TOKEN" in wf
     assert "--detach" not in wf and "--no-app-logs" in wf and "tok-" not in wf
@@ -336,3 +338,45 @@ def test_basic_bundle_zero_downtime_refusal_is_explained():
     from liara.liara_api.errors import error_kind, FA
     kind = error_kind(428, {"message": "This plan does not support zero downtime"})   # live answer, 2026-10-22
     assert kind == "not_in_plan" and "ارتقا" in FA[kind]
+
+
+def test_github_link_parsing_and_archive_host_pinning():
+    import asyncio
+    import io
+    import zipfile
+
+    import httpx
+
+    from liara.deploy import github
+    assert github.parse_link("https://github.com/owner/my-repo") == ("owner", "my-repo", None)
+    assert github.parse_link("github.com/owner/repo.git") == ("owner", "repo", None)
+    assert github.parse_link("https://github.com/o/r/tree/dev") == ("o", "r", "dev")
+    for bad in ("https://gitlab.com/o/r", "https://github.com/o", "https://github.com.evil.io/o/r", "file:///etc", "http://10.0.0.1/o/r"):
+        assert github.parse_link(bad) is None
+
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("r-main/package.json", "{}")
+    seen = []
+
+    def handler(req: httpx.Request) -> httpx.Response:
+        seen.append(str(req.url))
+        if req.url.host == "github.com":
+            return httpx.Response(302, headers={"location": "https://codeload.github.com/o/r/zip/refs/heads/main"})
+        return httpx.Response(200, content=buf.getvalue())
+
+    data = asyncio.run(github.fetch_zip("o", "r", None, 10**6, transport=httpx.MockTransport(handler)))
+    assert data == buf.getvalue() and seen[0] == "https://github.com/o/r/archive/HEAD.zip"
+
+    def evil(req):
+        return httpx.Response(302, headers={"location": "https://169.254.169.254/latest"})
+    try:
+        asyncio.run(github.fetch_zip("o", "r", None, 10**6, transport=httpx.MockTransport(evil)))
+        raise AssertionError("redirect off GitHub must be refused")
+    except github.GithubError:
+        pass
+    try:
+        asyncio.run(github.fetch_zip("o", "r", None, 10, transport=httpx.MockTransport(handler)))
+        raise AssertionError("size cap")
+    except github.GithubError:
+        pass

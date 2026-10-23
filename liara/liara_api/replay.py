@@ -7,6 +7,7 @@ response from there carries the header `x-replay-source: synthetic` so nobody mi
 A scenario picks which recording to use for per-app calls, e.g. "d_raw2" (crash-looping app) or "d_fixed" (healthy).
 """
 
+import asyncio
 import json
 import re
 from pathlib import Path
@@ -50,39 +51,156 @@ ROUTES = [
 
 DEMO_APPS = {"shop-missing-env": "env_missing", "shop-code-bug": "v2_regression", "shop-memory-leak": "v3_oom"}
 RECORDED_APP = "dastyar-demo-shop"
+V1_RELEASE = "6ad9e2c163b87278cbb18303"      # demo-shop v1 on Liara, recorded healthy (fixtures/demo/v1_healthy)
+ROLLBACK_RELEASE = "6ad9e5bc41fc53102532c7cd"  # the real rollback to v1's code (fixtures/demo/rollback_v1)
+
+# Judge mode lets the judge approve each app's recommended fix. Nothing is sent anywhere: the write is answered with
+# Liara's real answer to the same call (recorded), and from then on the app is served from a real recording of
+# the same shop on Liara after that kind of fix. `at` = when the change took effect in that recording.
+DEMO_AFTER = {
+    "shop-missing-env": {"fix": "set_envs", "label": "v1_healthy", "at": 1792664303,
+                         "fa": "همین فروشگاه روی لیارا وقتی PAYMENT_API_URL تنظیم بود (ضبط واقعی، ۳۰ مهر)"},
+    "shop-code-bug": {"fix": "rollback", "label": "v1_healthy", "at": 1792664303,
+                      "fa": "همین فروشگاه روی لیارا با کد سالم v1 (ضبط واقعی، ۳۰ مهر)"},
+    "shop-memory-leak": {"fix": "rollback", "label": "after_rollback", "at": 1792665072,
+                         "fa": "همین فروشگاه روی لیارا چند دقیقه بعد از برگشت واقعی به v1 (ضبط واقعی، ۳۰ مهر)"},
+}
+WRITE_ANSWERS = {"set_envs": "envs", "rollback": "rollback_v1"}    # the recordings holding Liara's real answers
+DEMO_REFUSED = {"error": "replay_read_only", "message": "demo mode: only each app's recorded fix can run"}
 
 
 class DemoReplay(httpx.AsyncBaseTransport):
     """Judge mode: three apps, each answered from one real recording of the demo shop on Liara (fixtures/demo/), with
-    no account and no network. Reads only — every write is refused with a clear message (nothing is pretended).
+    no account and no network.
 
     shop-missing-env → a deploy dropped PAYMENT_API_URL (500 on /checkout) · shop-code-bug → a code release throws a
     TypeError at server.js:37 · shop-memory-leak → memory climbs until Liara kills the container (OOM).
+
+    Writes: only the one fix per app that was really done and recorded (DEMO_AFTER) "runs" — simulated, said so on
+    the card and the verify result — and the app then switches to its recorded after-state. Any other write is
+    refused. Each session gets its own DemoReplay, so a new session starts from the broken state again.
     """
 
     def __init__(self):
         self.labels = {app: LabelReplay(label) for app, label in DEMO_APPS.items()}
+        self.after: dict[str, LabelReplay] = {}          # app -> its after-state, once the judge approved its fix
+        latest = {f"GET /v1/releases/{ROLLBACK_RELEASE}", f"GET /v2/releases/{ROLLBACK_RELEASE}/build-logs"}
+        self.answers = {fix: LabelReplay(label, latest=latest) for fix, label in WRITE_ANSWERS.items()}
         self.requests: list[httpx.Request] = []
+
+    def fixed(self, app: str) -> str | None:
+        """Where the after-state comes from (Persian), once the judge's approved fix has been simulated."""
+        return DEMO_AFTER[app]["fa"] if app in self.after else None
+
+    @staticmethod
+    def release_bodies() -> dict[str, dict[str, dict]]:
+        """What a rollback needs: v1's source + body, stored when v1 was deployed (as in a live session)."""
+        return {app: {V1_RELEASE: {"recorded": True}} for app, a in DEMO_AFTER.items() if a["fix"] == "rollback"}
+
+    def env_history(self) -> dict[str, list[set[str]]]:
+        """The env keys the session saw before the fault (as a live session that watched the app would have):
+        the recording of v1 was taken before the variable was dropped."""
+        rec = LabelReplay("v1_healthy").by_req[f"GET /v1/projects/{RECORDED_APP}"][0]["body"]["project"]
+        return {"shop-missing-env": [{e["key"] for e in rec.get("envs") or []}]}
+
+    def _current(self, app: str) -> "LabelReplay | None":
+        return self.after.get(app) or self.labels.get(app)
 
     def now(self, app: str) -> float | None:
         """The moment the recording was taken: "the last 30 minutes" must mean the recording's, not today's."""
-        t = self.labels.get(app)
-        return t.summary().get("at") if t else None
+        if not (t := self._current(app)):
+            return None
+        if at := t.summary().get("at"):
+            return at
+        watch = t.watch()
+        return watch[-1]["t"] + 5 if watch else None
+
+    def verify_args(self, app: str) -> dict:
+        """verify() over the after-recording: its clock, the moment the change took effect, a short pause instead
+        of the live settle window, and no new container to wait for (nothing was deployed — the card says so)."""
+        now = self.now(app) or 0
+
+        async def short_sleep(seconds: float) -> None:
+            await asyncio.sleep(min(seconds, 1.5))
+
+        base = {"prober": self.probe, "clock": lambda: now, "sleep": short_sleep, "settle_s": 0, "container_wait_s": 0}
+        if app not in self.after:       # nothing was changed (e.g. the code-fix option): verify the recorded broken state
+            return {**base, "started_at": now - 120}
+        return {**base, "started_at": DEMO_AFTER[app]["at"], "recorded": DEMO_AFTER[app]["fa"]}
 
     async def probe(self, url: str, n: int = 5) -> list[dict]:
         """The site checks made while recording (they can't be re-run: the faults were fixed afterwards)."""
         host, _, path = url.removeprefix("https://").partition("/")
-        t = self.labels.get(host.removesuffix(".liara.run"))
+        app = host.removesuffix(".liara.run")
+        t = self._current(app)
         recorded = (t.summary().get("probes") or {}) if t else {}
+        if t and not recorded and (watch := t.watch()):
+            # a watch recording checks "/" every ~20 s; only the checks after the change count
+            at = DEMO_AFTER.get(app, {}).get("at", 0)
+            recorded = {"/": [w["probe"] for w in watch if w["t"] >= at + 20]}
         route = "/" + path.split("?")[0]
         hits = next((v for k, v in recorded.items() if k.split("?")[0] == route), None)
         return (hits or [{"status": None, "ms": 0, "error": "not_recorded"}])[:n]
+
+    def _write(self, request: httpx.Request) -> httpx.Response:
+        """The recorded fix of a demo app: Liara's real recorded answer, then the app switches to its after-state."""
+        path, app, fix = request.url.path, None, None
+        if path == "/v1/projects/update-envs":
+            try:
+                body = json.loads(request.content or b"{}")
+                given = {v.get("key") for v in body.get("variables") or [] if isinstance(v, dict) and v.get("value")}
+                # only the recorded fix counts: the variable the fault dropped, with a value
+                if given >= {k for keys in self.env_history().get(body.get("project"), []) for k in keys}:
+                    app, fix = body.get("project"), "set_envs"
+            except (ValueError, AttributeError, TypeError):
+                pass
+        elif m := re.fullmatch(r"/v2/projects/([^/]+)/releases", path):
+            app, fix = m.group(1), "rollback"
+        a = DEMO_AFTER.get(app) if isinstance(app, str) else None
+        if not a or a["fix"] != fix or app in self.after:
+            return httpx.Response(403, json=DEMO_REFUSED)
+        rec = self.answers[fix].by_req[f"{request.method} {path.replace(app, RECORDED_APP)}"][0]
+        self.after[app] = LabelReplay(a["label"], latest={f"GET /v1/projects/{RECORDED_APP}/metrics/memory",
+                                                          f"GET /v1/projects/{RECORDED_APP}/metrics/summary",
+                                                          f"GET /v1/projects/{RECORDED_APP}/events"})
+        return httpx.Response(rec["status"], json=rec["body"], headers={"x-replay-source": "simulated"})
+
+    def _with_rollback(self, body: dict) -> dict:
+        """The release list after the rollback: the recorded list plus the recorded rollback release (v6) on top."""
+        rel = self.answers["rollback"].by_req[f"GET /v1/releases/{ROLLBACK_RELEASE}"][0]["body"]["release"]
+        rel = {**rel, "state": "READY", "tag": "v6", "message": "rollback to v1"}   # READY at the end of the recorded build
+        return {**body, "total": body.get("total", 0) + 1, "currentRelease": ROLLBACK_RELEASE,
+                "releases": [rel, *body.get("releases", [])]}
+
+    async def _app_call(self, app: str, key: str) -> httpx.Response:
+        """A per-app read: from the after-state once fixed (logs only if recorded there), else the broken state."""
+        after = self.after.get(app)
+        t = after if after and key in after.by_req else self.labels[app]
+        if after and t is not after and key.endswith("/logs"):
+            return httpx.Response(404, json={"error": "demo: no app logs were recorded after this fix"})
+        recs = t.by_req.get(key)
+        if not recs:
+            return httpx.Response(404, json={"error": f"demo: nothing recorded for {key}"})
+        if after and t is not after and key.endswith("/releases") and DEMO_AFTER[app]["fix"] == "rollback":
+            return httpx.Response(200, json=self._with_rollback(recs[-1]["body"]), headers={"x-replay-source": "simulated"})
+        if t is after:
+            i = t.seen.get(key, 0)
+            t.seen[key] = i + 1
+            rec = recs[-1] if key in t.latest else recs[min(i, len(recs) - 1)]
+        else:
+            rec = recs[-1]
+        body = rec["body"]
+        if isinstance(body, dict) and isinstance(body.get("project"), dict):
+            body = {**body, "project": {**body["project"], "project_id": app}}
+        return httpx.Response(rec["status"], json=body, headers={"x-replay-source": "recorded"})
 
     async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(request)
         method, path = request.method, request.url.path
         if method != "GET":
-            return httpx.Response(403, json={"error": "replay_read_only", "message": "demo mode is read-only"})
+            return self._write(request)
+        if path.startswith((f"/v1/releases/{ROLLBACK_RELEASE}", f"/v2/releases/{ROLLBACK_RELEASE}/")):
+            return await self.answers["rollback"].handle_async_request(request)   # the rollback's build, as recorded
         if path == "/v2/teams":
             return httpx.Response(200, json={"teams": []}, headers={"x-replay-source": "synthetic"})
         if path == "/v1/me":
@@ -96,13 +214,7 @@ class DemoReplay(httpx.AsyncBaseTransport):
             return httpx.Response(200, json={"projects": projects}, headers={"x-replay-source": "recorded"})
         m = re.fullmatch(r"(/v[12]/projects/)([^/]+)(/.*)?", path)
         if m and m.group(2) in self.labels:
-            t = self.labels[m.group(2)]
-            recs = t.by_req.get(f"GET {m.group(1)}{RECORDED_APP}{m.group(3) or ''}")
-            if recs:
-                body = recs[-1]["body"]
-                if isinstance(body, dict) and isinstance(body.get("project"), dict):
-                    body = {**body, "project": {**body["project"], "project_id": m.group(2)}}
-                return httpx.Response(recs[-1]["status"], json=body, headers={"x-replay-source": "recorded"})
+            return await self._app_call(m.group(2), f"GET {m.group(1)}{RECORDED_APP}{m.group(3) or ''}")
         return httpx.Response(404, json={"error": f"demo: nothing recorded for {method} {path}"})
 
 
@@ -142,6 +254,10 @@ class LabelReplay(httpx.AsyncBaseTransport):
     def summary(self) -> dict:
         f = self.dir / "summary.json"
         return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+
+    def watch(self) -> list[dict]:
+        f = self.dir / "watch.json"
+        return json.loads(f.read_text(encoding="utf-8")) if f.exists() else []
 
 
 class ReplayTransport(httpx.AsyncBaseTransport):

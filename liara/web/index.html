@@ -19,7 +19,8 @@
   <section id="connect" class="box">
     <div><b>وصل شدن به حساب لیارا</b></div>
     <div id="demoHint" class="box banner small hidden">این نسخه‌ی نمایشیه: سه برنامه‌ی ضبط‌شده از لیارای واقعی (متغیر جاافتاده،
-      باگ کد، نشت حافظه)، بدون حساب و بدون هزینه. هر متنی رو به‌جای کلید بنویس و «وصل شو» رو بزن.</div>
+      باگ کد، نشت حافظه)، بدون حساب و بدون هزینه. هر متنی رو به‌جای کلید بنویس و «وصل شو» رو بزن. مشکل رو بگو، راه‌حل پیشنهادی رو
+      خودت تأیید کن و نتیجه‌ی قبل/بعد رو ببین؛ تغییر فقط شبیه‌سازی می‌شه و «بعد» از ضبط واقعی همون برنامه میاد.</div>
     <ol class="small">
       <li>در console.liara.ir به بخش «کلیدهای API» برو.</li>
       <li>یک کلید با مدت اعتبار کوتاه بساز (مثلاً تا آخر هفته).</li>
@@ -52,12 +53,23 @@
         <button>وصل کن</button></form>
     </div>
 
+    <div class="box" id="watchBox">
+      <div class="row split"><span><b>نگهبان</b> <span id="watchState" class="pill">در حال شروع…</span></span>
+        <span class="muted small" id="watchWhen"></span></div>
+      <div class="muted small">هر دقیقه برنامه‌ها (تا ۵ تا) رو خودش بررسی می‌کنه (جواب سایت، خطاهای ۵xx در لاگ، حافظه و پردازنده، ری‌استارت
+        به‌خاطر کمبود حافظه) و اگه چیزی خراب شد همین‌جا خبر می‌ده. فقط می‌خونه؛ هیچ تغییری بدون تأیید تو نمی‌ده.</div>
+      <ul id="watchApps" class="ev"></ul>
+      <ul id="watchAlerts" class="ev"></ul>
+    </div>
+
     <div class="box" id="newBox">
       <div><b>پروژه‌ی تازه رو آنلاین کن</b></div>
       <div class="muted small">فایل zip پروژه‌ات رو بده (بدون node_modules). اول فقط نگاهش می‌کنم؛ تا تأیید نکنی چیزی روی لیارا ساخته نمی‌شه.</div>
       <div class="row"><label class="file"><input id="zip" type="file" accept=".zip,application/zip">
         <span class="pick">انتخاب فایل zip</span><span class="fname" id="zipName">فایلی انتخاب نشده</span></label>
         <button id="zipBtn">بررسی پروژه</button></div>
+      <form id="ghForm" class="row"><input id="ghUrl" class="ltr" aria-label="لینک مخزن گیت‌هاب" autocomplete="off"
+        placeholder="یا لینک مخزن عمومی گیت‌هاب: https://github.com/owner/repo"><button class="ghost">بررسی از گیت‌هاب</button></form>
     </div>
     <div class="box">
       <div class="row split">

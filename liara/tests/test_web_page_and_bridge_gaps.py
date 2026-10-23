@@ -184,6 +184,64 @@ def test_judge_mode_answers_three_recorded_scenarios_and_refuses_writes(tmp_path
     assert res["status"] == "failed" and "نمایش ضبط‌شده" in res["message"]
 
 
+def test_judge_approves_the_recorded_fix_and_sees_a_recorded_before_after(tmp_path, monkeypatch):
+    """Judge mode: the judge is the human — approve the card, the write is simulated (said on the card), and the
+    verify runs the real verify() over a real after-recording; nothing else can be written, live caps untouched."""
+    monkeypatch.setenv("LIARA_REPLAY", "demo")
+    monkeypatch.setenv("LIARA_DATA_DIR", str(tmp_path))
+    import liara.app as app_mod
+    app_mod = importlib.reload(app_mod)
+    page = TestClient(app_mod.app)
+    page.post("/api/session", json={"token": "any"}, headers=ORIGIN)
+    for app, text, (hyp, opt), route in [("shop-missing-env", "پرداخت خطا می‌ده", ("P2", 0), "/checkout"),
+                                         ("shop-code-bug", "پرداخت خطا می‌ده", ("P1", 1), "/checkout"),
+                                         ("shop-memory-leak", "سایت قطع می‌شه", ("P3", 0), "/")]:
+        board = page.post("/api/troubleshoot", json={"app": app, "text": text}, headers=ORIGIN).json()
+        values = {"PAYMENT_API_URL": "https://pay.example.ir/api"} if hyp == "P2" else None
+        fix = page.post(f"/api/incidents/{board['incident']}/fix", headers=ORIGIN,
+                        json={"hypothesis": hyp, "option": opt, "values": values, "board_id": board["id"]}).json()
+        assert fix["status"] == "waiting_for_user"
+        act = next(a for a in page.get("/api/actions").json()["actions"] if a["id"] == fix["pending_action_id"])
+        assert act["demo"] is True
+        assert page.post(f"/api/actions/{act['id']}/approve", json={"args_hash": act["args_hash"]},
+                         headers=ORIGIN).json()["status"] == "done"
+        v = page.post(f"/api/incidents/{board['incident']}/verify", headers=ORIGIN).json()
+        assert v["ok"] and not v["provisional"] and v["status"] == "resolved" and "ضبط واقعی" in v["recorded"]
+        assert v["before"]["codes"] != v["after"]["codes"] or hyp == "P3"
+        assert v["after"]["route"] == route and all(c == 200 for c in v["after"]["codes"])
+        if hyp == "P3":
+            assert v["after"]["slope_mb_min"] < 1 < v["before"]["slope_mb_min"]
+        again = page.post("/api/troubleshoot", json={"app": app, "text": "الان درسته؟"}, headers=ORIGIN).json()
+        assert again["hypotheses"][0]["id"] == "H0"                     # the after-state reads as healthy
+    # anything that wasn't recorded stays refused, and judge clicks never touch the live daily caps
+    card = page.post("/api/apps/shop-code-bug/zero-downtime", headers=ORIGIN).json()
+    act = next(a for a in page.get("/api/actions").json()["actions"] if a["id"] == card["pending_action_id"])
+    res = page.post(f"/api/actions/{act['id']}/approve", json={"args_hash": act["args_hash"]}, headers=ORIGIN).json()
+    assert res["status"] == "failed" and "نمایش ضبط‌شده" in res["message"]
+    assert app_mod.policy.budget.today()["deploys"] == 0
+
+
+def test_judge_mode_only_the_recorded_fix_counts_and_unfixed_verify_stays_offline(tmp_path, monkeypatch):
+    monkeypatch.setenv("LIARA_REPLAY", "demo")
+    monkeypatch.setenv("LIARA_DATA_DIR", str(tmp_path))
+    import liara.app as app_mod
+    app_mod = importlib.reload(app_mod)
+    page = TestClient(app_mod.app)
+    page.post("/api/session", json={"token": "any"}, headers=ORIGIN)
+    board = page.post("/api/troubleshoot", json={"app": "shop-missing-env", "text": "پرداخت خطا"}, headers=ORIGIN).json()
+    fix = page.post(f"/api/incidents/{board['incident']}/fix", headers=ORIGIN,
+                    json={"hypothesis": "P2", "option": 0, "values": {"OTHER": "x"}, "board_id": board["id"]}).json()
+    act = next(a for a in page.get("/api/actions").json()["actions"] if a["id"] == fix["pending_action_id"])
+    res = page.post(f"/api/actions/{act['id']}/approve", json={"args_hash": act["args_hash"]}, headers=ORIGIN).json()
+    assert res["status"] == "failed"                                   # a variable that wasn't the one dropped
+    # the code-fix option changes nothing in demo: verify reads the recording (no network, no wait) and says so
+    board = page.post("/api/troubleshoot", json={"app": "shop-code-bug", "text": "پرداخت خطا"}, headers=ORIGIN).json()
+    page.post(f"/api/incidents/{board['incident']}/fix", headers=ORIGIN,
+              json={"hypothesis": "P1", "option": 0, "board_id": board["id"]})
+    v = page.post(f"/api/incidents/{board['incident']}/verify", headers=ORIGIN).json()
+    assert v["ok"] is False and 500 in v["after"]["codes"]
+
+
 def test_healthy_answer_names_the_checked_page_and_points_elsewhere_for_non_problems(tmp_path, monkeypatch):
     monkeypatch.setenv("LIARA_REPLAY", "demo")
     monkeypatch.setenv("LIARA_DATA_DIR", str(tmp_path))

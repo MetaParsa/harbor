@@ -21,12 +21,17 @@ from .collect import ERROR_HEAD, Prober, default_prober, fa_num, parse_request, 
 
 async def verify(client: LiaraClient, app: str, contract: dict, before: dict, started_at: float, *,
                  prober: Prober | None = None, sleep=asyncio.sleep, clock=time.time,
-                 container_wait_s: float = 150, settle_s: float = 20) -> dict:
+                 container_wait_s: float = 150, settle_s: float = 20, recorded: str | None = None) -> dict:
+    """recorded = judge mode: the fix was simulated and `client` serves a real after-recording (described by this
+    Persian text); there is no new container to wait for, and the result says where the numbers come from."""
     prober = prober or default_prober
     checks = []
     route = contract.get("route") or "/"
 
-    if contract.get("new_container"):
+    if contract.get("new_container") and recorded:
+        checks.append({"name": "new_container", "ok": None,
+                       "text": "نمایشی: چیزی روی لیارا ساخته نشد؛ اعداد زیر از ضبط واقعی‌اند"})
+    elif contract.get("new_container"):
         # a container that didn't exist before the fix — an OOM restart of the old one keeps its id (live)
         old = set(before.get("containers") or [])
         deadline, seen = clock() + container_wait_s, False
@@ -76,7 +81,8 @@ async def verify(client: LiaraClient, app: str, contract: dict, before: dict, st
         checks.append({"name": "logs", "ok": new_5xx == 0 and new_tb == 0,
                        "text": f"بعد از تغییر: {fa_num(new_5xx)} خطای ۵xx و {fa_num(new_tb)} خطای برنامه در لاگ"})
     except LiaraError:
-        checks.append({"name": "logs", "ok": None, "text": "لاگ از لیارا خوانده نشد"})
+        checks.append({"name": "logs", "ok": None, "text": "نمایشی: لاگ بعد از این تغییر ضبط نشده" if recorded
+                       else "لاگ از لیارا خوانده نشد"})
     after["errors_5xx"] = new_5xx
 
     if contract.get("memory_flat"):
@@ -117,4 +123,5 @@ async def verify(client: LiaraClient, app: str, contract: dict, before: dict, st
     ok = bool(decided) and all(decided)
     provisional = any(c.get("provisional") for c in checks)
     return {"ok": ok, "provisional": provisional, "checks": checks, "before": before, "after": after,
+            **({"recorded": recorded} if recorded else {}),
             "summary": ("درست شد ✓" if ok and not provisional else "فعلاً درست به نظر می‌رسه" if ok else "هنوز درست نشده")}

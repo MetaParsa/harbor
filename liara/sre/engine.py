@@ -19,7 +19,7 @@ from liara.agent.policy import Policy, Session
 
 from .capabilities import capability
 from .collect import Prober, build_ledger, collect, fa_num, ltr
-from .llm_jobs import explain, hypothesis_dict, understand
+from .llm_jobs import explain, hypothesis_dict, rule_symptom, template_headline, understand
 from .patterns import contract_fa, diagnose
 from .verify import verify
 
@@ -93,6 +93,8 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
     ledger = build_ledger(facts)
     diag = diagnose(facts, ledger, symptom, s.ctx.env_history.get(app), s.ctx.known_good.get(app))
     _check_rollbacks(s, diag)
+    rules_view = [{"id": h.id, "confidence": round(h.confidence, 2), "title": h.title} for h in diag.hypotheses]
+    rules_headline = template_headline(diag)
     diag, headline, explain_src = await explain(llm, diag, ledger, text, s.id, redact)
 
     top = diag.hypotheses[0]
@@ -123,6 +125,14 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
                    "sources": len({e.source for e in ledger if e.quality == "measured"}),
                    "model": "llm" if "llm" in (symptom_src, explain_src) else "off"},
         "limits": [capability("http_metrics")["fa"]],
+        # what the model did vs what the rules alone said — shown on the board («هوش مصنوعی چه کرد؟»)
+        "ai": {"provider": ("recorded" if getattr(llm, "recorded", False) else
+                            (getattr(llm, "models", None) or {}).get("chat", "live")) if llm else "off",
+               "symptom_source": symptom_src, "understood": {"kind": symptom.get("kind"), "route": symptom.get("route")},
+               "rules_understood": {k: v for k, v in rule_symptom(text).items() if k in ("kind", "route")},
+               "explain_source": explain_src, "rules_order": rules_view, "rules_headline": rules_headline,
+               "final_order": [h.id for h in diag.hypotheses],
+               "added": next((h.title for h in diag.hypotheses if h.id == "PX"), None)},
     }
     board = s.redactor.obj(board)
     inc.board = board
@@ -206,7 +216,9 @@ def _executed_action(s: Session, inc: Incident):
     return max(done, key=lambda a: a.executed_at or 0) if done else None
 
 
-async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = None, **kw) -> dict:
+async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = None, started_at: float | None = None,
+                     **kw) -> dict:
+    """started_at overrides when the fix took effect (judge mode: the moment in the after-recording)."""
     inc = s.incidents.get(incident_id)
     if not inc:
         return {"status": "error", "error": "no_incident", "message": "این مورد پیدا نشد؛ دوباره بگو چی شده."}
@@ -227,7 +239,8 @@ async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = No
                         "message": "راه‌حل انتخاب‌شده هنوز اجرا نشده؛ بعد از تأیید کارتش دوباره بررسی می‌کنم."}
         _goto(inc, "verifying")
         s.emit("status", {"incident": inc.id, "text": "دارم بررسی می‌کنم که درست شد یا نه…"})
-        res = await verify(s.client, inc.app, inc.fix["contract"], inc.before, started or time.time(), prober=prober, **kw)
+        res = await verify(s.client, inc.app, inc.fix["contract"], inc.before, started_at or started or time.time(),
+                           prober=prober, **kw)
         inc.after, inc.verify_result = res["after"], res
         if res["ok"] and res.get("provisional"):
             pass                            # stays in "verifying" until the metric has enough post-fix samples
@@ -239,7 +252,10 @@ async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = No
         else:
             _goto(inc, "diagnosing")
             inc.fix = None                  # didn't work: diagnose again before proposing anything else
-        res = s.redactor.obj({**res, "id": uuid.uuid4().hex[:12], "report": report(inc), "status": inc.state})
+        lines = report(inc)
+        if kw.get("recorded"):          # judge mode: the report gets copied around, so it says so itself
+            lines = ["نمایشی (شبیه‌سازی روی ضبط واقعی؛ چیزی روی لیارا تغییر نکرد):"] + lines[:-1]
+        res = s.redactor.obj({**res, "id": uuid.uuid4().hex[:12], "report": lines, "status": inc.state})
         s.emit("verify", {"incident": inc.id, **res})
         return res
 

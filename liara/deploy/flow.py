@@ -369,4 +369,10 @@ def liara_json(job: Job) -> dict:
            "build": {"location": "iran", "cache": True}}
     if a.platform_config:
         out[a.platform] = a.platform_config    # becomes the release's platformConfig, as the Liara CLI sends it
+    if a.port:
+        # Liara restarts the app if this check fails and keeps a failing new release from taking traffic. The format
+        # and the curl command are Liara's documented example (docs.liara.ir/paas/details/health-check); the CLI
+        # sends it with every `liara deploy`. Our own API deploys don't send it yet (its units there are unverified).
+        out["healthCheck"] = {"command": f"CMD curl --fail http://localhost:{a.port} || exit 1",
+                              "interval": 30, "timeout": 15, "retries": 2, "startPeriod": 10}
     return out                                 # never "envs": in liara.json it replaces every variable on the app

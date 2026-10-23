@@ -17,6 +17,8 @@ import secrets
 import time
 from pathlib import Path
 
+import httpx
+
 from fastapi import Cookie, Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, StreamingResponse
@@ -27,10 +29,12 @@ from liara.agent.actions import APP_NAME
 from liara.agent.budget import DEFAULT_DIR, Budget
 from liara.agent.policy import ActionLog, AgentPort, Policy, Session, new_session_id
 from liara.agent.redact import Redactor
-from liara.deploy import ci, flow
+from liara.deploy import ci, flow, github
 from liara.deploy.analyze import DEFAULT_PORT
 from liara.deploy.domain import clean_domain, domain_status
 from liara.liara_api import DemoReplay, LiaraClient, LiaraError, ReplayTransport
+from liara.liara_api.replay import V1_RELEASE
+from liara.sre import watcher
 from liara.sre.capabilities import capability
 from liara.sre.engine import adopt_code_fix, propose_fix, support_ticket, troubleshoot, verify_fix
 from liara.sre.overview import app_list, app_overview
@@ -131,6 +135,8 @@ def sweep(now: float) -> None:
     building = {j.session_id for j in flow.jobs.values() if j.state == "building"}
     for k in [k for k, s in sessions.items() if now - s.last_seen > SESSION_IDLE_S and not s.busy and k not in building]:
         stale = sessions.pop(k)
+        if stale.watch_task:
+            stale.watch_task.cancel()
         flow.forget_session(k)                      # its jobs and the copies of the user's code go with it
         uploads.pop(k, None)
         with contextlib.suppress(RuntimeError):     # no loop (sync caller): the client is dropped with the session
@@ -243,6 +249,12 @@ async def open_session(body: SessionIn, request: Request):
     client.team_id = team
     sid = new_session_id()
     sessions[sid] = Session(sid, client, Redactor([body.token.strip()]), demo=demo)
+    if demo:
+        # as in a live session that deployed v1 itself: its source is stored and it was checked healthy
+        sessions[sid].ctx.release_bodies.update(demo.release_bodies())
+        for app_name in demo.release_bodies():
+            sessions[sid].ctx.known_good[app_name] = [V1_RELEASE]
+        sessions[sid].ctx.env_history.update(demo.env_history())
     resp = JSONResponse({"ok": True, "team": next((t["name"] for t in teams if t["id"] == team), None),
                          "teams": [t["name"] for t in teams], "replay": bool(replay)})
     resp.set_cookie("lsid", sid, httponly=True, samesite="strict", secure=is_https(request), max_age=COOKIE_MAX_AGE_S)
@@ -254,6 +266,8 @@ async def close_session(request: Request, lsid: str | None = Cookie(default=None
     if not same_origin(request):
         raise Refused("origin", "این کار فقط از صفحه‌ی خود دستیار ممکنه.", 403)
     if s := sessions.pop(lsid or "", None):
+        if s.watch_task:
+            s.watch_task.cancel()
         flow.forget_session(s.id)
         for t in [t for t, sid in bridge_tokens.items() if sid == s.id]:
             bridge_tokens.pop(t)                        # logging out also unpairs the coding agent
@@ -267,11 +281,12 @@ async def close_session(request: Request, lsid: str | None = Cookie(default=None
 async def stream(request: Request, s: Session = Depends(web_session)):
     q: asyncio.Queue = asyncio.Queue()
     s.subscribers.append(q)
+    watcher.ensure_running(s, lambda: sessions.get(s.id) is s)
 
     async def gen():
         try:
             pending = [a.public() for a in s.actions.values() if a.status == "pending" and not a.expired]
-            yield sse("hello", s.redactor.obj({"pending": pending}))
+            yield sse("hello", s.redactor.obj({"pending": pending, "watch": watcher.status(s)}))
             while not await request.is_disconnected():
                 try:
                     event, data = await asyncio.wait_for(q.get(), timeout=15)
@@ -307,6 +322,12 @@ async def approve(action_id: str, body: ApproveIn, s: Session = Depends(page_wri
 @app.post("/api/actions/{action_id}/reject")
 async def reject(action_id: str, s: Session = Depends(page_write)):
     return policy.reject(s, action_id)
+
+
+@app.get("/api/watch")
+async def watch_status(s: Session = Depends(web_session)):
+    """The watcher's last round: per app a one-line summary and open problems, plus recent alerts."""
+    return watcher.status(s)
 
 
 @app.get("/api/log")
@@ -384,9 +405,15 @@ async def api_fix(incident_id: str, body: FixIn, s: Session = Depends(page_write
     return await propose_fix(policy, s, incident_id, body.hypothesis, body.option, body.values, body.board_id)
 
 
+def demo_verify_args(s: Session, incident_id: str | None) -> dict:
+    """Judge mode: verify a simulated fix against the app's real after-recording (see DemoReplay.verify_args)."""
+    inc = s.incidents.get(incident_id or "")
+    return s.demo.verify_args(inc.app) if s.demo and inc else {}
+
+
 @app.post("/api/incidents/{incident_id}/verify")
 async def api_verify(incident_id: str, s: Session = Depends(page_write)):
-    return await verify_fix(s, incident_id)
+    return await verify_fix(s, incident_id, **demo_verify_args(s, incident_id))
 
 
 # ---------- first deploy: zip → analysis + plan → create (two taps) → build/heal loop → live ----------
@@ -408,6 +435,34 @@ async def api_new_project(request: Request, filename: str = "", s: Session = Dep
     data = await read_upload(request, s, flow.MAX_ZIP_BYTES, "حجم فایل zip از ۵۰ مگابایت بیشتره.")
     try:
         job = await flow.new_project(s, data, DATA, name_hint=filename[:80])
+    except flow.UploadError as e:
+        raise Refused("bad_upload", e.fa, 400) from None
+    return job.public()
+
+
+class GithubIn(BaseModel):
+    url: str
+
+
+@app.post("/api/projects/github")
+async def api_github_project(body: GithubIn, s: Session = Depends(page_write)):
+    """A public GitHub repo link instead of a zip: GitHub's own archive of it, then the same analysis (no Liara write)."""
+    link = github.parse_link(body.url[:300])
+    if not link:
+        raise Refused("bad_link", "لینک مخزن گیت‌هاب درست نیست؛ مثل https://github.com/owner/repo بنویس.", 400)
+    now = time.time()
+    recent = uploads[s.id] = [t for t in uploads.get(s.id, []) if now - t < 600]
+    if len(recent) >= UPLOADS_PER_10_MIN:
+        raise Refused("slow_down", "در ۱۰ دقیقه‌ی اخیر به سقف ارسال کد رسیدیم؛ کمی بعد دوباره امتحان کن.", 429)
+    recent.append(now)
+    try:
+        data = await github.fetch_zip(*link, limit=flow.MAX_ZIP_BYTES)
+    except github.GithubError as e:
+        raise Refused("github", e.fa, 400) from None
+    except httpx.HTTPError:
+        raise Refused("github", "به گیت‌هاب وصل نشدم؛ کمی بعد دوباره امتحان کن یا zip پروژه رو آپلود کن.", 502) from None
+    try:
+        job = await flow.new_project(s, data, DATA, name_hint=link[1][:80])
     except flow.UploadError as e:
         raise Refused("bad_upload", e.fa, 400) from None
     return job.public()
@@ -589,7 +644,7 @@ async def bridge_verify(body: BridgeVerifyIn, s: Session = Depends(bridge)):
         inc_id = max(incs, key=lambda i: i.opened_at).id if incs else None
     if not inc_id:
         raise Refused("no_incident", "برای این برنامه هنوز مشکلی بررسی نشده؛ اول troubleshoot رو اجرا کن.", 404)
-    return await verify_fix(s, inc_id)
+    return await verify_fix(s, inc_id, **demo_verify_args(s, inc_id))
 
 
 @app.post("/api/bridge/ci")

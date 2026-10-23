@@ -169,11 +169,11 @@ async def explain(llm, diag: Diagnosis, ledger: list[Evidence], symptom_text: st
     rule_top = diag.hypotheses[0]
     if by_id[v["order"][0]].confidence < rule_top.confidence - KEEP_TOP_WITHIN:
         v["order"] = [rule_top.id] + [p for p in v["order"] if p != rule_top.id]
-    hyps = [by_id[p] for p in v["order"]]
+    hyps = [by_id[p] for p in v["order"]][:3 - bool(v["added"])]      # a model-added cause is never cut off
     if v["added"]:
         hyps.append(Hypothesis("PX", v["added"]["title"], v["added"]["confidence"], v["added"]["supports"],
                                [{"kind": "handoff", "label": "بررسی بیشتر"}]))
-    return Diagnosis(hyps[:3], diag.ruled_out, diag.unknowns), v["headline"], "llm"
+    return Diagnosis(hyps, diag.ruled_out, diag.unknowns), v["headline"], "llm"
 
 
 def hypothesis_dict(h: Hypothesis) -> dict:
