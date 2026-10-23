@@ -11,6 +11,8 @@ import sys
 import tempfile
 import time
 
+sys.stdout.reconfigure(encoding="utf-8")  # Persian output on Windows consoles
+
 os.environ["LIARA_REPLAY"] = "demo"
 os.environ["LIARA_DATA_DIR"] = tempfile.mkdtemp()
 os.environ.pop("LLM_ENABLED", None)

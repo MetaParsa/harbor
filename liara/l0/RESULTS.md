@@ -1,4 +1,4 @@
-# L0 results (live the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ API, 2026-10-22)
+# L0 results (the platform's⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ live API, 2026-10-22)
 
 Fixtures (redacted): `liara/fixtures/api/`. Script: `liara/l0/liara_l0.py` (`state.json` holds the team id and stored release bodies — no secrets).
 Throwaway app `l0-dyar-6b46` (small-g2 + basic, Flask) on team "hackathon": 4 builds + 1 env update, then deleted. Cost ≈ 1 app-hour.

@@ -8,6 +8,8 @@ import re
 import sys
 import tempfile
 
+sys.stdout.reconfigure(encoding="utf-8")  # Persian output on Windows consoles
+
 os.environ["LIARA_REPLAY"] = "demo"
 os.environ["LIARA_DATA_DIR"] = tempfile.mkdtemp()
 os.environ["LIARA_DEV"] = "1"

@@ -1,6 +1,6 @@
 """OpenAI-compatible LLM client with provider failover, a hard spend guard and a scripted FakeLLM.
 
-Real calls are OFF unless `LLM_ENABLED=1` (user rule: no AI or credit use without permission). With it off, only
+Real calls are OFF unless `LLM_ENABLED=1` (no AI spend unless the operator turns it on). With it off, only
 FakeLLM answers, so development, tests and CI never spend credit.
 """
 

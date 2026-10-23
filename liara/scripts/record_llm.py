@@ -16,6 +16,8 @@ import sys
 import time
 from pathlib import Path
 
+sys.stdout.reconfigure(encoding="utf-8")  # Persian output on Windows consoles
+
 from core.llm import from_env
 from liara.agent.redact import Redactor
 from liara.agent.policy import Session

@@ -1,7 +1,7 @@
 """Hard caps on what the agent may spend on Liara, plus a kill switch. LLM tokens are capped by core.llm.SpendGuard.
 
-User rule: no credit use without permission. The user approved ~20–26 builds over Thu–Fri (2026-10-22); these caps
-make sure a bug or a loop can't go past that, whatever the LLM or a judge does.
+No credit is spent without the operator's say-so. These caps make sure a bug or a loop can't go past the agreed
+budget, whatever the LLM or a visitor does.
 - deploys per day across all sessions (Liara's own cap on the basic bundle is 20/day; keep headroom for us)
 - write actions (T1–T3) per session per hour
 - app creations per day (each new app costs money every hour it exists)

@@ -1,10 +1,12 @@
 """Live run of the first-deploy chapter against the local assistant (user-approved 2026-10-22).
 
-Reads the Liara token from Hackathon/Liara/api.txt (never printed), opens a session on the local backend, uploads a
+Reads the Liara token from LIARA_TOKEN, else the file named by LIARA_TOKEN_FILE (default ../Liara/api.txt, outside the
+repo; never printed), opens a session on the local backend, uploads a
 project zip, asks for the create card and approves exactly that card (two taps), then follows the job until it is
 live or stopped. Usage:  uv run --frozen python -m liara.scripts.first_deploy_live liara/demo-apps/app-d.zip dastyar-app-d
 """
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -13,7 +15,7 @@ import httpx
 
 BASE = "http://localhost:8771"
 HDR = {"origin": BASE}
-TOKEN_FILE = Path(__file__).resolve().parents[3] / "Liara" / "api.txt"
+TOKEN_FILE = Path(os.environ.get("LIARA_TOKEN_FILE") or Path(__file__).resolve().parents[3] / "Liara" / "api.txt")
 
 
 def say(*a):
@@ -22,7 +24,7 @@ def say(*a):
 
 def main(zip_path: str, app: str) -> int:
     with httpx.Client(base_url=BASE, timeout=120) as c:
-        r = c.post("/api/session", json={"token": TOKEN_FILE.read_text(encoding="utf-8").strip()}, headers=HDR)
+        r = c.post("/api/session", json={"token": os.environ.get("LIARA_TOKEN", "").strip() or TOKEN_FILE.read_text(encoding="utf-8").strip()}, headers=HDR)
         say("session", r.status_code, {k: v for k, v in r.json().items() if k in ("team", "teams", "replay", "message")})
         if r.status_code != 200:
             return 1

@@ -6,7 +6,7 @@ __pycache__/
 .env.*
 !.env.example
 
-# Torob dataset and built DBs: products.csv is 196 MB (over GitHub's limit); rebuild with torob/etl/build_db.py
+# local data and built DBs
 data/
 *.db
 *.db-wal

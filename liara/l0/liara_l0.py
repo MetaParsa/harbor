@@ -3,7 +3,8 @@
 Every call is saved, redacted, to liara/fixtures/api/<name>.json so later steps
 (L1 client, REPLAY mode, tests) can use real responses.
 
-Token: LIARA_TOKEN env var, else the first line of Hackathon/Liara/api.txt.
+Token: LIARA_TOKEN env var, else the first line of the file named by LIARA_TOKEN_FILE (default ../Liara/api.txt,
+outside the repo).
 Never printed, never written to disk by this script.
 
 Commands (anything that costs credit needs --yes):
@@ -32,7 +33,7 @@ API = "https://api.liara.ir"
 HERE = Path(__file__).resolve().parent
 FIXTURES = HERE.parent / "fixtures" / "api"
 STATE = HERE / "state.json"
-TOKEN_FILE = HERE.parents[2] / "Liara" / "api.txt"
+TOKEN_FILE = Path(os.environ.get("LIARA_TOKEN_FILE") or HERE.parents[2] / "Liara" / "api.txt")
 
 SECRET_KEY = re.compile(r"(token|secret|password|passwd|apikey|api_key|accesskey|access_key|credential|private)", re.I)
 ALWAYS_EXCLUDE = {".git", ".idea", ".vscode", ".next", "node_modules", "__pycache__", "venv", ".venv", ".env", "liara.json", ".DS_Store"}

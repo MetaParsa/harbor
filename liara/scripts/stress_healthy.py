@@ -6,6 +6,8 @@ import os
 import sys
 import tempfile
 
+sys.stdout.reconfigure(encoding="utf-8")  # Persian output on Windows consoles
+
 os.environ["LIARA_REPLAY"] = "demo"
 os.environ["LIARA_DATA_DIR"] = tempfile.mkdtemp()
 sys.path.insert(0, sys.argv[1] if len(sys.argv) > 1 else str(__import__("pathlib").Path(__file__).resolve().parents[2]))

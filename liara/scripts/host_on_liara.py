@@ -3,13 +3,15 @@
 Creates the app (small plan, python platform) on the token's team if it doesn't exist, packs this repo the way the
 assistant packs any project (.gitignore rules, no secrets), releases it with the hosted settings (empty key = judge
 mode, a real key = live on the visitor's account), waits for the build and checks /health twice. The Liara token is
-read from Hackathon/Liara/api.txt and never printed.
+read from LIARA_TOKEN, else the file named by LIARA_TOKEN_FILE (default ../Liara/api.txt, outside the repo), and
+never printed.
 
   uv run --frozen python -m liara.scripts.host_on_liara [app-name]
 """
 
 import asyncio
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -17,7 +19,7 @@ from pathlib import Path
 from liara.liara_api import LiaraClient, LiaraError, package_dir, probe
 
 ROOT = Path(__file__).resolve().parents[2]
-TOKEN_FILE = ROOT.parent / "Liara" / "api.txt"
+TOKEN_FILE = Path(os.environ.get("LIARA_TOKEN_FILE") or ROOT.parent / "Liara" / "api.txt")
 L0_STATE = ROOT / "liara" / "l0" / "state.json"
 PLAN = "small-g2"
 
@@ -27,7 +29,7 @@ def say(*a):
 
 
 async def main(name: str) -> int:
-    token = TOKEN_FILE.read_text(encoding="utf-8").strip()
+    token = os.environ.get("LIARA_TOKEN", "").strip() or TOKEN_FILE.read_text(encoding="utf-8").strip()
     team = json.loads(L0_STATE.read_text(encoding="utf-8"))["team_id"]
     c = LiaraClient(token, team_id=team)
     try:

@@ -1,7 +1,7 @@
-# liara-sre — connect your coding agent to the the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ assistant
+# liara-sre — connect your coding agent to the deploy assistant
 
 One file, Python standard library only (`liara_sre_mcp.py`): nothing to `pip install`, so a flaky package mirror
-can't stop it. It talks to the assistant's web backend and never sees your the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ token.
+can't stop it. It talks to the assistant's web backend and never sees your API token.
 
 ## Install
 
@@ -24,7 +24,7 @@ For local development use `--url http://localhost:8771`. Plain `http://` is refu
 ## Use
 
 1. In the assistant's page press «وصل کردن به ایجنت کدنویسی» → an 8-character code (valid 10 minutes, single use).
-2. Tell your agent: *"pair with the the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ assistant using code ABCD2345"*.
+2. Tell your agent: *"pair with the deploy assistant using code ABCD2345"*.
 3. *"My site's checkout gives 500 — use liara-sre to find out why"* → `troubleshoot` returns the cause, the file and
    line (mapped to your project), and the recommended fix.
 4. The agent edits the code → `deploy_project` → **you approve the card in the assistant's page** →
