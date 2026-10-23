@@ -4,7 +4,7 @@ and the coding-agent bridge.
 Run:  uv run --frozen python -m liara.dev_server [--live]      (see dev_server.py)
 REPLAY (no Liara account, recorded responses):  LIARA_REPLAY=d_fixed  (any token is accepted)
 
-Security model (LIARA.md §2): the Liara token lives only in this process's memory, inside one session's client.
+Security model (README.md §2): the Liara token lives only in this process's memory, inside one session's client.
 Approvals come only from this web session (cookie, SameSite=Strict, same-origin check); a coding agent or the
 LLM can propose actions but has no route that approves them.
 """

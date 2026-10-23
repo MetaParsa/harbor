@@ -1,6 +1,6 @@
 """First deploy: zip → analysis + plan → create the app (T3, the user's two taps) → build → watch it come up → heal.
 
-The loop (LIARA.md §4):
+The loop (README.md §4):
   1. the upload is unpacked into data/projects/<job>/orig and copied to work/; config-only preflight fixes go in;
   2. create_app is proposed through the policy — nothing is spent until the user taps «تأیید» and «مطمئنم»;
   3. up to 3 builds (covered by that approval, T1): pack work/ → upload → release → wait for the build;

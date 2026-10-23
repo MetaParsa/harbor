@@ -1,7 +1,7 @@
 [project]
-name = "starcoach-agents"
+name = "harbor"
 version = "0.1.0"
-description = "StarCoach Agentic AI hackathon: Torob in-store shopping agent (+ shared core)"
+description = "Deploy + SRE assistant: diagnoses and fixes apps on a PaaS through its API, with user approval"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi==0.115.6",
@@ -20,7 +20,7 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["torob/tests"]
+testpaths = ["liara/tests"]
 
 [tool.uv]
 package = false

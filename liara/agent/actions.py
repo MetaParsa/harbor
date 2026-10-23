@@ -1,6 +1,6 @@
 """Every Liara action the agent can take, with its tier, its approval card and its executor.
 
-Tiers (LIARA.md §2; enforced by policy.Policy, never by a prompt):
+Tiers (README.md §2; enforced by policy.Policy, never by a prompt):
   T0 read: auto · T1 safe write: auto, shown · T2: one tap · T3: two taps («مطمئنم») with cost and downtime.
 There is deliberately no tool that deletes a user's app, touches billing or changes the bundle.
 

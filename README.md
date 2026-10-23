@@ -220,7 +220,7 @@ flowchart LR
 ## اجرا
 
 ```bash
-cd starcoach-agents
+cd harbor
 uv sync
 uv run --frozen python -m liara.dev_server          # نسخه‌ی نمایشی: سه برنامه‌ی ضبط‌شده، بدون حساب و هزینه → http://127.0.0.1:8771
 uv run --frozen python -m liara.dev_server --live   # لیارای واقعی با کلید API که در صفحه می‌گذارید
