@@ -137,7 +137,9 @@ class LLMClient:
         self.log: list[dict] = []   # last calls, for /admin
 
     def complete(self, role: str, messages: list[dict], *, session_id: str = "-", max_tokens: int = 400,
-                 json_mode: bool = False, tools: list[dict] | None = None) -> LLMResult:
+                 json_mode: bool = False, tools: list[dict] | None = None, schema: dict | None = None) -> LLMResult:
+        """`schema`: a JSON schema the reply must match (Claude's structured outputs); implies json_mode."""
+        json_mode = json_mode or schema is not None
         if not self.enabled:
             if self.fake is None:
                 raise LLMDisabled("LLM_ENABLED is off and no FakeLLM is configured")
@@ -150,7 +152,9 @@ class LLMClient:
             t0, used = time.perf_counter(), 0
             try:
                 call = self._anthropic if isinstance(p, AnthropicProvider) else self._openai
-                text, tool_calls, usage, used = call(p, model, messages, max_tokens, json_mode, tools)
+                text, tool_calls, usage, used = (call(p, model, messages, max_tokens, json_mode, tools, schema)
+                                                 if isinstance(p, AnthropicProvider)
+                                                 else call(p, model, messages, max_tokens, json_mode, tools))
                 used = used or per_attempt
                 if not (text or tool_calls):
                     raise LLMError("empty reply")
@@ -189,7 +193,7 @@ class LLMClient:
         msg = (data.get("choices") or [{}])[0].get("message") or {}
         return msg.get("content") or "", msg.get("tool_calls") or [], usage, used
 
-    def _anthropic(self, p: "AnthropicProvider", model, messages, max_tokens, json_mode, tools):
+    def _anthropic(self, p: "AnthropicProvider", model, messages, max_tokens, json_mode, tools, schema=None):
         """Claude through the official SDK. The app speaks OpenAI-shaped messages; they are translated both ways.
         Thinking off and low effort: every call here is a short, latency-sensitive step (route, name a photo, answer)."""
         system, msgs = to_anthropic_messages(messages)
@@ -197,6 +201,8 @@ class LLMClient:
             system = (system + "\n\n" if system else "") + "Reply with one JSON object only, no prose and no code fence."
         kw: dict = {"model": model, "max_tokens": max_tokens, "messages": msgs,
                     "thinking": {"type": "disabled"}, "output_config": {"effort": "low"}}
+        if schema:   # structured outputs: the reply is JSON matching the schema, never prose
+            kw["output_config"]["format"] = {"type": "json_schema", "schema": schema}
         if system:
             kw["system"] = system
         if tools:
