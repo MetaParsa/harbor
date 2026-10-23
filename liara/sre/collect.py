@@ -24,7 +24,7 @@ from liara.liara_api.models import App, Event, LogLine, MetricSeries, Plan, Rele
 from liara.text import fa_num, ltr  # noqa: F401 — re-exported for the sre package
 
 COLLECTOR_TIMEOUT_S = 8
-PROBE_TIMEOUT_S = 15          # probes run concurrently, but a slow app is exactly what we must still measure
+PROBE_TIMEOUT_S = 15          # probes run one after another on one connection; a slow app is exactly what we must still measure
 REQUEST_LINE = re.compile(r"^(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS) (\S+) (\d{3}) ([\d.]+) ?ms\b")
 NGINX_ACCESS = re.compile(r"^(GET|POST|PUT|PATCH|DELETE|HEAD) (\d{3}) \S+ \"(\S+)\"")       # Liara's Flask/nginx line
 ERROR_HEAD = re.compile(r"^(?:Uncaught )?((?:[A-Za-z_][\w.]*)?(?:Error|Exception|Exit|Interrupt))\b(?: \[[A-Z_]+\])?:? ?(.*)")

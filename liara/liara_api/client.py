@@ -12,6 +12,7 @@ The token is held in memory only and never appears in reprs, logs, call records 
 
 import asyncio
 import time
+from collections import deque
 from collections.abc import Awaitable, Callable
 
 import httpx
@@ -38,11 +39,12 @@ class LiaraClient:
                                        timeout=timeout_s, transport=transport)
         self.team_id = team_id
         self.on_call = on_call
-        self.calls: list[ApiCall] = []
+        self.calls: deque[ApiCall] = deque(maxlen=500)     # recent calls (the watcher would grow a list forever)
+        self.n_calls = 0
         self._plans: tuple[float, Plans] | None = None
 
     def __repr__(self) -> str:
-        return f"LiaraClient(team={'yes' if self.team_id else 'no'}, calls={len(self.calls)})"
+        return f"LiaraClient(team={'yes' if self.team_id else 'no'}, calls={self.n_calls})"
 
     async def __aenter__(self) -> "LiaraClient":
         return self
@@ -90,6 +92,7 @@ class LiaraClient:
     def _record(self, method, path, status, t0, kind=None) -> None:
         call = ApiCall(method, path, status, round((time.perf_counter() - t0) * 1000), kind)
         self.calls.append(call)
+        self.n_calls += 1
         if self.on_call:
             self.on_call(call)
 

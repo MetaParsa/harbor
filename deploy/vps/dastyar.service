@@ -15,6 +15,7 @@ RestartSec=3
 MemoryMax=1500M
 MemorySwapMax=0
 LimitCORE=0
+LimitNOFILE=16384
 NoNewPrivileges=yes
 PrivateTmp=yes
 ProtectSystem=strict

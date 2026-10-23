@@ -76,12 +76,16 @@ async def troubleshoot(s: Session, app: str, text: str, *, llm=None, prober: Pro
 
 async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) -> dict:
     t0 = time.perf_counter()
-    calls0 = len(s.client.calls)
+    calls0 = s.client.n_calls
     inc = s.open_incident(app)
     if inc is None:
         inc = Incident(app, s.redactor.text(text[:300]))
         s.incidents[inc.id] = inc
     _goto(inc, "diagnosing")
+    for act in [a for a in s.actions.values() if a.incident_id == inc.id and a.status == "pending"]:
+        # a card from the previous diagnosis must not run after a new one replaced its plan (it couldn't be verified)
+        act.status = "expired"
+        s.emit("action_result", {"id": act.id, "ok": False, "message": "با تشخیص تازه کنار رفت؛ از کارت جدید استفاده کن."})
     s.emit("status", {"incident": inc.id, "text": "دارم شواهد رو از لیارا جمع می‌کنم…"})
 
     redact = s.redactor.text
@@ -122,7 +126,7 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
         "ruled_out": diag.ruled_out, "unknowns": diag.unknowns,
         "evidence": [{"id": e.id, "kind": e.kind, "text": e.text, "quality": e.quality, "source": e.source} for e in ledger],
         "brief": _brief(app, top, text) if any(fx["kind"] == "coding_agent" for fx in top.fixes) else None,
-        "footer": {"seconds": round(time.perf_counter() - t0, 1), "liara_calls": len(s.client.calls) - calls0,
+        "footer": {"seconds": round(time.perf_counter() - t0, 1), "liara_calls": s.client.n_calls - calls0,
                    "sources": len({e.source for e in ledger if e.quality == "measured"}),
                    "model": "llm" if "llm" in (symptom_src, explain_src) else "off"},
         "limits": [capability("http_metrics")["fa"]],
@@ -225,7 +229,8 @@ async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = No
         return {"status": "error", "error": "no_incident", "message": "این مورد پیدا نشد؛ دوباره بگو چی شده."}
     async with _lock(s, inc.app):
         if inc.closed:                               # double click / retry: the answer we already have
-            return s.redactor.obj({**(inc.verify_result or {}), "report": report(inc), "status": inc.state})
+            res = inc.verify_result or {}
+            return s.redactor.obj({**res, "report": res.get("report_lines") or report(inc), "status": inc.state})
         if not inc.fix or not inc.fix.get("contract"):
             return {"status": "error", "error": "nothing_to_verify",
                     "message": "برای این مورد هنوز راه‌حلی انتخاب نشده که بررسیش کنم."}
@@ -256,6 +261,7 @@ async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = No
         lines = report(inc)
         if kw.get("recorded"):          # judge mode: the report gets copied around, so it says so itself
             lines = ["نمایشی (شبیه‌سازی روی ضبط واقعی؛ چیزی روی لیارا تغییر نکرد):"] + lines[:-1]
+        inc.verify_result["report_lines"] = lines
         res = s.redactor.obj({**res, "id": uuid.uuid4().hex[:12], "report": lines, "status": inc.state})
         s.emit("verify", {"incident": inc.id, **res})
         return res

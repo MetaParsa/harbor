@@ -5,11 +5,16 @@ Used by tests and as a disclosed demo fallback («نمایش ضبط‌شده»).
 response from there carries the header `x-replay-source: synthetic` so nobody mistakes it for a real answer.
 
 A scenario picks which recording to use for per-app calls, e.g. "d_raw2" (crash-looping app) or "d_fixed" (healthy).
+
+DemoReplay is judge mode: three apps answered from real recordings of the demo shop on Liara, on the recording's
+clock, with each app's one recorded fix simulated (labelled) and its after-state served from a real recording;
+RecordedLLM replays Claude's real answers for those apps.
 """
 
 import asyncio
 import json
 import re
+from collections import deque
 from pathlib import Path
 
 import httpx
@@ -112,7 +117,7 @@ class DemoReplay(httpx.AsyncBaseTransport):
         self.after: dict[str, LabelReplay] = {}          # app -> its after-state, once the judge approved its fix
         latest = {f"GET /v1/releases/{ROLLBACK_RELEASE}", f"GET /v2/releases/{ROLLBACK_RELEASE}/build-logs"}
         self.answers = {fix: LabelReplay(label, latest=latest) for fix, label in WRITE_ANSWERS.items()}
-        self.requests: list[httpx.Request] = []
+        self.requests: deque[httpx.Request] = deque(maxlen=500)
 
     def fixed(self, app: str) -> str | None:
         """Where the after-state comes from (Persian), once the judge's approved fix has been simulated."""
@@ -158,7 +163,8 @@ class DemoReplay(httpx.AsyncBaseTransport):
 
         base = {"prober": self.probe, "clock": lambda: now, "sleep": short_sleep, "settle_s": 0, "container_wait_s": 0}
         if app not in self.after:       # nothing was changed (e.g. the code-fix option): verify the recorded broken state
-            return {**base, "started_at": now - 120}
+            return {**base, "started_at": now - 120, "recorded": "همین برنامه هنوز بدون تعمیر (ضبط واقعی)؛ "
+                    "در نسخه‌ی نمایشی ایجنت کدنویسی کدی نفرستاده"}
         return {**base, "started_at": DEMO_AFTER[app]["at"], "recorded": DEMO_AFTER[app]["fa"]}
 
     async def probe(self, url: str, n: int = 5) -> list[dict]:
@@ -266,7 +272,7 @@ class LabelReplay(httpx.AsyncBaseTransport):
             rec = json.loads(f.read_text(encoding="utf-8"))
             self.by_req.setdefault(rec["request"], []).append(rec)
         self.seen: dict[str, int] = {}
-        self.requests: list[httpx.Request] = []
+        self.requests: deque[httpx.Request] = deque(maxlen=500)
 
     async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(request)
@@ -297,7 +303,7 @@ class ReplayTransport(httpx.AsyncBaseTransport):
     def __init__(self, scenario: str = "d_fixed", overrides: dict[str, str] | None = None):
         self.scenario = scenario
         self.overrides = overrides or {}       # fixture name -> other fixture name (e.g. events_d_fixed -> events_d_raw2)
-        self.requests: list[httpx.Request] = []
+        self.requests: deque[httpx.Request] = deque(maxlen=500)
 
     async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(request)

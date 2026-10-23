@@ -292,6 +292,8 @@ class Policy:
         try:
             result = await tool.run(s.ctx, run_args)
         except LiaraError as e:
+            if e.kind == "demo" and incident and act.id in incident.actions:
+                incident.actions.remove(act.id)         # judge mode refused it before anything ran: no change used up
             act.status, act.result = "failed", {"error": e.kind}
             self.log.write(s, {"event": "failed", "action": act.id, "error": e.kind, "liara": e.message})
             s.emit("action_result", {"id": act.id, "ok": False, "message": e.fa})

@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+
+# Torob dataset and built DBs: products.csv is 196 MB (over GitHub's limit); rebuild with torob/etl/build_db.py
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# Liara accepts one dependency file (seen live): requirements.txt is used for hosting,
+# pyproject.toml + uv.lock are for local development with uv
+pyproject.toml
+uv.lock

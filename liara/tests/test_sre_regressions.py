@@ -145,7 +145,7 @@ class StubClient:
     """Enough of LiaraClient for verify(): scripted events / releases / logs."""
 
     def __init__(self, events, logs, current="r-new"):
-        self._events, self._logs, self._current, self.calls = events, logs, current, []
+        self._events, self._logs, self._current, self.calls, self.n_calls = events, logs, current, [], 0
 
     async def events(self, app, since):
         return self._events

@@ -1,8 +1,10 @@
 """Liara deploy + SRE assistant — web backend: session, live event stream, approvals, SRE, first deploy, domains,
 and the coding-agent bridge.
 
-Run:  uv run --frozen python -m liara.dev_server [--live]      (see dev_server.py)
-REPLAY (no Liara account, recorded responses):  LIARA_REPLAY=d_fixed  (any token is accepted)
+Run:  uv run --frozen python -m liara.dev_server [--live]      (see dev_server.py; main.py for hosting)
+LIARA_REPLAY=demo   judge mode: three apps recorded on Liara, each with its recorded fix simulated (DemoReplay)
+LIARA_REPLAY=auto   hosted: an empty key (or "demo") opens judge mode, a real key a live session on that account
+LIARA_REPLAY=<name> one recorded scenario (tests), e.g. d_fixed; any token is accepted
 
 Security model (README.md §2): the Liara token lives only in this process's memory, inside one session's client.
 Approvals come only from this web session (cookie, SameSite=Strict, same-origin check); a coding agent or the
@@ -61,6 +63,9 @@ SECURITY_HEADERS = {
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",
 }
+MAX_JSON_BYTES = 64 * 1024                 # every JSON route; code uploads have their own streaming caps
+UPLOAD_ROUTES = ("/api/projects", "/api/bridge/deploy")
+MAX_STREAMS_PER_SESSION = 4
 STATIC = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"), "/app.css": ("app.css", "text/css")}
 
 app = FastAPI(title="liara-sre")
@@ -112,10 +117,23 @@ BAD_APP = ("bad_app", "اسم برنامه درست نیست (فقط حروف ک
 
 @app.middleware("http")
 async def security_headers(request: Request, call_next):
+    path = request.url.path
+    if request.method in ("POST", "PUT", "PATCH") and path not in UPLOAD_ROUTES:
+        # JSON bodies are parsed whole before any check runs: refuse big (or unsized) ones up front
+        try:
+            size = int(request.headers.get("content-length") or -1)
+        except ValueError:
+            size = -1
+        if size > MAX_JSON_BYTES or (size < 0 and request.headers.get("transfer-encoding")):
+            return JSONResponse({"error": "too_big", "message": "درخواست بیش از حد بزرگه."}, status_code=413,
+                                headers=SECURITY_HEADERS)
     resp = await call_next(request)
     resp.headers.update(SECURITY_HEADERS)
-    if request.url.path in STATIC:
+    if path in STATIC:
         resp.headers["Cache-Control"] = "no-cache"      # an update must reach an open browser without a hard reload
+    elif path.startswith("/api/"):
+        resp.headers["Cache-Control"] = "no-store"      # per-session data: no cache in front may ever keep it
+        resp.headers["Vary"] = "Cookie"
     return resp
 
 
@@ -307,6 +325,8 @@ async def close_session(request: Request, lsid: str | None = Cookie(default=None
 
 @app.get("/api/stream")
 async def stream(request: Request, s: Session = Depends(web_session)):
+    if len(s.subscribers) >= MAX_STREAMS_PER_SESSION:
+        raise Refused("slow_down", "این نشست در چند زبانه‌ی دیگه هم باز است؛ یکی رو ببند.", 429)
     q: asyncio.Queue = asyncio.Queue()
     s.subscribers.append(q)
     watcher.ensure_running(s, lambda: sessions.get(s.id) is s)
@@ -360,7 +380,7 @@ async def watch_status(s: Session = Depends(web_session)):
 
 @app.get("/api/log")
 async def action_log(s: Session = Depends(web_session)):
-    return {"log": s.log[-200:], "api_calls": len(s.client.calls)}
+    return {"log": s.log[-200:], "api_calls": s.client.n_calls}
 
 
 class ProposeIn(BaseModel):
@@ -550,6 +570,8 @@ def domain_args(body: DomainIn) -> tuple[str, str]:
 @app.post("/api/domains")
 async def api_add_domain(body: DomainIn, s: Session = Depends(page_write)):
     app_name, domain = domain_args(body)
+    if s.demo:
+        raise Refused("demo", "در نسخه‌ی نمایشی دامنه وصل نمی‌شه (برنامه‌ها ضبط‌شده‌اند)؛ با کلید API لیارای خودت امتحانش کن.", 403)
     st = await domain_status(s, app_name, domain)
     if st["state"] != "not_added":
         return {"status": "exists", "domain_status": st}

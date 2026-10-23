@@ -380,3 +380,22 @@ def test_github_link_parsing_and_archive_host_pinning():
         raise AssertionError("size cap")
     except github.GithubError:
         pass
+
+
+def test_heal_two_python_manifests_keeps_requirements_and_ignores_pyproject(tmp_path):
+    from liara.deploy import heal
+    from liara.liara_api.package import package_dir
+    (tmp_path / "requirements.txt").write_text("fastapi\n")
+    (tmp_path / "pyproject.toml").write_text("[project]\nname='x'\n")
+    (tmp_path / ".gitignore").write_text(".venv/\n")
+    (tmp_path / "main.py").write_text("print(1)\n")
+    d = heal.classify_failure(["> ERROR: found both requirements.txt and pyproject.toml. Please use one of them and deploy again."])
+    assert d.rule == "py-two-manifests"
+    fix = heal.apply_fix(tmp_path, d)
+    assert fix and "+pyproject.toml" in fix.diff and "+.venv/" in fix.diff
+    import io
+    import tarfile
+    tar, _ = package_dir(tmp_path, "python")
+    names = tarfile.open(fileobj=io.BytesIO(tar)).getnames()
+    assert "requirements.txt" in names and "pyproject.toml" not in names
+    assert heal.apply_fix(tmp_path, d) is None                     # the same fix twice would just loop

@@ -412,7 +412,7 @@ function renderVerify(v) {
   const icon = v.ok && !v.provisional ? "✓" : v.ok ? "…" : "✗";
   const card = h("div", { class: "box" }, h("p", { class: "headline " + (v.ok ? "good" : "bad"), text: `${icon} ${v.summary}` }));
   const ba = h("div", { class: "ba" }, h("span"), h("span", { class: "h", text: "قبل" }), h("span", { class: "h", text: "بعد" }),
-    h("span", { text: a.route || b.route || "/" }), h("span", { class: "bad", text: codes(b.codes) }), h("span", { class: v.ok ? "good" : "bad", text: codes(a.codes) }));
+    h("span", { text: a.route || b.route || "/" }), h("span", { class: (b.codes || []).some((c) => c == null || c >= 400) ? "bad" : "", text: codes(b.codes) }), h("span", { class: v.ok ? "good" : "bad", text: codes(a.codes) }));
   if (b.median_ms != null || a.median_ms != null) ba.append(h("span", { text: "زمان پاسخ" }), h("span", { text: `${fa(b.median_ms)} ms` }), h("span", { text: `${fa(a.median_ms)} ms` }));
   if (b.slope_mb_min != null && a.slope_mb_min != null) ba.append(h("span", { text: "روند حافظه" }), h("span", { text: `${fa(b.slope_mb_min, 1)} مگ/دقیقه` }), h("span", { text: `${fa(a.slope_mb_min, 1)} مگ/دقیقه` }));
   if (v.recorded) card.append(h("div", { class: "banner small", text: `نمایشی: تغییر روی لیارا انجام نشد. «بعد» = ${v.recorded}.` }));

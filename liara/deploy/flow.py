@@ -197,6 +197,8 @@ async def new_project(s: Session, data: bytes, data_dir: Path, *, name_hint: str
 # ---------- 2. create the app (the user approves on the page) ----------
 
 async def propose_create(policy: Policy, s: Session, job: Job, app: str, *, runner=None) -> dict:
+    if s.demo:
+        return {"status": "error", "error": "demo", "message": "در نسخه‌ی نمایشی برنامه‌ی تازه ساخته نمی‌شه؛ تحلیل و پلن پیشنهادی همین بود. برای آنلاین کردن واقعی، با کلید API لیارای خودت وصل شو (روی لیارای واقعی: README «سناریوهای واقعی»)."}
     if job.state not in ("analyzed", "stopped") or job.created:
         return {"status": "error", "error": "busy", "message": "برای این پروژه قبلاً برنامه ساخته شده یا کارش در جریانه."}
     if not APP_NAME.match(app):

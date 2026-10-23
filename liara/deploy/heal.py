@@ -30,6 +30,7 @@ PIP_NAME = {"dotenv": "python-dotenv", "cv2": "opencv-python-headless", "PIL": "
             "whitenoise": "whitenoise", "decouple": "python-decouple", "environ": "django-environ"}
 PKG_RESOURCES = re.compile(r"No module named 'pkg_resources'")
 MODULE_MISSING = re.compile(r"ModuleNotFoundError: No module named '([A-Za-z_][\w.]*)'?")
+TWO_MANIFESTS = re.compile(r"found both requirements\.txt and pyproject\.toml")      # seen live 2026-10-23
 NPM_START = re.compile(r"(must be runnable with 'npm start'|Missing script: \"start\")")
 ERROR_LINE = re.compile(r"(Error|Exception|error:|ERR!)")
 REQ_NAME = re.compile(r"[<>=!~\[ ;]")
@@ -51,6 +52,9 @@ def classify_failure(log_lines: list[str]) -> BuildFailure:
     if m := PKG_RESOURCES.search(text):
         return BuildFailure("py-pkg-resources", m.group(0),
                          "برنامه بالا نیومد: gunicorn روی لیارا ماژول pkg_resources رو پیدا نکرد (ایراد خود پلتفرم Flask لیارا).")
+    if m := TWO_MANIFESTS.search(text):
+        return BuildFailure("py-two-manifests", m.group(0),
+                            "لیارا بیلد رو رد کرد چون پروژه هم requirements.txt داره هم pyproject.toml و فقط یکی رو قبول می‌کنه.")
     if m := MODULE_MISSING.search(text):
         mod = m.group(1).split(".")[0]
         return BuildFailure("py-module-missing", m.group(0), f"برنامه بالا نیومد: کد «{mod}» رو import می‌کنه ولی نصب نشده.",
@@ -124,7 +128,26 @@ def apply_fix(root: Path, d: BuildFailure) -> Fix | None:
                             "requirements.txt", diff)
     if d.rule == "node-start":
         return add_start_script(root)
+    if d.rule == "py-two-manifests":
+        return ignore_pyproject(root)
     return None
+
+
+def ignore_pyproject(root: Path) -> Fix | None:
+    """Keep requirements.txt (what Liara's python platforms install) and leave pyproject.toml + its lock files out of
+    the upload with a .liaraignore. That file replaces .gitignore for Liara, so the existing rules are copied into it."""
+    if not (root / "requirements.txt").is_file():
+        return None
+    old = _read(root / ".liaraignore")
+    if old is None or "pyproject.toml" in (old or ""):
+        return None
+    base = old or next((t for n in (".dockerignore", ".gitignore") if (t := _read(root / n))), "")
+    new = (base if not base or base.endswith("\n") else base + "\n") + \
+        "# Liara accepts one dependency file: requirements.txt is used, these stay out of the upload\n" \
+        "pyproject.toml\nuv.lock\npoetry.lock\nPipfile\nPipfile.lock\n"
+    diff = _edit(root, ".liaraignore", old or "", new)
+    return Fix("py-two-manifests", "requirements.txt رو نگه داشتم و pyproject.toml رو با یک ‎.liaraignore از ارسال بیرون گذاشتم "
+               "(قواعد ‎.gitignore هم داخلش کپی شد).", ".liaraignore", diff)
 
 
 def add_start_script(root: Path) -> Fix | None:
