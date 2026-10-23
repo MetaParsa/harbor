@@ -134,7 +134,8 @@ async def run_once(s: Session) -> None:
 
 
 def _alert(s: Session, app: str, key: str, text: str, *, ok: bool) -> None:
-    a = {"app": app, "key": key, "text": s.redactor.text(f"{app}: {text}"), "ok": ok, "at": time.time()}
+    # the app name is isolated: a Latin first word would turn the whole Persian line left-to-right
+    a = {"app": app, "key": key, "text": s.redactor.text(f"{ltr(app)}: {text}"), "ok": ok, "at": time.time()}
     s.alerts.append(a)
     del s.alerts[:-MAX_ALERTS]
     s.emit("alert", a)

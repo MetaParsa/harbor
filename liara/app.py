@@ -11,6 +11,7 @@ LLM can propose actions but has no route that approves them.
 
 import asyncio
 import contextlib
+import hashlib
 import json
 import os
 import secrets
@@ -21,7 +22,7 @@ import httpx
 
 from fastapi import Cookie, Depends, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse, StreamingResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, StreamingResponse
 from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -719,7 +720,21 @@ async def health():
     return {"ok": True, "killed": policy.budget.killed(), "demo": mode == "demo", "both": mode == "auto"}
 
 
+def _versioned_index() -> str:
+    """index.html with app.js / app.css addressed by their content hash: a CDN in front (seen live: ArvanCloud
+    caches them despite no-cache) can then never serve an old script with a new page."""
+    html = (WEB / "index.html").read_text(encoding="utf-8")
+    for name in ("app.js", "app.css"):
+        tag = hashlib.sha256((WEB / name).read_bytes()).hexdigest()[:10]
+        html = html.replace(f'"/{name}"', f'"/{name}?v={tag}"')
+    return html
+
+
 @app.get("/")
+async def index_page():
+    return HTMLResponse(_versioned_index())
+
+
 @app.get("/app.js")
 @app.get("/app.css")
 async def static_file(request: Request):

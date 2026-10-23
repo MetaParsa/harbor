@@ -443,7 +443,7 @@ function renderWatch(w) {
   if (w.last_run) state.watchSeen = true;
   $("watchApps").textContent = "";
   apps.forEach(([name, r]) => $("watchApps").append(h("li", { class: r.problems.length ? "bad" : "good",
-    text: `${r.problems.length ? "✗" : "✓"} ${name}: ${r.problems.length ? r.problems.join(" ") : r.summary}` })));
+    text: `${r.problems.length ? "✗" : "✓"} \u2066${name}\u2069: ${r.problems.length ? r.problems.join(" ") : r.summary}` })));
   $("watchAlerts").textContent = "";
   (w.alerts || []).slice(-5).reverse().forEach((a) => $("watchAlerts").append(alertLine(a)));
 }
