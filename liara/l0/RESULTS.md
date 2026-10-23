@@ -1,4 +1,4 @@
-# L0 results (live Liara API, 2026-10-22)
+# L0 results (live the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ API, 2026-10-22)
 
 Fixtures (redacted): `liara/fixtures/api/`. Script: `liara/l0/liara_l0.py` (`state.json` holds the team id and stored release bodies — no secrets).
 Throwaway app `l0-dyar-6b46` (small-g2 + basic, Flask) on team "hackathon": 4 builds + 1 env update, then deleted. Cost ≈ 1 app-hour.
@@ -25,11 +25,11 @@ Throwaway app `l0-dyar-6b46` (small-g2 + basic, Flask) on team "hackathon": 4 bu
 
 | Release | What happened | Where it shows |
 |---|---|---|
-| v1 | **Liara's own Flask platform crash-loops today:** it installs `gunicorn==20.1.0`, pip pulls the newest `setuptools` (84.2.1), which no longer has `pkg_resources` → `ModuleNotFoundError: No module named 'pkg_resources'`, `multirun: one or more of the provided commands ended abnormally`, site 503/502. Affects any fresh Flask deploy that doesn't pin setuptools. | app logs only |
+| v1 | **the platform's⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ own Flask platform crash-loops today:** it installs `gunicorn==20.1.0`, pip pulls the newest `setuptools` (84.2.1), which no longer has `pkg_resources` → `ModuleNotFoundError: No module named 'pkg_resources'`, `multirun: one or more of the provided commands ended abnormally`, site 503/502. Affects any fresh Flask deploy that doesn't pin setuptools. | app logs only |
 | v2 | Fix: `setuptools<80` in requirements.txt (installed before gunicorn, so gunicorn keeps it) → next error `No module named 'dotenv'` inside gunicorn's worker boot → 502. | app logs only (build log clean, release READY) |
 | v3 | Add `python-dotenv` → **200**, Persian page. | probe |
 
-→ New catalogue rule (high confidence, real): signature `No module named 'pkg_resources'` + `gunicorn` in traceback → add `setuptools<80` to requirements.txt. Our Flask demo should keep this — it's a live, current Liara bug our agent fixes and Liara's console doesn't explain.
+→ New catalogue rule (high confidence, real): signature `No module named 'pkg_resources'` + `gunicorn` in traceback → add `setuptools<80` to requirements.txt. Our Flask demo should keep this — it's a live, current the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ bug our agent fixes and the platform's⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ console doesn't explain.
 
 ## 4. Runtime signals
 
@@ -67,9 +67,9 @@ Throwaway app `l0-dyar-6b46` (small-g2 + basic, Flask) on team "hackathon": 4 bu
 Script: `liara/scripts/demo_dry_run.py` (our L1 client + a recording transport). Recordings: `liara/fixtures/demo/<label>/`
 (redacted; `/v1/me` never recorded). Builds used: 4 (v1, v2, v3, rollback) + 3 env updates. App left running on v1.
 
-| Step | Liara release | What we saw |
+| Step | the platform⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ release | What we saw |
 |---|---|---|
-| deploy v1 with `envs: {PAYMENT_API_URL}` in the release body | v1 DEPLOY, READY in 20 s | The app had no env vars yet, so this only looked like "added". **Correction (L3, live): a non-empty release-body `envs` REPLACES the whole list** — the v3 deploy with `SELF_LOAD_RPS`+`LEAK_MB` silently dropped `PAYMENT_API_URL`. Only `envs: {}` leaves vars alone; use `update-envs` (read-modify-write) for changes. For ~30 s after READY the site answered **503/502 from Liara's edge** with no app log lines at all. |
+| deploy v1 with `envs: {PAYMENT_API_URL}` in the release body | v1 DEPLOY, READY in 20 s | The app had no env vars yet, so this only looked like "added". **Correction (L3, live): a non-empty release-body `envs` REPLACES the whole list** — the v3 deploy with `SELF_LOAD_RPS`+`LEAK_MB` silently dropped `PAYMENT_API_URL`. Only `envs: {}` leaves vars alone; use `update-envs` (read-modify-write) for changes. For ~30 s after READY the site answered **503/502 from the platform's⁤⁤⁤⁤⁤⁤⁤⁤⁤⁤⁣ edge** with no app log lines at all. |
 | remove `PAYMENT_API_URL` (judge-mode fault) | v2 ENV_UPDATE | `/checkout` 500 on every request, `/` and `/api/products` 200. Stack trace in app logs at `/app/server.js:30` → container code lives under `/app/`. |
 | restore env, deploy v2 (coupon bug) | v3 ENV_UPDATE, v4 DEPLOY READY in 28 s | `/checkout` 500 with `TypeError: Cannot read properties of undefined (reading 'percent')` at `/app/server.js:37:34`; rest of the shop 200. |
 | deploy v3 + `SELF_LOAD_RPS=0.5`, `LEAK_MB=4` | v5 DEPLOY READY in 25 s | RAM **2 → 467 MB in ~3.5 min (~2.4 MB/s)**, probe time up to 1.8 s, then event **`oom`** → `die` → `start` on the **same container** and RAM back to 41 MB (sawtooth). |
