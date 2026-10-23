@@ -102,7 +102,9 @@ async def understand(llm, text: str, session_id: str = "-", redact: Redact = lam
     d = validate_symptom(await _complete(llm, "router", SYMPTOM_PROMPT, redact(text[:500]), session_id))
     if d:
         rules = rule_symptom(text)
-        d["route"] = d["route"] or rules["route"]
+        typed = d["route"] and d["route"].split("?")[0] in text
+        # a page the model inferred («پرداخت» → /payment) is a guess about this app's URLs: only a typed one is kept
+        d["route"] = d["route"] if typed else rules["route"]
         return d, "llm"
     return rule_symptom(text), "rules"
 

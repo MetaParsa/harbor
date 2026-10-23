@@ -234,3 +234,14 @@ def test_a_named_page_that_does_not_exist_is_replaced_by_the_failing_one():
     assert ground_route({"kind": "error", "route": "/"}, f)["route"] == "/"
     f2 = Facts("shop", 1010, logs=lines, probes={"/cart": [{"status": 500}]})
     assert ground_route({"kind": "error", "route": "/cart"}, f2)["route"] == "/cart"     # not a 404: keep it
+
+
+def test_the_model_cannot_invent_a_page_but_a_typed_one_is_kept():
+    import asyncio
+    from core.llm import FakeLLM, LLMClient
+    from liara.sre.llm_jobs import understand
+    llm = LLMClient([], {"router": "x"}, fake=FakeLLM(lambda role, m: {"kind": "error", "route": "/payment"}))
+    d, src = asyncio.run(understand(llm, "صفحه‌ی پرداخت خطا میده"))
+    assert src == "llm" and d["route"] == "/checkout"             # the rules' page, not the model's guess
+    llm2 = LLMClient([], {"router": "x"}, fake=FakeLLM(lambda role, m: {"kind": "error", "route": "/pay"}))
+    assert asyncio.run(understand(llm2, "آدرس /pay خطا میده"))[0]["route"] == "/pay"

@@ -234,7 +234,7 @@ const KIND_FA = { error: "خطا", slow: "کندی", down: "از دسترس خا
 // the same board comes from the rules (that path always works); the panel says so instead of hiding it.
 function aiPanel(ai) {
   const on = ai.symptom_source === "llm" || ai.explain_source === "llm";
-  const who = ai.provider === "recorded" ? "پاسخ ضبط‌شده‌ی Claude برای همین شواهد (نمایشی؛ بدون هزینه)" : on ? `مدل ${ai.provider} (زنده)` : "خاموش";
+  const who = ai.provider === "recorded" ? "پاسخ ضبط‌شده‌ی Claude برای همین شواهد (نمایشی؛ بدون هزینه)" : on ? `${/claude/i.test(ai.provider) ? "Claude" : ai.provider} (زنده)` : "خاموش";
   const box = h("details", on ? { open: "" } : {}, h("summary", { text: `هوش مصنوعی چه کرد؟ (${on ? who : "مدل خاموش؛ تشخیص با قواعد"})` }));
   const u = ai.understood || {}, r = ai.rules_understood || {};
   const list = h("ul", { class: "ev" },
@@ -411,7 +411,7 @@ function renderVerify(v) {
   const b = v.before || {}, a = v.after || {};
   const codes = (x) => (x || []).map((c) => (c == null ? "×" : fa(c))).join("، ");
   const icon = v.ok && !v.provisional ? "✓" : v.ok ? "…" : "✗";
-  const card = h("div", { class: "box" }, h("p", { class: "headline " + (v.ok ? "good" : "bad"), text: `${icon} ${v.summary}` }));
+  const card = h("div", { class: "box" }, h("p", { class: "headline " + (v.ok ? "good" : "bad"), text: v.summary.includes(icon) ? v.summary : `${icon} ${v.summary}` }));
   const ba = h("div", { class: "ba" }, h("span"), h("span", { class: "h", text: "قبل" }), h("span", { class: "h", text: "بعد" }),
     h("span", { text: a.route || b.route || "/" }), h("span", { class: (b.codes || []).some((c) => c == null || c >= 400) ? "bad" : "", text: codes(b.codes) }), h("span", { class: v.ok ? "good" : "bad", text: codes(a.codes) }));
   if (b.median_ms != null || a.median_ms != null) ba.append(h("span", { text: "زمان پاسخ" }), h("span", { text: `${fa(b.median_ms)} ms` }), h("span", { text: `${fa(a.median_ms)} ms` }));

@@ -69,14 +69,14 @@ def _rollback_target(f: Facts, known_good: list[str]):
     return next((r for r in earlier if r.type == "DEPLOY"), None), False
 
 
-def ground_route(symptom: dict, f: Facts) -> dict:
+def ground_route(symptom: dict, f: Facts, text: str = "") -> dict:
     """The page the user (or the model reading them) named must exist: if the app's log never served it and our
     check of it got only 404s, while another page is failing, that failing page is the one meant. Seen live:
     «صفحه‌ی پرداخت» read as /payment while the shop's checkout is /checkout. The guess is kept for the board."""
     named = (symptom.get("route") or "").split("?")[0]
-    if not named:
+    if not named or named in text:              # a page the user typed is what they mean
         return symptom
-    reqs = f.requests()
+    reqs = [r for r in f.requests() if r["ts"] < f.now - 2]   # f.now is taken before our own checks run
     cur = f.current_release
     if named in {r["path"] for r in reqs}:
         return symptom
@@ -138,7 +138,10 @@ def diagnose(f: Facts, ledger: list[Evidence], symptom: dict, env_history: list[
     # P2 configuration: errors from an ENV_UPDATE release, or config-shaped errors on any release
     recent_tbs = tbs_cur or tbs[-3:]                 # the current release's traces may be outside the 100-line window
     config_shaped = any(CONFIG_HINT.search(f"{t['error']} {t['message']}") for t in recent_tbs)
-    removed = sorted(env_history[-2] - env_history[-1]) if env_history and len(env_history) >= 2 else []
+    # a variable that disappeared since we last saw the app counts when the current release is the settings change
+    # (an old, deliberate removal must not explain a later code bug)
+    removed = sorted(env_history[-2] - env_history[-1]) if (env_history and len(env_history) >= 2 and cur
+                                                            and cur.type == "ENV_UPDATE") else []
     if cur and has_errors and not edge_only and (cur.type == "ENV_UPDATE" or config_shaped or removed):
         if cur.type == "ENV_UPDATE":
             c = 0.75 + (0.1 if any(ENV_HINT.search(f"{t['error']} {t['message']}") for t in tbs_cur) else 0)

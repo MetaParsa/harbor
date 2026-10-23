@@ -145,7 +145,7 @@ def release_ts(r: Release) -> float | None:
         return None
 
 
-async def _guard(name: str, coro, facts: Facts, timeout: float = COLLECTOR_TIMEOUT_S):
+async def guard(name: str, coro, facts: Facts, timeout: float = COLLECTOR_TIMEOUT_S):
     try:
         return await asyncio.wait_for(coro, timeout)
     except (LiaraError, TimeoutError, OSError) as e:
@@ -162,15 +162,15 @@ async def collect(client: LiaraClient, app: str, routes: list[str], *, prober: P
     routes = list(dict.fromkeys(["/"] + [r for r in routes if r and r.startswith("/")]))[:3]
     # Probes first, on their own: run alongside the API calls their timings came out ~3 s instead of ~0.1 s (live,
     # 2026-10-22), which made a fast app look slow. A response time is only worth showing if it's the app's.
-    probes = await asyncio.gather(*[_guard(f"probe {r}", prober(url + r, 5), f, PROBE_TIMEOUT_S) for r in routes])
+    probes = await asyncio.gather(*[guard(f"probe {r}", prober(url + r, 5), f, PROBE_TIMEOUT_S) for r in routes])
     results = await asyncio.gather(
-        _guard("app", client.get_app(app), f),
-        _guard("releases", client.releases(app, 6), f),
-        _guard("events", client.events(app, 3600), f),
-        _guard("memory", client.metrics(app, "memory", 1800), f),
-        _guard("cpu", client.metrics(app, "cpu", 1800), f),
-        _guard("logs", client.app_logs(app, since_s=1800), f),
-        _guard("plans", client.plans(), f),
+        guard("app", client.get_app(app), f),
+        guard("releases", client.releases(app, 6), f),
+        guard("events", client.events(app, 3600), f),
+        guard("memory", client.metrics(app, "memory", 1800), f),
+        guard("cpu", client.metrics(app, "cpu", 1800), f),
+        guard("logs", client.app_logs(app, since_s=1800), f),
+        guard("plans", client.plans(), f),
     )
     a, rels, ev, mem, cpu, logs, plans = results
     f.app, f.events, f.memory, f.cpu, f.logs = a, ev or [], mem or [], cpu or [], logs or []

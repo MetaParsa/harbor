@@ -5,7 +5,7 @@ Standard library only (no pip install: package mirrors can be flaky in Iran), on
 It is a thin client of the assistant's web backend and NEVER holds the Liara token:
 
   1. In the assistant's web page press «وصل کردن به ایجنت کدنویسی» → an 8-character code.
-  2. Tell your coding agent: "pair with the Liara assistant using code ABC123" (tool `pair`).
+  2. Tell your coding agent: "pair with the Liara assistant using code ABCD2345" (tool `pair`).
   3. The agent can then troubleshoot, deploy your local folder, wait for YOUR approval (given only in the web
      page — there is no approve tool here), verify the fix, and write a support ticket.
 
@@ -281,7 +281,7 @@ class Server:
                 "message": "Not paired yet. Ask the user for the code from the assistant page, then call pair."}
 
     def tool_pair(self, a):
-        res = self.backend.call("POST", "/api/bridge/pair", {"code": str(a.get("code", ""))[:12]}, timeout=20)
+        res = self.backend.call("POST", "/api/bridge/pair", {"code": re.sub(r"[^A-Za-z0-9]", "", str(a.get("code", "")))[:12]}, timeout=20)
         if res.get("token"):
             self.backend.token = res["token"]
             return {"status": "paired", "message": "Connected to the user's Liara assistant session. " + NEVER_APPROVE}

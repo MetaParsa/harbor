@@ -18,7 +18,7 @@ from liara.agent.incident import STATE_FA, TRANSITIONS, Incident
 from liara.agent.policy import Policy, Session
 
 from .capabilities import capability
-from .collect import Prober, build_ledger, collect, default_prober, fa_num, ltr
+from .collect import PROBE_TIMEOUT_S, Prober, build_ledger, collect, default_prober, fa_num, guard, ltr
 from .llm_jobs import explain, hypothesis_dict, rule_symptom, template_headline, understand
 from .patterns import contract_fa, diagnose, ground_route
 from .verify import verify
@@ -96,10 +96,12 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
     if facts.app:
         s.redactor.add(*[e.value for e in facts.app.envs])
         note_env_keys(s, app, {e.key for e in facts.app.envs})
-    symptom = ground_route(symptom, facts)
+    symptom = ground_route(symptom, facts, text)
     if symptom.get("route_guess"):
         # the page meant is another one than we checked: measure it too, so "before" is that page's numbers
-        facts.probes[symptom["route"]] = await (prober or default_prober)(f"https://{app}.liara.run{symptom['route']}", 5)
+        url = f"https://{app}.liara.run{symptom['route']}"
+        if (p := await guard(f"probe {symptom['route']}", (prober or default_prober)(url, 5), facts, PROBE_TIMEOUT_S)) is not None:
+            facts.probes[symptom["route"]] = p
     ledger = build_ledger(facts)
     diag = diagnose(facts, ledger, symptom, s.ctx.env_history.get(app), s.ctx.known_good.get(app))
     _check_rollbacks(s, diag)
@@ -236,8 +238,9 @@ async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = No
         return {"status": "error", "error": "no_incident", "message": "این مورد پیدا نشد؛ دوباره بگو چی شده."}
     async with _lock(s, inc.app):
         if inc.closed:                               # double click / retry: the answer we already have
-            res = inc.verify_result or {}
-            return s.redactor.obj({**res, "report": res.get("report_lines") or report(inc), "status": inc.state})
+            res = {k: v for k, v in (inc.verify_result or {}).items() if k != "report_lines"}
+            return s.redactor.obj({**res, "report": (inc.verify_result or {}).get("report_lines") or report(inc),
+                                   "status": inc.state})
         if not inc.fix or not inc.fix.get("contract"):
             return {"status": "error", "error": "nothing_to_verify",
                     "message": "برای این مورد هنوز راه‌حلی انتخاب نشده که بررسیش کنم."}
@@ -268,8 +271,8 @@ async def verify_fix(s: Session, incident_id: str, *, prober: Prober | None = No
         lines = report(inc)
         if kw.get("recorded"):          # judge mode: the report gets copied around, so it says so itself
             lines = ["نمایشی (شبیه‌سازی روی ضبط واقعی؛ چیزی روی لیارا تغییر نکرد):"] + lines[:-1]
-        inc.verify_result["report_lines"] = lines
         res = s.redactor.obj({**res, "id": uuid.uuid4().hex[:12], "report": lines, "status": inc.state})
+        inc.verify_result["report_lines"] = lines
         s.emit("verify", {"incident": inc.id, **res})
         return res
 
