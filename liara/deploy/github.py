@@ -10,7 +10,7 @@ import re
 import httpx
 
 LINK = re.compile(r"^(?:https?://)?(?:www\.)?github\.com/([A-Za-z0-9](?:[A-Za-z0-9-]{0,38}))/([A-Za-z0-9._-]{1,100}?)"
-                  r"(?:\.git)?(?:/tree/([A-Za-z0-9._/-]{1,100}))?/?$")
+                  r"(?:\.git)?(?:/tree/((?:[A-Za-z0-9_-][A-Za-z0-9._-]*/?){1,10}))?/?$")
 ARCHIVE_HOSTS = {"github.com", "codeload.github.com"}
 TIMEOUT_S = 60
 
@@ -24,7 +24,7 @@ class GithubError(Exception):
 def parse_link(url: str) -> tuple[str, str, str | None] | None:
     """(owner, repo, branch or None) from a github.com repo link, else None."""
     m = LINK.match((url or "").strip())
-    if not m or m.group(2) in (".", ".."):
+    if not m or m.group(2) in (".", "..") or ".." in (m.group(3) or ""):
         return None
     return m.group(1), m.group(2), m.group(3)
 

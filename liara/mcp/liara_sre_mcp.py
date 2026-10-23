@@ -4,7 +4,7 @@
 Standard library only (no pip install: package mirrors can be flaky in Iran), one file, stdio JSON-RPC.
 It is a thin client of the assistant's web backend and NEVER holds the Liara token:
 
-  1. In the assistant's web page press «وصل کردن به ایجنت کدنویسی» → a 6-character code.
+  1. In the assistant's web page press «وصل کردن به ایجنت کدنویسی» → an 8-character code.
   2. Tell your coding agent: "pair with the Liara assistant using code ABC123" (tool `pair`).
   3. The agent can then troubleshoot, deploy your local folder, wait for YOUR approval (given only in the web
      page — there is no approve tool here), verify the fix, and write a support ticket.
@@ -183,7 +183,7 @@ NEVER_APPROVE = ("Approval happens only in the Liara assistant's web page, by th
 
 TOOLS = [
     {"name": "pair",
-     "description": "Connect to the user's Liara assistant session with the 6-character code shown in its web page "
+     "description": "Connect to the user's Liara assistant session with the 8-character code shown in its web page "
                     "(button «وصل کردن به ایجنت کدنویسی»). Needed once per session.",
      "inputSchema": {"type": "object", "properties": {"code": {"type": "string"}}, "required": ["code"]}},
     {"name": "troubleshoot",

@@ -304,6 +304,22 @@ class LiaraClient:
         return await self._req("POST", "/v1/domains/provision-ssl-certs", json={"domain": domain}, retry=False)
 
 
+async def _get_same_site(c: httpx.AsyncClient, url: str, method: str = "GET") -> httpx.Response:
+    """Follow at most 3 redirects, and only to https on the same host or another *.liara.run app. A redirect anywhere
+    else (an internal address, a cloud metadata IP…) is not followed: its 3xx is the answer. The app being probed
+    belongs to whoever holds the token, so it must never steer our server's requests."""
+    host = httpx.URL(url).host
+    for _ in range(4):
+        r = await c.request(method, url)
+        if not r.is_redirect:
+            return r
+        nxt = r.url.join(r.headers.get("location", ""))
+        if nxt.scheme != "https" or not (nxt.host == host or nxt.host.endswith(".liara.run")):
+            return r
+        url = str(nxt)
+    return r
+
+
 async def probe(url: str, n: int = 5, timeout_s: float = 8, marker: str | None = None, budget_s: float = 15) -> list[dict]:
     """Our own HTTP check (Liara has no status-code or latency metric). One dict per request.
 
@@ -311,16 +327,16 @@ async def probe(url: str, n: int = 5, timeout_s: float = 8, marker: str | None =
     made a 0.1 s page look like 0.5–1.5 s (live, 2026-10-22). Stops early once `budget_s` is spent on a slow app.
     """
     out: list[dict] = []
-    async with httpx.AsyncClient(timeout=timeout_s, follow_redirects=True) as c:
+    async with httpx.AsyncClient(timeout=timeout_s, follow_redirects=False) as c:
         try:
-            await c.head(url)               # warm-up: DNS + TLS handshake aren't the app's response time
+            await _get_same_site(c, url, "HEAD")   # warm-up: DNS + TLS handshake aren't the app's response time
         except httpx.HTTPError:
             pass                            # the real requests below report the failure
         start = time.perf_counter()
         for _ in range(n):
             t0 = time.perf_counter()
             try:
-                r = await c.get(url)
+                r = await _get_same_site(c, url)
                 out.append({"status": r.status_code, "ms": round((time.perf_counter() - t0) * 1000),
                             "marker": marker is None or marker in r.text})
             except httpx.HTTPError as e:

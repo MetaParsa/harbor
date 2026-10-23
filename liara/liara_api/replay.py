@@ -89,7 +89,8 @@ class RecordedLLM:
     def complete(self, role: str, _messages, **_kw):
         from core.llm import LLMError, LLMResult
         a = self.rec["answers"].get(role)
-        if not a or (role == "router" and self.text.strip() != self.rec["text"]):
+        same = re.sub(r"[\s‌]", "", self.text) == re.sub(r"[\s‌]", "", self.rec["text"])   # «می‌ده» = «میده»
+        if not a or (role == "router" and not same):
             raise LLMError("not recorded")
         return LLMResult(a["text"], [], a.get("usage") or {}, "recorded", a.get("model", ""), 0)
 

@@ -151,7 +151,7 @@ def _own_liara_json(root: Path, a: Analysis) -> None:
     if isinstance(platform, str) and platform in DEFAULT_PORT and platform != a.platform:
         a.platform, a.framework, a.platform_config = platform, f"{a.framework} (طبق liara.json)", {}
         a.preflight = [f for f in a.preflight if f.rule != "flask-app-module"]
-    if isinstance(port, int) and 1 <= port <= 65535:
+    if isinstance(port, int) and not isinstance(port, bool) and 1 <= port <= 65535:
         a.port = port
     if isinstance(own.get(a.platform), dict):
         a.platform_config = dict(own[a.platform])         # the same block the Liara CLI would send

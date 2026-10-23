@@ -141,7 +141,7 @@ class Policy:
         self.log = log
         # judge-mode writes are simulated: they get their own counters, so judges can't use up the live caps
         self.demo_budget = Budget(budget.dir / "demo", Caps(deploys_per_day=10**6, apps_per_day=0,
-                                                            writes_per_session_hour=30, writes_per_hour_total=2000))
+                                                            writes_per_session_hour=30, writes_per_hour_total=10**6))
 
     def _budget(self, s: Session) -> Budget:
         return self.demo_budget if s.demo else self.budget

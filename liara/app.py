@@ -47,7 +47,11 @@ COOKIE_MAX_AGE_S = 12 * 3600       # the server-side idle sweep is what ends a s
 PAIR_TTL_S = 600
 PAIR_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 UPLOADS_PER_10_MIN = 5
-MAX_SOURCE_BYTES = 128 * 1024 * 1024
+MAX_SOURCE_BYTES = int(os.environ.get("LIARA_MAX_SOURCE_MB", "128")) * 1024 * 1024
+MAX_SESSIONS = int(os.environ.get("LIARA_MAX_SESSIONS", "300"))       # a public instance: memory is the limit
+SESSIONS_PER_IP_10_MIN = 20
+SESSION_MAX_AGE_S = 12 * 3600                                         # hard end, even with a page left open
+PAIR_FAILS_PER_MIN_TOTAL = 300                                         # 8-char codes: brute force is out of reach
 STREAM_HEADERS = {"Cache-Control": "no-cache, no-transform", "X-Accel-Buffering": "no"}
 SECURITY_HEADERS = {
     "X-Frame-Options": "DENY",
@@ -65,6 +69,8 @@ sessions: dict[str, Session] = {}
 pair_codes: dict[str, tuple[str, float]] = {}          # code -> (session id, expires at)
 bridge_tokens: dict[str, str] = {}                     # bridge token -> session id
 pair_failures: dict[str, list[float]] = {}             # client ip -> failed attempts in the last minute
+session_opens: dict[str, list[float]] = {}             # client ip -> sessions opened in the last 10 min
+heavy = asyncio.Semaphore(2)                           # uploads + GitHub fetches buffered at once, server-wide
 uploads: dict[str, list[float]] = {}                   # session id -> upload times in the last 10 min
 
 
@@ -133,7 +139,8 @@ def same_origin(request: Request) -> bool:
 def sweep(now: float) -> None:
     """Drop idle sessions (never one mid-build), and everything that hangs off them."""
     building = {j.session_id for j in flow.jobs.values() if j.state == "building"}
-    for k in [k for k, s in sessions.items() if now - s.last_seen > SESSION_IDLE_S and not s.busy and k not in building]:
+    for k in [k for k, s in sessions.items() if k not in building and
+              ((now - s.last_seen > SESSION_IDLE_S and not s.busy) or now - s.created > SESSION_MAX_AGE_S)]:
         stale = sessions.pop(k)
         if stale.watch_task:
             stale.watch_task.cancel()
@@ -147,6 +154,8 @@ def sweep(now: float) -> None:
         pair_codes.pop(c)
     for ip in [ip for ip, ts in pair_failures.items() if not ts or now - ts[-1] > 60]:
         pair_failures.pop(ip)
+    for ip in [ip for ip, ts in session_opens.items() if not ts or now - ts[-1] > 600]:
+        session_opens.pop(ip)
 
 
 def get_session(sid: str | None, *, touch: bool = True) -> Session | None:
@@ -203,6 +212,13 @@ async def read_upload(request: Request, s: Session, limit: int, too_big: str) ->
             raise Refused("too_big", too_big, 413)
     except ValueError:
         raise Refused("bad_length", "طول بدنه‌ی درخواست نامعتبره.", 400) from None
+    if heavy.locked():
+        raise Refused("busy", "سرور الان چند پروژه‌ی دیگه رو هم‌زمان دریافت می‌کنه؛ یک دقیقه بعد دوباره امتحان کن.", 503)
+    async with heavy:
+        return await _read_body(request, s, limit, too_big, now, recent)
+
+
+async def _read_body(request: Request, s: Session, limit: int, too_big: str, now: float, recent: list[float]) -> bytes:
     chunks, size = [], 0
     async for chunk in request.stream():
         size += len(chunk)
@@ -236,6 +252,13 @@ class SessionIn(BaseModel):
 async def open_session(body: SessionIn, request: Request):
     if not same_origin(request):
         raise Refused("origin", "این کار فقط از صفحه‌ی خود دستیار ممکنه.", 403)
+    now = time.time()
+    sweep(now)
+    ip = request.client.host if request.client else "?"
+    opened = session_opens[ip] = [t for t in session_opens.get(ip, []) if now - t < 600]
+    if len(opened) >= SESSIONS_PER_IP_10_MIN or len(sessions) >= MAX_SESSIONS:
+        raise Refused("slow_down", "الان نشست تازه باز نمی‌شه (تعداد زیاد)؛ چند دقیقه بعد دوباره امتحان کن.", 429)
+    opened.append(now)
     replay = os.environ.get("LIARA_REPLAY")
     if replay == "auto":
         # hosted: an empty key (or the word "demo") opens judge mode; a real key opens a live session on that account
@@ -251,7 +274,8 @@ async def open_session(body: SessionIn, request: Request):
     team = body.team_id or (teams[0]["id"] if len(teams) == 1 else None)
     client.team_id = team
     sid = new_session_id()
-    sessions[sid] = Session(sid, client, Redactor([body.token.strip()]), demo=demo)
+    # a demo "key" is any text (often empty or the word demo): masking it would blank ordinary words on the page
+    sessions[sid] = Session(sid, client, Redactor([] if demo else [body.token.strip()]), demo=demo)
     if demo:
         # as in a live session that deployed v1 itself: its source is stored and it was checked healthy
         sessions[sid].ctx.release_bodies.update(demo.release_bodies())
@@ -463,9 +487,12 @@ async def api_github_project(body: GithubIn, s: Session = Depends(page_write)):
     recent = uploads[s.id] = [t for t in uploads.get(s.id, []) if now - t < 600]
     if len(recent) >= UPLOADS_PER_10_MIN:
         raise Refused("slow_down", "در ۱۰ دقیقه‌ی اخیر به سقف ارسال کد رسیدیم؛ کمی بعد دوباره امتحان کن.", 429)
+    if heavy.locked():
+        raise Refused("busy", "سرور الان چند پروژه‌ی دیگه رو هم‌زمان دریافت می‌کنه؛ یک دقیقه بعد دوباره امتحان کن.", 503)
     recent.append(now)
     try:
-        data = await github.fetch_zip(*link, limit=flow.MAX_ZIP_BYTES)
+        async with heavy:
+            data = await github.fetch_zip(*link, limit=flow.MAX_ZIP_BYTES)
     except github.GithubError as e:
         raise Refused("github", e.fa, 400) from None
     except httpx.HTTPError:
@@ -559,7 +586,7 @@ class PairIn(BaseModel):
 async def new_pair_code(s: Session = Depends(page_write)):
     for c in [c for c, (sid, _) in pair_codes.items() if sid == s.id]:
         pair_codes.pop(c)                               # one live code per session
-    code = "".join(secrets.choice(PAIR_ALPHABET) for _ in range(6))
+    code = "".join(secrets.choice(PAIR_ALPHABET) for _ in range(8))
     pair_codes[code] = (s.id, time.time() + PAIR_TTL_S)
     return {"code": code, "expires_in_s": PAIR_TTL_S,
             "message": "این کد رو به ایجنت کدنویسی‌ات بده: «با کد … به دستیار لیارا وصل شو». ۱۰ دقیقه اعتبار داره."}
@@ -570,7 +597,8 @@ async def bridge_pair(body: PairIn, request: Request):
     now = time.time()
     ip = request.client.host if request.client else "?"
     fails = pair_failures[ip] = [t for t in pair_failures.get(ip, []) if now - t < 60]
-    if len(fails) >= 20:                                # per client: one noisy caller can't block everyone's pairing
+    total = sum(1 for ts in pair_failures.values() for t in ts if now - t < 60)
+    if len(fails) >= 20 or total >= PAIR_FAILS_PER_MIN_TOTAL:   # per client, plus a global ceiling (IPs can be faked)
         raise Refused("slow_down", "تلاش‌های ناموفق زیاد بود؛ یک دقیقه صبر کن.", 429)
     entry = pair_codes.pop(body.code.strip().upper(), None)
     if not entry or entry[1] < now or entry[0] not in sessions:
@@ -615,6 +643,8 @@ async def bridge_deploy(request: Request, app_name: str, port: int | None = None
                         s: Session = Depends(bridge)):
     """Body = the project as tar.gz (packed locally by the MCP server). Uploading is free; the release is a T2 card."""
     check_app(app_name)
+    if s.demo:
+        raise Refused("demo", "در نسخه‌ی نمایشی نمی‌شه کد فرستاد؛ برای انتشار واقعی با کلید API خودت وصل شو.", 403)
     if port is not None and not 1 <= port <= 65535:
         raise Refused("bad_port", "پورت باید عددی بین ۱ و ۶۵۵۳۵ باشه.", 400)
     data = await read_upload(request, s, MAX_SOURCE_BYTES, "حجم کد از ۱۲۸ مگابایت بیشتره.")

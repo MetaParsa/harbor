@@ -12,7 +12,8 @@ ExecStart=/opt/dastyar/.venv/bin/python main.py
 Restart=always
 RestartSec=3
 # Liara tokens live only in this process's memory: no swap-out to disk, no core dumps, nothing else writable
-MemoryMax=600M
+MemoryMax=1500M
+MemorySwapMax=0
 LimitCORE=0
 NoNewPrivileges=yes
 PrivateTmp=yes

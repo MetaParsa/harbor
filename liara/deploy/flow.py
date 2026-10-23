@@ -12,6 +12,7 @@ The user gets the live URL, every change we made, one patch for their repo and a
 
 import asyncio
 import io
+import os
 import re
 import secrets
 import shutil
@@ -39,7 +40,7 @@ MAX_ZIP_BYTES = 50 * 1024 * 1024
 MAX_UNPACKED_BYTES = 200 * 1024 * 1024
 MAX_FILES = 5000
 JOBS_PER_SESSION = 3
-JOBS_TOTAL = 30
+JOBS_TOTAL = int(os.environ.get("LIARA_JOBS_TOTAL", "30"))      # each job keeps up to 3 copies of a project on disk
 DONE_STATES = {"done", "failed", "rejected", "expired", "refused"}
 
 jobs: dict[str, "Job"] = {}
@@ -363,13 +364,16 @@ def github_workflow(job: Job, team_id: str | None) -> str:
     return ci.github_workflow(job.app or job.suggested_app, job.analysis.port, team_id)
 
 
+HEALTHCHECK_PLATFORMS = {"node", "next", "flask", "django", "python", "php", "laravel"}   # Liara's images have curl
+
+
 def liara_json(job: Job) -> dict:
     a = job.analysis
     out = {"platform": a.platform, "app": job.app or job.suggested_app, "port": a.port,
            "build": {"location": "iran", "cache": True}}
     if a.platform_config:
         out[a.platform] = a.platform_config    # becomes the release's platformConfig, as the Liara CLI sends it
-    if a.port:
+    if a.port and a.platform in HEALTHCHECK_PLATFORMS:
         # Liara restarts the app if this check fails and keeps a failing new release from taking traffic. The format
         # and the curl command are Liara's documented example (docs.liara.ir/paas/details/health-check); the CLI
         # sends it with every `liara deploy`. Our own API deploys don't send it yet (its units there are unverified).
