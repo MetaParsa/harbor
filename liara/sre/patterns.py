@@ -69,6 +69,29 @@ def _rollback_target(f: Facts, known_good: list[str]):
     return next((r for r in earlier if r.type == "DEPLOY"), None), False
 
 
+def ground_route(symptom: dict, f: Facts) -> dict:
+    """The page the user (or the model reading them) named must exist: if the app's log never served it and our
+    check of it got only 404s, while another page is failing, that failing page is the one meant. Seen live:
+    «صفحه‌ی پرداخت» read as /payment while the shop's checkout is /checkout. The guess is kept for the board."""
+    named = (symptom.get("route") or "").split("?")[0]
+    if not named:
+        return symptom
+    reqs = f.requests()
+    cur = f.current_release
+    if named in {r["path"] for r in reqs}:
+        return symptom
+    probed = next((p for r, p in f.probes.items() if r.split("?")[0] == named), None)
+    if probed is None or not all(x.get("status") == 404 for x in probed):
+        return symptom
+    failing: dict[str, int] = {}
+    for r in reqs:
+        if r["status"] >= 500 and (not cur or r["release"] == cur.id):
+            failing[r["path"]] = failing.get(r["path"], 0) + 1
+    if not failing:
+        return symptom
+    return {**symptom, "route": max(failing, key=failing.get), "route_guess": symptom["route"]}
+
+
 def diagnose(f: Facts, ledger: list[Evidence], symptom: dict, env_history: list[set[str]] | None = None,
              known_good: list[str] | None = None) -> Diagnosis:
     hyps: list[Hypothesis] = []

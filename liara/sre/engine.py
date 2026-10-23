@@ -18,9 +18,9 @@ from liara.agent.incident import STATE_FA, TRANSITIONS, Incident
 from liara.agent.policy import Policy, Session
 
 from .capabilities import capability
-from .collect import Prober, build_ledger, collect, fa_num, ltr
+from .collect import Prober, build_ledger, collect, default_prober, fa_num, ltr
 from .llm_jobs import explain, hypothesis_dict, rule_symptom, template_headline, understand
-from .patterns import contract_fa, diagnose
+from .patterns import contract_fa, diagnose, ground_route
 from .verify import verify
 
 
@@ -34,7 +34,9 @@ def _goto(inc: Incident, state: str) -> None:
         inc.move(state)
 
 
-def _note_env_keys(s: Session, app: str, keys: set[str]) -> None:
+def note_env_keys(s: Session, app: str, keys: set[str]) -> None:
+    """Remember the app's env var names as last seen (home card, watcher, diagnosis): a later diagnosis can then
+    name a variable that was dropped since."""
     hist = s.ctx.env_history.setdefault(app, [])
     if not hist or hist[-1] != keys:
         hist.append(keys)
@@ -93,7 +95,11 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
     facts = await collect(s.client, app, [symptom.get("route") or ""], prober=prober, now=now)
     if facts.app:
         s.redactor.add(*[e.value for e in facts.app.envs])
-        _note_env_keys(s, app, {e.key for e in facts.app.envs})
+        note_env_keys(s, app, {e.key for e in facts.app.envs})
+    symptom = ground_route(symptom, facts)
+    if symptom.get("route_guess"):
+        # the page meant is another one than we checked: measure it too, so "before" is that page's numbers
+        facts.probes[symptom["route"]] = await (prober or default_prober)(f"https://{app}.liara.run{symptom['route']}", 5)
     ledger = build_ledger(facts)
     diag = diagnose(facts, ledger, symptom, s.ctx.env_history.get(app), s.ctx.known_good.get(app))
     _check_rollbacks(s, diag)
@@ -133,7 +139,8 @@ async def _troubleshoot(s: Session, app: str, text: str, *, llm, prober, now) ->
         # what the model did vs what the rules alone said — shown on the board («هوش مصنوعی چه کرد؟»)
         "ai": {"provider": ("recorded" if getattr(llm, "recorded", False) else
                             (getattr(llm, "models", None) or {}).get("chat", "live")) if llm else "off",
-               "symptom_source": symptom_src, "understood": {"kind": symptom.get("kind"), "route": symptom.get("route")},
+               "symptom_source": symptom_src, "understood": {"kind": symptom.get("kind"), "route": symptom.get("route"),
+                              "route_guess": symptom.get("route_guess")},
                "rules_understood": {k: v for k, v in rule_symptom(text).items() if k in ("kind", "route")},
                "explain_source": explain_src, "rules_order": rules_view, "rules_headline": rules_headline,
                "final_order": [h.id for h in diag.hypotheses],

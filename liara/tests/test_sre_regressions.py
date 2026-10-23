@@ -218,3 +218,19 @@ async def test_verify_follows_a_reproposed_stale_card():
 
     res = await verify_fix(s, inc.id, prober=ok, sleep=clock.sleep, clock=clock, settle_s=0)
     assert res.get("error") != "fix_not_executed" and "checks" in res
+
+
+def test_a_named_page_that_does_not_exist_is_replaced_by_the_failing_one():
+    """Seen live: «صفحه‌ی پرداخت» was read as /payment; the shop's failing page is /checkout."""
+    from liara.liara_api.models import LogLine
+    from liara.sre.collect import Facts
+    from liara.sre.patterns import ground_route
+    lines = [LogLine(int((1000 + i) * 1e9), "stdout", "GET /checkout 500 1.0ms", None) for i in range(4)] + \
+            [LogLine(int(1005 * 1e9), "stdout", "GET / 200 1.0ms", None)]
+    f = Facts("shop", 1010, logs=lines, probes={"/": [{"status": 200}], "/payment": [{"status": 404}] * 3})
+    g = ground_route({"kind": "error", "route": "/payment"}, f)
+    assert g["route"] == "/checkout" and g["route_guess"] == "/payment"
+    # a page the app really serves stays as named, even if it is healthy now
+    assert ground_route({"kind": "error", "route": "/"}, f)["route"] == "/"
+    f2 = Facts("shop", 1010, logs=lines, probes={"/cart": [{"status": 500}]})
+    assert ground_route({"kind": "error", "route": "/cart"}, f2)["route"] == "/cart"     # not a 404: keep it

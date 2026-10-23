@@ -11,6 +11,7 @@ from liara.agent.policy import Session
 from liara.liara_api import LiaraError
 
 from .collect import release_ts
+from .engine import note_env_keys
 
 
 async def app_overview(s: Session, name: str) -> dict:
@@ -20,6 +21,7 @@ async def app_overview(s: Session, name: str) -> dict:
         kind = app.kind if isinstance(app, LiaraError) else "internal"
         return {"status": "error", "error": kind, "message": getattr(app, "fa", "برنامه خوانده نشد.")}
     s.redactor.add(*[e.value for e in app.envs])            # values seen anywhere get masked everywhere
+    note_env_keys(s, name, {e.key for e in app.envs})
     out = {"name": app.name, "url": None if s.demo else app.url,   # recorded demo apps have no live site
            "platform": app.platform, "state": app.status, "on": app.scale > 0,
            "plan": app.plan_id, "bundle": app.bundle_id, "env_keys": [e.key for e in app.envs],

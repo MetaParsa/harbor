@@ -239,7 +239,8 @@ function aiPanel(ai) {
   const u = ai.understood || {}, r = ai.rules_understood || {};
   const list = h("ul", { class: "ev" },
     h("li", { text: `۱. فهم حرف تو — ${ai.symptom_source === "llm" ? "مدل" : "قواعد"}: نوع «${KIND_FA[u.kind] || u.kind}»، صفحه ${u.route || "نامعلوم"}` +
-      (ai.symptom_source === "llm" && (r.kind !== u.kind || r.route !== u.route) ? ` (قواعد به‌تنهایی: «${KIND_FA[r.kind] || r.kind}»، ${r.route || "نامعلوم"})` : "") }),
+      (ai.symptom_source === "llm" && (r.kind !== u.kind || r.route !== u.route) ? ` (قواعد به‌تنهایی: «${KIND_FA[r.kind] || r.kind}»، ${r.route || "نامعلوم"})` : "") +
+      (u.route_guess ? ` — حدس اول ${u.route_guess} بود، ولی چنین صفحه‌ای در لاگ برنامه نبود و جواب ۴۰۴ داد؛ صفحه‌ای که واقعاً خطا می‌ده ${u.route}ه.` : "") }),
     h("li", { text: "۲. قواعد ثابت (بدون مدل) از روی شواهد این علت‌ها رو دادن: " +
       ai.rules_order.map((x) => `${x.id} ${fa(Math.round(x.confidence * 100))}٪`).join("، ") }),
     h("li", { text: ai.explain_source === "llm"
