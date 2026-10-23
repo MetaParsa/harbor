@@ -84,7 +84,7 @@ async function start(res) {
 }
 
 function setComposer(enabled, hint) {
-  $("askText").disabled = !enabled; $("askBtn").disabled = !enabled; $("checkBtn").disabled = !enabled; $("micBtn").disabled = !enabled;
+  $("askText").disabled = !enabled; $("askBtn").disabled = !enabled; $("checkBtn").disabled = !enabled;
   if (hint) $("askText").placeholder = hint;
 }
 
@@ -427,45 +427,6 @@ function renderVerify(v) {
   say(card);
   loadOverview();
 }
-
-// ---------- voice: say the problem; the words are drafted into the box, never sent by themselves ----------
-// Web Speech API (free, in the browser: Edge and Chrome send the audio to their own speech service). Asking for the
-// microphone first makes every Chromium browser show its permission prompt, including forks whose speech service
-// is missing (Helium, Brave): those then get a clear message instead of silence.
-
-const Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
-const SPEECH_ERR = { network: "سرویس گفتار این مرورگر در دسترس نیست (مثلاً در Helium یا Brave)؛ با Edge یا Chrome امتحان کن یا تایپ کن.",
-  "not-allowed": "اجازه‌ی میکروفون داده نشد؛ از آیکون قفل کنار آدرس، Microphone رو روی Allow بذار.",
-  "service-not-allowed": "این مرورگر اجازه‌ی تبدیل گفتار به متن رو نمی‌ده؛ با Edge یا Chrome امتحان کن.",
-  "no-speech": "صدایی شنیده نشد؛ دوباره امتحان کن.", "audio-capture": "میکروفونی پیدا نشد.",
-  "language-not-supported": "این مرورگر فارسی رو برای گفتار پشتیبانی نمی‌کنه؛ با Edge یا Chrome امتحان کن." };
-
-function micIdle() { state.rec = null; $("micBtn").classList.remove("on"); $("micBtn").textContent = "🎤"; }
-
-$("micBtn").onclick = async () => {
-  if (state.rec) { state.rec.stop(); return; }
-  if (!Speech) { note("این مرورگر تبدیل گفتار به متن نداره (در Edge یا Chrome هست)؛ متن رو تایپ کن.", "bad"); return; }
-  if (!navigator.mediaDevices?.getUserMedia) { note("میکروفون فقط روی https یا localhost در دسترسه.", "bad"); return; }
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });   // the permission prompt
-    stream.getTracks().forEach((t) => t.stop());
-  } catch (e) {
-    note(e.name === "NotFoundError" ? SPEECH_ERR["audio-capture"] : SPEECH_ERR["not-allowed"], "bad");
-    return;
-  }
-  const rec = state.rec = new Speech();
-  rec.lang = "fa-IR"; rec.interimResults = true; rec.continuous = false;
-  const before = $("askText").value.trim();
-  rec.onresult = (e) => {
-    const heard = [...e.results].map((r) => r[0].transcript).join(" ").trim();
-    $("askText").value = before ? `${before} ${heard}` : heard;
-  };
-  rec.onerror = (e) => { if (e.error !== "aborted") note(SPEECH_ERR[e.error] || `تبدیل گفتار انجام نشد (${e.error}).`, "bad"); };
-  rec.onend = () => { micIdle(); status(""); $("askText").focus(); };
-  try { rec.start(); } catch { micIdle(); return; }
-  $("micBtn").classList.add("on"); $("micBtn").textContent = "■";
-  status("دارم گوش می‌دم… حرفت رو بزن؛ متنش در کادر نوشته می‌شه و خودت می‌فرستی.");
-};
 
 // ---------- watcher (background health + resource checks, liara/sre/watcher.py) ----------
 

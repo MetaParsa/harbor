@@ -55,7 +55,6 @@ pre { direction:ltr; text-align:left; font:12px/1.5 "IBM Plex Mono", Consolas, m
 .code { font:700 28px/1.4 "IBM Plex Mono", Consolas, monospace; letter-spacing:4px; direction:ltr; text-align:center; margin:6px 0 }
 .composer { position:fixed; inset-inline:0; bottom:0; background:var(--bg); border-top:1px solid var(--line); padding:10px 16px }
 .composer form { max-width:680px; margin:0 auto; display:flex; gap:8px }
-.mic { padding-inline:12px; font-size:18px; line-height:1 } .mic.on { background:var(--red-soft); color:var(--red); border-color:var(--red) }
 a { color:var(--indigo) }
 .hidden { display:none !important }
 .steps { list-style:none; padding:0; margin:8px 0; font-size:14px } .steps li { padding:4px 0; border-bottom:1px dashed var(--line); unicode-bidi:plaintext; text-align:start }
